@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "commizard"
+version = "0.0.1"
+authors = [
+    { name = "Chungzter", email = "freezycry@protonmail.com" },
+]
+description = "The commit writing Wizard Assistant"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+# TODO: License this project
+# license = "MIT"
+# license-files = ["LICEN[CS]E*"]
+keywords = ["Commit message helper", "commit assistant", "git", "AI assistant"]
+# TODO: Upload to github
+# [project.urls]
+# Homepage = "https://github.com/username/commizard"
+# Issues = "https://github.com/username/commizard/issues"
+
+[project.scripts]
+commizard = "commizard.cli:main"
