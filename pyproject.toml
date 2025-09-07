@@ -9,6 +9,9 @@ authors = [
     { name = "Chungzter", email = "freezycry@protonmail.com" },
 ]
 description = "The commit writing Wizard Assistant"
+dependencies = [
+    "rich>=13.9.0"
+]
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
