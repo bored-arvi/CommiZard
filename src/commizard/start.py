@@ -63,7 +63,7 @@ def print_welcome() -> None:
         None
     """
     console = Console()
-    if console.color_system == "truecolor":
+    if console.color_system in ("truecolor", "256"):
         console.print(gradient_text(text_banner, start_color, end_color))
 
     # don't use the gradient function for terminals that don't support it:
