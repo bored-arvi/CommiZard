@@ -91,7 +91,8 @@ def local_ai_available() -> bool:
     """
     try:
         # Very rare for servers to have this api, so let's test this.
-        response = requests.get("http://localhost:11434/api/version", timeout=5)
+        response = requests.get("http://localhost:11434/api/version",
+                                timeout=0.3)
         if response.status_code == 200:
             return isinstance(response.json(),
                               dict) and "version" in response.json()
