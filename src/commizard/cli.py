@@ -18,7 +18,7 @@ def main() -> None:
         return
 
     if not start.local_ai_available():
-        print("local ai not available")
+        print("local AI not available")
 
     start.print_welcome()
 
