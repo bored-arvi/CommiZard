@@ -1,5 +1,6 @@
 import shutil
 
+import requests
 from rich.color import Color
 from rich.console import Console
 
@@ -80,10 +81,19 @@ def check_git_installed() -> bool:
     return shutil.which("git") != None
 
 
-def check_local_ai() -> bool:
+# TODO: refactor for better error handling and better behavior overall
+def local_ai_available() -> bool:
     """
     Check if there's an ollama server running on port 11434
 
     Returns:
         True if there's a local AI server running, False otherwise.
     """
+    try:
+        # Very rare for servers to have this api, so let's test this.
+        response = requests.get("http://localhost:11434/api/version", timeout=5)
+    except:
+        return False
+    if response.status_code == 200:
+        return True
+    return False
