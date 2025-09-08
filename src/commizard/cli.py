@@ -2,6 +2,12 @@ from . import start
 
 
 def main() -> None:
+    """
+    Main function of the program.
+
+    Returns:
+        None
+    """
     start.print_welcome()
     while True:
         command = input("CommiZard> ").strip()

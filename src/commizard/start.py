@@ -57,7 +57,7 @@ def print_welcome() -> None:
     name.
 
     Returns:
-        None.
+        None
     """
     console = Console()
     if console.color_system == "truecolor":
