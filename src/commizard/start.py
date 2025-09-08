@@ -17,6 +17,17 @@ end_color = Color.parse("#8F00FF")
 
 
 def gradient_text(text: str, start_color: Color, end_color: Color) -> str:
+    """
+    Apply a horizontal gradient across the given ASCII art text.
+
+    Args:
+        text: The ASCII art or banner text.
+        start_color: The starting Rich color object.
+        end_color: The ending Rich color object.
+
+    Returns:
+        str: The ASCII text wrapped in Rich markup with gradient colors.
+    """
     lines = text.splitlines()
     total_chars = max(len(line) for line in lines)
     result_lines = []
