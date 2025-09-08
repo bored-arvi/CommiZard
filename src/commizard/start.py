@@ -1,16 +1,50 @@
+from rich.color import Color
 from rich.console import Console
-from rich.panel import Panel
 
 text_banner = r"""
- ██████╗ ██████╗ ███╗   ███╗███╗   ███╗██╗███████╗ █████╗ ██████╗ ██████╗ 
+ ██████╗ ██████╗ ███╗   ███╗███╗   ███╗██╗███████╗ █████╗ ██████╗ ██████╗
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██║╚══███╔╝██╔══██╗██╔══██╗██╔══██╗
 ██║     ██║   ██║██╔████╔██║██╔████╔██║██║  ███╔╝ ███████║██████╔╝██║  ██║
 ██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██║ ███╔╝  ██╔══██║██╔══██╗██║  ██║
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║███████╗██║  ██║██║  ██║██████╔╝
- ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ 
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝
 """
 
+# Gradient colors
+start_color = Color.parse("#535147")
+start_color = Color.parse("#FF746C")
+end_color = Color.parse("#8F00FF")
 
+
+def gradient_text(text: str, start_color: Color, end_color: Color) -> str:
+    lines = text.splitlines()
+    total_chars = max(len(line) for line in lines)
+    result_lines = []
+    for line in lines:
+        colored_line = ""
+        for i, char in enumerate(line):
+            r = int(start_color.triplet[0] + (
+                    end_color.triplet[0] - start_color.triplet[0]) * (
+                            i / total_chars))
+            g = int(
+                start_color.triplet[1] + (
+                        end_color.triplet[1] - start_color.triplet[1]) * (
+                        i / total_chars))
+            b = int(start_color.triplet[2] + (
+                    end_color.triplet[2] - start_color.triplet[2]) * (
+                            i / total_chars))
+            colored_line += f"[#{r:02x}{g:02x}{b:02x}]{char}"
+        result_lines.append(colored_line)
+    return "\n".join(result_lines)
+
+
+# TODO: randomly chooses the colors so the welcome screen is different
+#       everytime the program is run.
 def print_welcome() -> None:
     console = Console()
-    console.print(f"[purple]{text_banner}[/purple]")
+    if console.color_system == "truecolor":
+        console.print(gradient_text(text_banner, start_color, end_color))
+
+    # don't use the gradient function for terminals that don't support it:
+    else:
+        console.print(f"[bold purple]{text_banner}[/bold purple]")
