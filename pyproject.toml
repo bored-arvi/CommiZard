@@ -10,7 +10,8 @@ authors = [
 ]
 description = "The commit writing Wizard Assistant"
 dependencies = [
-    "rich>=13.9.0"
+    "rich>=13.9.0",
+    "requests>=2.32.2"
 ]
 readme = "README.md"
 requires-python = ">=3.9"
