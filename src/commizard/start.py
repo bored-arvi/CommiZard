@@ -78,3 +78,12 @@ def check_git_installed() -> bool:
         bool: True if the package is installed, False otherwise.
     """
     return shutil.which("git") != None
+
+
+def check_local_ai() -> bool:
+    """
+    Check if there's an ollama server running on port 11434
+
+    Returns:
+        True if there's a local AI server running, False otherwise.
+    """
