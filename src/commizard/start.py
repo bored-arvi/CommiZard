@@ -1,3 +1,5 @@
+import subprocess
+
 from rich.color import Color
 from rich.console import Console
 
@@ -66,3 +68,21 @@ def print_welcome() -> None:
     # don't use the gradient function for terminals that don't support it:
     else:
         console.print(f"[bold purple]{text_banner}[/bold purple]")
+
+
+def check_git_installed() -> bool:
+    """
+    Check if the git package is installed.
+
+    Returns:
+        bool: True if the package is installed, False otherwise.
+    """
+    # I'm not sure if this is the best way to test for git. I know, it looks
+    # super-duper wasteful to create a whole process just to see if it exists.
+    # I'm going to look on what I could do later to make this better.
+    try:
+        _ = subprocess.run(["git", "--version"], capture_output=True)
+        return True
+    except FileNotFoundError:
+        print("holy shit lols")
+        return False

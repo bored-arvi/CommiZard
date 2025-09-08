@@ -8,6 +8,9 @@ def main() -> None:
     Returns:
         None
     """
+    if not start.check_git_installed():
+        print("git not installed")
+        return
     start.print_welcome()
     while True:
         command = input("CommiZard> ").strip()
