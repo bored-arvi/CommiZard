@@ -1,4 +1,5 @@
 from . import start
+from .output import *
 
 
 # TODO: add a printing handler to print colorized outputs to the terminal
@@ -14,11 +15,11 @@ def main() -> None:
         None
     """
     if not start.check_git_installed():
-        print("git not installed")
+        print_error("git not installed")
         return
 
     if not start.local_ai_available():
-        print("local AI not available")
+        print_warning("local AI not available")
 
     start.print_welcome()
 
@@ -28,7 +29,7 @@ def main() -> None:
             print("Goodbye!")
             break
         else:
-            print(f"You typed: {command}")
+            print_success(f"You typed: {command}")
 
 
 if __name__ == "__main__":
