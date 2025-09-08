@@ -52,6 +52,13 @@ def gradient_text(text: str, start_color: Color, end_color: Color) -> str:
 # TODO: randomly chooses the colors so the welcome screen is different
 #       everytime the program is run.
 def print_welcome() -> None:
+    """
+    Print the welcome screen. Right now it's the ASCII art of the project's
+    name.
+
+    Returns:
+        None.
+    """
     console = Console()
     if console.color_system == "truecolor":
         console.print(gradient_text(text_banner, start_color, end_color))
