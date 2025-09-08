@@ -4,6 +4,8 @@ from . import start
 # TODO: add a printing handler to print colorized outputs to the terminal
 #       (errors, results, warnings, verbose diagnostics, etc.)
 
+# TODO: Consider multithreading startup checks. If you're using timeouts and
+#       long waits, the program will halt executing and not be responsive enough
 def main() -> None:
     """
     Main function of the program.
@@ -19,7 +21,7 @@ def main() -> None:
         print("local ai not available")
 
     start.print_welcome()
-    
+
     while True:
         command = input("CommiZard> ").strip()
         if command in ("exit", "quit"):
