@@ -26,7 +26,7 @@ def print_error(message: str) -> None:
     Returns:
         None
     """
-    console.print(f"[red]Error: {message}[/red]")
+    console.print(f"[bold red]Error: {message}[/bold red]")
 
 
 def print_warning(message: str) -> None:
