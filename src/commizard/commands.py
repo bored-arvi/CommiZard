@@ -3,6 +3,7 @@ import subprocess
 from . import output
 
 
+# TODO: Complete function
 def handle_commit_req(opts: list) -> int:
     """
     commits the generated prompt according to options:
