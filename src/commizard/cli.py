@@ -21,6 +21,9 @@ def main() -> None:
     if not start.local_ai_available():
         print_warning("local AI not available")
 
+    if not start.is_inside_working_tree():
+        print_error("not inside work tree")
+        
     start.print_welcome()
 
     while True:
