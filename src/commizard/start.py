@@ -1,4 +1,5 @@
 import shutil
+import subprocess
 
 import requests
 from rich.color import Color
@@ -97,4 +98,9 @@ def is_inside_working_tree() -> bool:
     Check if we're inside a working directory (can execute commit and diff
     commands)
     """
-    pass
+    out = subprocess.run(["git", "rev-parse", "--is-inside-work-tree"],
+                         capture_output=True)
+    if out.returncode == 0 and out.stdout == "true\n":
+        return True
+    else:
+        return False
