@@ -58,9 +58,6 @@ def print_welcome() -> None:
     """
     Print the welcome screen. Right now it's the ASCII art of the project's
     name.
-
-    Returns:
-        None
     """
     console = Console()
     if console.color_system in ("truecolor", "256"):
@@ -74,9 +71,6 @@ def print_welcome() -> None:
 def check_git_installed() -> bool:
     """
     Check if the git package is installed.
-
-    Returns:
-        bool: True if the package is installed, False otherwise.
     """
     return shutil.which("git") != None
 
@@ -85,9 +79,6 @@ def check_git_installed() -> bool:
 def local_ai_available() -> bool:
     """
     Check if there's an ollama server running on port 11434
-
-    Returns:
-        True if there's a local AI server running, False otherwise.
     """
     try:
         # Very rare for servers to have this api, so let's test this.
