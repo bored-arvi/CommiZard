@@ -99,3 +99,11 @@ def local_ai_available() -> bool:
     except:
         return False
     return False
+
+
+def is_inside_working_tree() -> bool:
+    """
+    Check if we're inside a working directory (can execute commit and diff
+    commands)
+    """
+    pass
