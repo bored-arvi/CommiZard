@@ -12,7 +12,7 @@ def print_success(message: str) -> None:
 
 def print_error(message: str) -> None:
     """
-    prints error message in red color
+    prints error message bold red
     """
     console.print(f"[bold red]Error: {message}[/bold red]")
 
