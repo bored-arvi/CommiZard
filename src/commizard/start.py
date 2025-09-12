@@ -99,7 +99,7 @@ def is_inside_working_tree() -> bool:
     commands)
     """
     out = subprocess.run(["git", "rev-parse", "--is-inside-work-tree"],
-                         capture_output=True)
+                         capture_output=True, text=True)
     if out.returncode == 0 and out.stdout.strip() == "true":
         return True
     else:
