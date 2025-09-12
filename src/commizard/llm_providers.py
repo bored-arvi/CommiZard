@@ -25,9 +25,18 @@ def select_model(select_str: str) -> None:
     if select_str in available_models:
         selected_model = select_str
         # TODO: Load the model
+        ...
 
 
 def generate() -> None:
     """
     generate commit message
     """
+    pass
+
+
+def regenerate(prompt: str) -> None:
+    """
+    regenerate commit message based on prompt
+    """
+    pass
