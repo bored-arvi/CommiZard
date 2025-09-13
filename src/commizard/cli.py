@@ -1,3 +1,4 @@
+from . import commands
 from . import start
 from .output import *
 
@@ -27,12 +28,11 @@ def main() -> None:
     start.print_welcome()
 
     while True:
-        command = input("CommiZard> ").strip()
-        if command in ("exit", "quit"):
+        user_input = input("CommiZard> ").strip()
+        if user_input in ("exit", "quit"):
             print("Goodbye!")
             break
-        else:
-            print_success(f"You typed: {command}")
+        commands.parser(user_input)
 
 
 if __name__ == "__main__":
