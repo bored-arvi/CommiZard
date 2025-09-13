@@ -1,10 +1,20 @@
 import requests
 
-available_models = []
+available_models = None
 selected_model = ""
 
 gen_head = ""
 gen_body = ""
+
+
+# TODO:
+def init_model_list() -> None:
+    """
+    Initialize the list of available models indisde the available_models global
+    variable.
+    """
+    global available_models
+    available_models = list_locals()
 
 
 def list_locals() -> list[str]:
@@ -24,9 +34,6 @@ def list_locals() -> list[str]:
         output.append(model["name"])
 
     return output
-
-
-available_models.append(list_locals())
 
 
 def select_model(select_str: str) -> None:
