@@ -17,7 +17,6 @@ text_banner = r"""
 
 # Gradient colors
 start_color = Color.parse("#535147")
-start_color = Color.parse("#FF746C")
 end_color = Color.parse("#8F00FF")
 
 
