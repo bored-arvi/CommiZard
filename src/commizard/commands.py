@@ -81,8 +81,8 @@ def print_available_models(opts: list) -> None:
     """
     prints the available models according to options passed.
     """
-    models = llm_providers.list_locals()
-    for model in models:
+    llm_providers.init_model_list()
+    for model in llm_providers.available_models:
         print(model)
 
 
