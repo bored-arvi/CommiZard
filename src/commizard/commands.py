@@ -69,14 +69,10 @@ def copy_command(opts: list) -> int:
 
 
 # TODO: implement
-def load_model(opts: list) -> int:
+def load_model(opts: list) -> None:
     """
-    Get the model (either local or online) ready for generation.
-    Args:
-        opts: list of options following the command
-
-    Returns:
-        a status code: 0 for success, 1 for failure.
+    Get the model (either local or online) ready for generation based on the
+    options passed.
     """
     pass
 
