@@ -1,6 +1,5 @@
 import requests
 
-available_models = []
 selected_model = ""
 
 gen_head = ""
@@ -24,9 +23,6 @@ def list_locals() -> list[str]:
         output.append(model["name"])
 
     return output
-
-
-available_models.append(list_locals())
 
 
 def select_model(select_str: str) -> None:
