@@ -1,5 +1,6 @@
 import subprocess
 
+from . import llm_providers
 from . import output
 
 
@@ -80,10 +81,20 @@ def load_model(opts: list) -> int:
     pass
 
 
+def print_available_models(opts: list) -> None:
+    """
+    prints the available models according to options passed.
+    """
+    models = llm_providers.list_locals()
+    for model in models:
+        print(model)
+
+
 supported_commands = {"commit": handle_commit_req,
                       "help": print_help,
                       "cp": copy_command,
-                      "start": load_model
+                      "start": load_model,
+                      "list": print_available_models
                       }
 
 
