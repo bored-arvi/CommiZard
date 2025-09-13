@@ -11,11 +11,22 @@ def list_locals() -> list[str]:
     """
     return a list of available local AI models
     """
-    response = requests.get('http://localhost:11434/api/tags', timeout=1)
-    ...
+    # TODO: Handle potential errors
+    response = requests.get('http://localhost:11434/api/tags', timeout=0.3)
+
+    # Right now we assume that the response is OK:
+    response = response.json()
+    response = response["models"]
+    output = []
+
+    # TODO: also return the number of parameters
+    for model in response:
+        output.append(model["name"])
+
+    return output
 
 
-available_models += list_locals()
+available_models.append(list_locals())
 
 
 def select_model(select_str: str) -> None:
