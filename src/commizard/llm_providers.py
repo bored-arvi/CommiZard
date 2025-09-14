@@ -84,6 +84,17 @@ def load_model(model_name: str) -> dict:
     return r.json()
 
 
+def unload_model() -> None:
+    """
+    Unload the local model from RAM
+    """
+    global selected_model
+    url = "http://localhost:11434/api/generate"
+    payload = {"model": selected_model, "keep_alive": 0}
+    selected_model = None
+    r = requests.post(url, json=payload)
+
+
 def generate() -> None:
     """
     generate commit message
