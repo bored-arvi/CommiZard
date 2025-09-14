@@ -69,12 +69,24 @@ def copy_command(opts: list) -> int:
 
 
 # TODO: implement
-def load_model(opts: list) -> None:
+def start_model(opts: list[str]) -> None:
     """
     Get the model (either local or online) ready for generation based on the
     options passed.
     """
-    pass
+    if llm_providers.available_models is None:
+        llm_providers.init_model_list()
+
+    # TODO: we can get partial name of the model. For example, the user writes:
+    #       start codellama instead of: start codellama:7b-instruct . implement
+    #       that
+
+    model_name = opts[0]
+
+    if model_name not in llm_providers.available_models:
+        output.print_error(f"{model_name} Not found.")
+        return
+    llm_providers.select_model(model_name)
 
 
 def print_available_models(opts: list) -> None:
@@ -89,7 +101,7 @@ def print_available_models(opts: list) -> None:
 supported_commands = {"commit": handle_commit_req,
                       "help": print_help,
                       "cp": copy_command,
-                      "start": load_model,
+                      "start": start_model,
                       "list": print_available_models
                       }
 
