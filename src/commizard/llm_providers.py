@@ -90,8 +90,13 @@ def generate() -> None:
     """
     url = "http://localhost:11434/api/generate"
     diff = git_utils.get_diff()
-    payload = {"model": selected_model, }
-    pass
+    if diff == "":
+        output.print_warning("No changes to the repository.")
+        return
+    payload = {"model": selected_model, "prompt": generation_prompt + diff,
+               "stream": False}
+    r = requests.post(url, json=payload)
+    print(r.json().get("response"))
 
 
 def regenerate(prompt: str) -> None:
