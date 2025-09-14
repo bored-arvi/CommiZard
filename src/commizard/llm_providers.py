@@ -107,7 +107,7 @@ def generate() -> None:
     payload = {"model": selected_model, "prompt": generation_prompt + diff,
                "stream": False}
     r = requests.post(url, json=payload)
-    output.print_generated(r.json().get("response"))
+    output.print_generated(r.json().get("response").strip())
 
 
 def regenerate(prompt: str) -> None:
