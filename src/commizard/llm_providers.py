@@ -30,7 +30,7 @@ def list_locals() -> list[str]:
     response = response["models"]
     output = []
 
-    # TODO: also return the number of parameters
+    # TODO: also return the number of parameters to display a better list
     for model in response:
         output.append(model["name"])
 
