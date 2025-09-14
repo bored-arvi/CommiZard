@@ -1,5 +1,6 @@
 import requests
 
+from . import git_utils
 from . import output
 
 available_models = None
@@ -8,13 +9,17 @@ selected_model = None
 gen_head = ""
 gen_body = ""
 
-generation_prompt = """You are an assistant that writes Git commit messages.
+generation_prompt = """
+You are an assistant that generates good, professional Git commit messages.
 
-Write a commit message based on the following git diff:
-- Provide a short, descriptive commit title in imperative mood (e.g., "fix parser bug").
+Guidelines:
+- Write a concise, descriptive commit title in **imperative mood** (e.g., "fix
+parser bug").
 - Keep the title under 50 characters if possible.
-- If relevant, also include a body with more details.
-- Do not include anything except the commit message.
+- If needed, add a commit body separated by a blank line:
+  - Explain *what* changed and *why* (not how).
+- Do not include anything except the commit message itself (no commentary or
+formatting).
 
 Here is the diff:
 """
