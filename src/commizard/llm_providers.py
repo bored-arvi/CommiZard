@@ -1,7 +1,9 @@
 import requests
 
+from . import output
+
 available_models = None
-selected_model = ""
+selected_model = None
 
 gen_head = ""
 gen_body = ""
@@ -38,12 +40,30 @@ def list_locals() -> list[str]:
 
 def select_model(select_str: str) -> None:
     """
-    change selected_model to select_str if available
+    Prepare the local model for use
     """
-    if select_str in available_models:
-        selected_model = select_str
-        # TODO: Load the model
-        ...
+    global selected_model
+    selected_model = select_str
+    load_res = load_model(selected_model)
+    if load_res.get("done_reason") == "load":
+        output.print_success(f"{selected_model} loaded.")
+    else:
+        output.print_error(f"{selected_model} didn't load.")
+
+
+def load_model(model_name: str) -> dict:
+    """
+    Load the local model into RAM
+    Args:
+        model_name: name of the model to load
+
+    Returns:
+        a dict of the POST request
+    """
+    print("Loading local model...")
+    payload = {"model": selected_model}
+    r = requests.post("http://localhost:11434/api/generate", json=payload)
+    return r.json()
 
 
 def generate() -> None:
