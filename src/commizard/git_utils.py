@@ -42,5 +42,5 @@ def get_diff() -> str:
 
     out = run_git_command(["--no-pager", "diff"])
 
-    if out.returncode == 0 and out.stderr.strip() == "":
+    if out.returncode == 0:
         return out.stdout.strip()
