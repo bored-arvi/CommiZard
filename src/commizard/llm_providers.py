@@ -9,7 +9,6 @@ gen_head = ""
 gen_body = ""
 
 
-# TODO:
 def init_model_list() -> None:
     """
     Initialize the list of available models indisde the available_models global
