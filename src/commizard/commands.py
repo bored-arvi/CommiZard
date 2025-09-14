@@ -98,11 +98,20 @@ def print_available_models(opts: list) -> None:
         print(model)
 
 
+def generate_message(opts: list) -> None:
+    """
+    generate and print a commit message
+    """
+    llm_providers.generate()
+
+
 supported_commands = {"commit": handle_commit_req,
                       "help": print_help,
                       "cp": copy_command,
                       "start": start_model,
-                      "list": print_available_models
+                      "list": print_available_models,
+                      "gen": generate_message,
+                      "generate": generate_message
                       }
 
 
