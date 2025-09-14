@@ -47,8 +47,6 @@ def select_model(select_str: str) -> None:
     load_res = load_model(selected_model)
     if load_res.get("done_reason") == "load":
         output.print_success(f"{selected_model} loaded.")
-    else:
-        output.print_error(f"{selected_model} didn't load.")
 
 
 def load_model(model_name: str) -> dict:
@@ -62,7 +60,12 @@ def load_model(model_name: str) -> dict:
     """
     print("Loading local model...")
     payload = {"model": selected_model}
-    r = requests.post("http://localhost:11434/api/generate", json=payload)
+    try:
+        r = requests.post("http://localhost:11434/api/generate", json=payload)
+    except requests.exceptions.ConnectionError:
+        output.print_error(
+            f"Failed to connect to {model_name}. Is ollama running?")
+        return {}
     return r.json()
 
 
