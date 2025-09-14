@@ -8,6 +8,17 @@ selected_model = None
 gen_head = ""
 gen_body = ""
 
+generation_prompt = """You are an assistant that writes Git commit messages.
+
+Write a commit message based on the following git diff:
+- Provide a short, descriptive commit title in imperative mood (e.g., "fix parser bug").
+- Keep the title under 50 characters if possible.
+- If relevant, also include a body with more details.
+- Do not include anything except the commit message.
+
+Here is the diff:
+"""
+
 
 def init_model_list() -> None:
     """
