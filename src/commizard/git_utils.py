@@ -26,7 +26,7 @@ def is_changed() -> bool:
     """
     Check if we have changed files
     """
-    out = run_git_command(["diff", "--name-only", "--no-pager"])
+    out = run_git_command(["diff", "--name-only"])
     return (out.returncode == 0) and (out.stdout.strip() != "")
 
 
