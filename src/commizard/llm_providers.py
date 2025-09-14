@@ -11,7 +11,7 @@ gen_body = ""
 
 def init_model_list() -> None:
     """
-    Initialize the list of available models indisde the available_models global
+    Initialize the list of available models inside the available_models global
     variable.
     """
     global available_models
