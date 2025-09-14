@@ -31,6 +31,7 @@ def main() -> None:
 
     if not start.is_inside_working_tree():
         print_error("not inside work tree")
+        return
 
     start.print_welcome()
 
