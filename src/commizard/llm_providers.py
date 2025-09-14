@@ -83,6 +83,9 @@ def generate() -> None:
     """
     generate commit message
     """
+    url = "http://localhost:11434/api/generate"
+    diff = git_utils.get_diff()
+    payload = {"model": selected_model, }
     pass
 
 
