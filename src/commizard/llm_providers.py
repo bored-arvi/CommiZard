@@ -22,6 +22,8 @@ parser bug").
   - Explain *what* changed and *why* (not how).
 - Do not include anything except the commit message itself (no commentary or
 formatting).
+- Do not include Markdown formatting, code blocks, quotes, or symbols such as
+``` or **.
 
 Here is the diff:
 """
