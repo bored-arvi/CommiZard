@@ -33,8 +33,8 @@ def print_generated(message: str) -> None:
     console.print(f"[blue]{message}[/blue]")
 
 
-# TODO: add wrapping function for output
-
+# fixme: this function destroys bulletin board outputs. We shouldn't blindly
+#        wrap these lists into each-other.
 def wrap_text(text: str, width: int = 70) -> str:
     """
     Wrap text into paragraphs of specified width, preserving paragraph breaks.
