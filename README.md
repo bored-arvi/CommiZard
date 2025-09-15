@@ -32,14 +32,17 @@ You can also install CommiZard from source:
 
 ```bash
 git clone URL_TO_BE_DETERMINED
-cd commizard
+cd CommiZard
 pip install .
 ```
 
 Or build it with PEP 517 build tools:
 
 ```bash
-python -m build
+git clone URL_TO_BE_DETERMINED
+cd CommiZard
+python -m build # or use hatchling if installed: hatchling build
+pip install dist/commizard-version-py3-none-any.whl 
 ```
 
 ## Usage
