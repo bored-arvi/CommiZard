@@ -68,7 +68,6 @@ def copy_command(opts: list) -> int:
     pass
 
 
-# TODO: implement
 def start_model(opts: list[str]) -> None:
     """
     Get the model (either local or online) ready for generation based on the
