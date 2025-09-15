@@ -95,6 +95,7 @@ def unload_model() -> None:
     r = requests.post(url, json=payload)
 
 
+# TODO: Use Json options to receive head and title separately
 def generate() -> None:
     """
     generate commit message
