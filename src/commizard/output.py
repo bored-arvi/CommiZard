@@ -1,3 +1,5 @@
+import textwrap
+
 from rich.console import Console
 
 console = Console()
@@ -30,4 +32,12 @@ def print_generated(message: str) -> None:
     """
     console.print(f"[blue]{message}[/blue]")
 
+
 # TODO: add wrapping function for output
+def wrap_text(text: str, width: int) -> str:
+    """
+    Wrap a string to a specified maximum line width by inserting line breaks.
+    """
+    if width <= 0:
+        raise ValueError("Width must be a positive integer")
+    return '\n'.join(textwrap.wrap(text, width=width))
