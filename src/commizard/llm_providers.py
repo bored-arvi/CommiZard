@@ -8,6 +8,7 @@ selected_model = None
 
 gen_head = ""
 gen_body = ""
+gen_message = None
 
 # Ironically enough, I've used Chat-GPT to write a prompt to prompt other
 # Models (or even itself in the future!)
@@ -124,6 +125,10 @@ def generate() -> None:
 
     print(r.json().get("response").strip())
     r = output.wrap_text(r.json().get("response").strip(), 72)
+
+    global gen_message
+    gen_message = r
+
     output.print_generated(r)
 
 
