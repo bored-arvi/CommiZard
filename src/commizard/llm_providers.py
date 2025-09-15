@@ -9,6 +9,8 @@ selected_model = None
 gen_head = ""
 gen_body = ""
 
+# Ironically enough, I've used Chat-GPT to write a prompt to prompt other
+# Models (or even itself in the future!)
 generation_prompt = """
 You are an assistant that generates good, professional Git commit messages.
 
