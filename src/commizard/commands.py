@@ -1,5 +1,7 @@
 import subprocess
 
+import pyperclip
+
 from . import llm_providers
 from . import output
 
@@ -54,18 +56,20 @@ def print_help(opts: list) -> None:
     pass
 
 
-# TODO: implement
-def copy_command(opts: list) -> int:
+def copy_command(opts: list) -> None:
     """
     copies the generated prompt to clipboard according to options passed.
 
     Args:
         opts: list of options following the command
-
-    Returns:
-        a status code: 0 for success, 1 for failure.
     """
-    pass
+    if llm_providers.gen_message == None:
+        output.print_warning("No generated message found."
+                             " Please run 'generate' first.")
+        return
+
+    pyperclip.copy(llm_providers.gen_message)
+    output.print_success("Copied to clipboard.")
 
 
 def start_model(opts: list[str]) -> None:
