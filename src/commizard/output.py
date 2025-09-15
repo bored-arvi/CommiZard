@@ -34,9 +34,11 @@ def print_generated(message: str) -> None:
 
 
 # TODO: add wrapping function for output
-def wrap_text(text: str, width: int) -> str:
+
+def wrap_text(text: str, width: int = 70) -> str:
     """
-    Wrap a string to a specified maximum line width by inserting line breaks.
+    Wrap text into paragraphs of specified width, preserving paragraph breaks.
     """
-    assert width > 0, "Width must be a positive integer"
-    return '\n'.join(textwrap.wrap(text, width=width))
+    paragraphs = text.split('\n\n')
+    wrapped_paragraphs = [textwrap.fill(p, width=width) for p in paragraphs]
+    return '\n\n'.join(wrapped_paragraphs)
