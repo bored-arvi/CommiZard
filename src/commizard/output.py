@@ -38,6 +38,5 @@ def wrap_text(text: str, width: int) -> str:
     """
     Wrap a string to a specified maximum line width by inserting line breaks.
     """
-    if width <= 0:
-        raise ValueError("Width must be a positive integer")
+    assert width > 0, "Width must be a positive integer"
     return '\n'.join(textwrap.wrap(text, width=width))
