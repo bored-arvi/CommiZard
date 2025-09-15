@@ -8,27 +8,26 @@ Generate, tweak, and copy commit messages with full control, right from a REPL.
 
 ## Features
 
-- REPL style. Stay in an interactive session, try multiple commits, don’t
-  restart a process each time.
-- Generates commit messages from `git diff`.
-- Simple CLI interface with familiar commands.
-- Flexible model integration and plans to implement online models
-- Clipboard integration. Instantly copy to your system clipboard, ready to
-  paste anywhere.
-- No background daemons. Runs only when you want it; no hooks, no processes
-  hanging around. You can do whatever you want with the generated output.
-- You always decide whether to commit, copy, or discard.
+- **REPL-style interface** — Stay in an interactive session. Generate multiple
+  commit variations without restarting.
+- **Smart generation** — Creates commit messages directly from your `git diff`.
+- **Simple CLI** — Familiar, intuitive commands. No learning curve.
+- **Flexible AI** backends — Easily swap models. Online model support planned!
+- **Clipboard magic** — Instantly copy generated messages to your system
+  clipboard — ready to paste into `git commit`.
+- **Zero daemons** — No background processes. No git hooks. No surprises.
+- **Absolute Control** — You run it when *you* want, and you decide to commit,
+  copy, tweak, or discard.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install
-CommiZard:
+Install via [pip](https://pip.pypa.io/en/stable/) (from GitHub):
 
 ```bash
 pip install git+URL_TO_BE_DETERMINED
 ```
 
-You can also install CommiZard from source:
+Install from source:
 
 ```bash
 git clone URL_TO_BE_DETERMINED
@@ -36,21 +35,20 @@ cd CommiZard
 pip install .
 ```
 
-Or build it with PEP 517 build tools:
+Or build using PEP 517 (e.g., with `build` or `hatchling`):
 
 ```bash
 git clone URL_TO_BE_DETERMINED
 cd CommiZard
-python -m build # or use hatchling if installed: hatchling build
-pip install dist/commizard-version-py3-none-any.whl 
+python -m build
+# or: hatchling build
+pip install dist/commizard-*-py3-none-any.whl
 ```
 
 ## Usage
 
-The following screenshot is an example workflow from commizard running on
-itself.
 IMAGE_TO_BE_ADDED
-This is one of the very first times the program has been used to help a user
-(in this case, me) write a commit message.
+This is one of the very first times the program helped a user (me 😄) write a
+meaningful commit message.
 
 ## Contributing
