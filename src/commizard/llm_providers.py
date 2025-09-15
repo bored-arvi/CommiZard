@@ -105,6 +105,10 @@ def unload_model() -> None:
 
 
 # TODO: Use Json options to receive head and title separately
+# TODO: add streaming option. It's gonna be a pain wrapping it though as it's
+#       coming... so this functionality requires some work...
+#       I think this documentation relates to streaming:
+#    https://requests.readthedocs.io/en/latest/user/advanced/#streaming-requests
 def generate() -> None:
     """
     generate commit message
