@@ -97,6 +97,20 @@ worth checking out:
 
 ## Contributing
 
+Contributions of all kinds are welcome.
+
+If you’d like to get involved:
+
+- Read the [CONTRIBUTING.md](CONTRIBUTING.md) guide for details on how to report
+  bugs, suggest features, or open pull requests.
+- Found a bug 🐞 or have an idea 💡? [Open an issue](...) and let’s discuss it!
+- Starter-friendly tasks are listed in the
+  [Starter Tasks section](./CONTRIBUTING.md#starter-tasks). Check it out if
+  you’re not ready to dive into core features yet.
+
+Not sure where to start? Open an issue or comment “I’d like to help with this,”
+and we’ll figure it out together!
+
 ## License
 
 `CommiZard` is released under the [MIT license](LICENSE).
