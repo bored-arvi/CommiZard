@@ -29,7 +29,7 @@ keywords = [
     "git",
     "AI assistant",
 ]
-# TODO: Upload to github
+
 [project.urls]
 Homepage = "https://github.com/username/CommiZard"
 Issues = "https://github.com/username/CommiZard/issues"
