@@ -1,8 +1,9 @@
 # CommiZard
 
+<div style="text-align: center;">
 BANNER_IMAGE_TO_BE_ADDED
 BADGES_TO_BE_ADDED
-
+</div>
 CommiZard — An interactive commit assistant, powered by AI!
 Generate, tweak, and copy commit messages with full control — right from a REPL.
 
