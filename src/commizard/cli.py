@@ -3,15 +3,7 @@ from . import start
 from .output import *
 
 
-# from sys import argv
-# TODO: add argv and argument passing to the REPL starter (-h, --help, -v,
-#       --verbose, --version. I can only think of these right now.)
-#       the --verbose option would require a lot of change to the current code
-#       since every function should output what it's currently doing...
-#
-
-# TODO: Consider multithreading startup checks. If you're using timeouts and
-#       long waits, the program will halt executing and not be responsive enough
+# TODO: see issue #2 and #3
 def main() -> None:
     """
     This is the entry point of the program. calls some functions at the start,
