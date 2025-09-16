@@ -19,6 +19,17 @@ Generate, tweak, and copy commit messages with full control, right from a REPL.
 - **Absolute Control** — You run it when *you* want, and you decide to commit,
   copy, tweak, or discard.
 
+> [!WARNING]
+>
+> ⚠️ **Heads up!** CommiZard is in **early alpha**. Not all features are
+> complete or stable yet.
+>
+> CommiZard is under active development — expect bugs, crashes, and missing
+> functionality. Please [open an issue](...) if you encounter any problems.
+>
+> Many features haven't been implemented yet, as this product was released as a
+> Minimum Viable Product (MVP). Stay tuned for new improvements!
+
 ## ⚙️ Installation
 
 Install via [pip](https://pip.pypa.io/en/stable/) (from GitHub):
