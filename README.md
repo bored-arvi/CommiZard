@@ -42,13 +42,13 @@ Generate, tweak, and copy commit messages with full control — right from a REP
 Install via [pip](https://pip.pypa.io/en/stable/) (from GitHub):
 
 ```bash
-pip install git+URL_TO_BE_DETERMINED
+pip install git+https://github.com/Chungzter/CommiZard
 ```
 
 Install from source:
 
 ```bash
-git clone URL_TO_BE_DETERMINED
+git clone https://github.com/Chungzter/CommiZard
 cd CommiZard
 pip install .
 ```
@@ -56,7 +56,7 @@ pip install .
 Or build from source using PEP 517 (e.g., with `build` or `hatchling`):
 
 ```bash
-git clone URL_TO_BE_DETERMINED
+git clone https://github.com/Chungzter/CommiZard
 cd CommiZard
 python -m build
 # or: hatchling build
