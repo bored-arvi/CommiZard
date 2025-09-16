@@ -94,3 +94,9 @@ worth checking out:
 ---
 
 ## Contributing
+
+## License
+
+`CommiZard` is licensed under the [MIT license](...).
+
+Copyright (c) 2025 Chungzter
