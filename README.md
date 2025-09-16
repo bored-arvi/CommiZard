@@ -32,7 +32,9 @@ Generate, tweak, and copy commit messages with full control — right from a REP
 > complete or stable yet.
 >
 > CommiZard is under active development — expect bugs, crashes, and missing
-> functionality. Please [open an issue](...) if you encounter problems.
+> functionality.
+> Please [open an issue](https://github.com/Chungzter/CommiZard/issues) if you
+> encounter problems.
 >
 > Many features are still missing, since this project was released as a Minimum
 > Viable Product (MVP). Stay tuned for new improvements!

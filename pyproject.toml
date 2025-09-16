@@ -12,7 +12,7 @@ description = "The commit writing Wizard Assistant"
 dependencies = [
     "rich>=13.9.0,<=14.1.0",
     "requests>=2.32.2,<=2.32.5",
-    "pyperclip>=1.8.0,<=1.9.0"
+    "pyperclip>=1.8.0,<=1.9.0",
 ]
 readme = "README.md"
 requires-python = ">=3.9"
@@ -21,14 +21,18 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-# TODO: License this project
-# license = "MIT"
-# license-files = ["LICEN[CS]E*"]
-keywords = ["Commit message helper", "commit assistant", "git", "AI assistant"]
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = [
+    "Commit message helper",
+    "commit assistant",
+    "git",
+    "AI assistant"
+]
 # TODO: Upload to github
-# [project.urls]
-# Homepage = "https://github.com/username/commizard"
-# Issues = "https://github.com/username/commizard/issues"
+[project.urls]
+Homepage = "https://github.com/username/CommiZard"
+Issues = "https://github.com/username/CommiZard/issues"
 
 [project.scripts]
 commizard = "commizard.cli:main"

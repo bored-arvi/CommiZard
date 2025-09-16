@@ -9,8 +9,9 @@ Here are some ways you can help improve this project:
 
 ## 🐞 Reporting Bugs / Requesting Features
 
-1. First, Check if it’s already reported — search [open issues](...).
-2. If it’s new → [open an issue](...)!
+1. First, Check if it’s already reported —
+   search [open issues](https://github.com/Chungzter/CommiZard/issues).
+2. If it’s new → [open an issue](https://github.com/Chungzter/CommiZard/issues)!
     - Be as detailed as you can: OS, Python version, steps to reproduce,
       expected vs actual behavior.
     - For feature requests, please describe your use case — why do you need it?
