@@ -97,6 +97,6 @@ worth checking out:
 
 ## License
 
-`CommiZard` is licensed under the [MIT license](...).
+`CommiZard` is released under the [MIT license](LICENSE).
 
 Copyright (c) 2025 Chungzter
