@@ -8,7 +8,7 @@
 [![Python version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 ![GitHub License](https://img.shields.io/github/license/Chungzter/Commizard)
 </div>
-CommiZard — An interactive commit assistant, powered by AI!
+CommiZard — An interactive commit assistant, powered by AI! 🧙‍♂️
 Generate, tweak, and copy commit messages with full control — right from a REPL.
 
 ---
@@ -130,7 +130,9 @@ If you’d like to get involved:
 
 - Read the [CONTRIBUTING.md](CONTRIBUTING.md) guide for details on how to report
   bugs, suggest features, or open pull requests.
-- Found a bug 🐞 or have an idea 💡? [Open an issue](...) and let’s discuss it!
+- Found a bug 🐞 or have an idea
+  💡? [Open an issue](https://github.com/Chungzter/CommiZard/issues) and let’s
+  discuss it!
 - Starter-friendly tasks are listed in the
   [Starter Tasks section](./CONTRIBUTING.md#starter-tasks). Check it out if
   you’re not ready to dive into core features yet.
