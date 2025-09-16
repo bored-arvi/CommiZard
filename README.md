@@ -2,9 +2,7 @@
 
 <div style="text-align: center;">
 
-<!--Banner image to be added-->
-
-<!--Badges to be added-->
+![CommiZard's banner](https://github.com/user-attachments/assets/851536f3-49a0-42a9-961d-20d975595d04)
 [![Python version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 ![GitHub License](https://img.shields.io/github/license/Chungzter/Commizard)
 </div>
@@ -87,7 +85,8 @@ use the following commands:
 
 ### Example Usage
 
-<!--screenshot to be added-->
+![CommiZard on 7323da1a1847908 during alpha dev](https://github.com/user-attachments/assets/d8696e0a-ba6e-496d-b1f8-8d0247339cd4)
+
 This is one of the very first times the program helped a user (me 😄) write a
 meaningful commit message.
 
