@@ -11,8 +11,6 @@
 CommiZard — An interactive commit assistant, powered by AI! 🧙‍♂️
 Generate, tweak, and copy commit messages with full control — right from a REPL.
 
----
-
 ## Features
 
 - **REPL-style Interface** — Stay in an interactive session. Generate multiple
@@ -39,8 +37,6 @@ Generate, tweak, and copy commit messages with full control — right from a REP
 > Many features are still missing, since this project was released as a Minimum
 > Viable Product (MVP). Stay tuned for new improvements!
 
----
-
 ## ⚙️ Installation
 
 Install via [pip](https://pip.pypa.io/en/stable/) (from GitHub):
@@ -66,8 +62,6 @@ python -m build
 # or: hatchling build
 pip install dist/commizard-*-py3-none-any.whl
 ```
-
----
 
 ## Usage
 
@@ -97,8 +91,6 @@ use the following commands:
 This is one of the very first times the program helped a user (me 😄) write a
 meaningful commit message.
 
----
-
 ## 🧭 Alternatives & Similar Tools
 
 When I started building CommiZard, I made sure to look around — and guess what?
@@ -121,8 +113,6 @@ worth checking out:
 > little UX comforts I wanted.
 >
 > So yeah — I built CommiZard for me… and maybe for you too 😉
-
----
 
 ## Contributing
 

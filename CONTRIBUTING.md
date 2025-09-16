@@ -5,8 +5,6 @@ free time, so your help means the world.
 
 Here are some ways you can help improve this project:
 
----
-
 ## 🐞 Reporting Bugs / Requesting Features
 
 1. First, Check if it’s already reported —
@@ -19,8 +17,6 @@ Here are some ways you can help improve this project:
 > [!TIP]
 > The clearer your report, the faster we can fix or build it!
 
----
-
 ## ️ Pull Requests (Code Contributions)
 
 1. Fork the repo, then clone your fork.
@@ -32,14 +28,10 @@ Here are some ways you can help improve this project:
 ✅ I’ll review it as soon as I can!  
 ✅ Even small fixes — typos, docs, or tests — are welcome!
 
----
-
 ## 🧪 Testing & Quality
 
 Right now, test coverage is minimal. If you want to help add unit/integration
 tests — you’ll be my hero.
-
----
 
 ## Starter Tasks
 
