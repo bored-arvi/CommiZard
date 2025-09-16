@@ -67,4 +67,9 @@ worth checking out:
 - **[AICommit2](https://github.com/tak-bro/aicommit2)** — The most complete FOSS
   option I found
 
+> *Why did I still follow through and build this?*  
+> Because I couldn’t find a tool that gave me full user control + those little
+> UX comforts I craved.  
+> So yeah — I built CommiZard for me… and maybe for you too 😉
+
 ## Contributing
