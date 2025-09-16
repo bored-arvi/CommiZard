@@ -27,7 +27,7 @@ keywords = [
     "Commit message helper",
     "commit assistant",
     "git",
-    "AI assistant"
+    "AI assistant",
 ]
 # TODO: Upload to github
 [project.urls]
