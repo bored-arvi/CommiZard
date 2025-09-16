@@ -10,9 +10,6 @@ from .output import *
 #       since every function should output what it's currently doing...
 #
 
-# TODO: add a printing handler to print colorized outputs to the terminal
-#       (errors, results, warnings, verbose diagnostics, etc.)
-
 # TODO: Consider multithreading startup checks. If you're using timeouts and
 #       long waits, the program will halt executing and not be responsive enough
 def main() -> None:
