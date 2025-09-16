@@ -14,10 +14,8 @@ from .output import *
 #       long waits, the program will halt executing and not be responsive enough
 def main() -> None:
     """
-    Main function of the program.
-
-    Returns:
-        None
+    This is the entry point of the program. calls some functions at the start,
+    then jumps into an infinite loop.
     """
     if not start.check_git_installed():
         print_error("git not installed")
