@@ -1,8 +1,12 @@
 # CommiZard
 
 <div style="text-align: center;">
-BANNER_IMAGE_TO_BE_ADDED
-BADGES_TO_BE_ADDED
+
+<!--Banner image to be added-->
+
+<!--Badges to be added-->
+[![Python version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+![GitHub License](https://img.shields.io/github/license/Chungzter/Commizard)
 </div>
 CommiZard — An interactive commit assistant, powered by AI!
 Generate, tweak, and copy commit messages with full control — right from a REPL.
