@@ -69,6 +69,28 @@ pip install dist/commizard-*-py3-none-any.whl
 
 ## Usage
 
+After installing CommiZard (See [Installation](#-installation)), you can launch
+the interactive REPL in your Git repository:
+
+```bash
+commizard
+```
+
+Once launched, you’ll enter the interactive CommiZard terminal, where you can
+use the following commands:
+
+### Commands
+
+|     Command      |                         Description                          |
+|:----------------:|:------------------------------------------------------------:|
+|      `list`      |  List all available Ollama models installed on your system.  |
+|      `gen`       | Generate a new commit message based on the current Git diff. |
+|       `cp`       |         Copy the generated output to your clipboard          |
+|     `commit`     |             Directly commit the generated output             |
+| `exit` or `quit` |                    Exit the REPL session.                    |
+
+### Example Usage
+
 <!--screenshot to be added-->
 This is one of the very first times the program helped a user (me 😄) write a
 meaningful commit message.
