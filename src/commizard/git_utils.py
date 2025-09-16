@@ -2,6 +2,8 @@
 import subprocess
 
 
+# fixme: handle edge cases where utf-8 characters raise a UnicodeDecodeError
+#        when the diff has emojis in it.
 def run_git_command(args: list[str]) -> subprocess.CompletedProcess:
     """
     Run a git command with the given args.
