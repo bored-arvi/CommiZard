@@ -1,4 +1,3 @@
-# TODO: use this module as a git API everywhere
 import subprocess
 
 
