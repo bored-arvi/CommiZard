@@ -69,7 +69,7 @@ pip install dist/commizard-*-py3-none-any.whl
 
 ## Usage
 
-IMAGE_TO_BE_ADDED
+<!--screenshot to be added-->
 This is one of the very first times the program helped a user (me 😄) write a
 meaningful commit message.
 
