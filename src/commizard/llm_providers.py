@@ -123,7 +123,6 @@ def generate() -> None:
                "stream": False}
     r = requests.post(url, json=payload)
 
-    print(r.json().get("response").strip())
     r = output.wrap_text(r.json().get("response").strip(), 72)
 
     global gen_message
