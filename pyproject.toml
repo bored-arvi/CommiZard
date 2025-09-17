@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "commizard"
-version = "0.0.1alpha"
+dynamic = ["version"]
 authors = [
     { name = "Chungzter", email = "freezycry@protonmail.com" },
 ]
@@ -36,3 +36,6 @@ Issues = "https://github.com/Chungzter/CommiZard/issues"
 
 [project.scripts]
 commizard = "commizard.cli:main"
+
+[tool.hatch.version]
+path = "src/commizard/__init__.py"
