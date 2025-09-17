@@ -6,7 +6,7 @@ from . import llm_providers
 from . import output
 
 
-# TODO: transfer commit functionality to git_utils and use that module
+# TODO: see issue #3
 def handle_commit_req(opts: list) -> int:
     """
     commits the generated prompt according to options:
