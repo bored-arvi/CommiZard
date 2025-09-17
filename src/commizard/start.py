@@ -53,8 +53,7 @@ def gradient_text(text: str, start_color: Color, end_color: Color) -> str:
     return "\n".join(result_lines)
 
 
-# TODO: randomly chooses the colors so the welcome screen is different
-#       everytime the program is run.
+# TODO: see issue #5
 def print_welcome() -> None:
     """
     Print the welcome screen. Right now it's the ASCII art of the project's

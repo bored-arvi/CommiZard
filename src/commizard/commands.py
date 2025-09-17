@@ -6,7 +6,7 @@ from . import llm_providers
 from . import output
 
 
-# TODO: see issue #3
+# TODO: see issue #4
 def handle_commit_req(opts: list) -> int:
     """
     commits the generated prompt according to options:
