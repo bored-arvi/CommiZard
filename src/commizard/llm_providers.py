@@ -56,7 +56,7 @@ def list_locals() -> list[str]:
     response = response["models"]
     res = []
 
-    # TODO: also return the number of parameters to display a better list
+    # TODO: see issue #10
     for model in response:
         res.append(model["name"])
 
@@ -105,11 +105,7 @@ def unload_model() -> None:
     r = requests.post(url, json=payload)
 
 
-# TODO: Use Json options to receive head and title separately
-# TODO: add streaming option. It's gonna be a pain wrapping it though as it's
-#       coming... so this functionality requires some work...
-#       I think this documentation relates to streaming:
-#    https://requests.readthedocs.io/en/latest/user/advanced/#streaming-requests
+# TODO: see issues #11 and #15
 def generate() -> None:
     """
     generate commit message
