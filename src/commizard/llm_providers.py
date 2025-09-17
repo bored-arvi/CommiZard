@@ -43,7 +43,7 @@ def list_locals() -> list[str]:
     """
     return a list of available local AI models
     """
-    # TODO: Handle potential errors
+    # TODO: see issue #6
     try:
         response = requests.get('http://localhost:11434/api/tags', timeout=0.3)
     except requests.exceptions.ConnectionError:

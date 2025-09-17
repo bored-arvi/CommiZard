@@ -75,7 +75,7 @@ def check_git_installed() -> bool:
     return shutil.which("git") != None
 
 
-# TODO: refactor for better error handling and better behavior overall
+# TODO: see issue #6
 def local_ai_available() -> bool:
     """
     Check if there's an ollama server running on port 11434
