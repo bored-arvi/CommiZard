@@ -3,7 +3,7 @@ from . import start
 from .output import *
 
 
-# TODO: see issue #2 and #3
+# TODO: see issues #2 and #3
 def main() -> None:
     """
     This is the entry point of the program. calls some functions at the start,
