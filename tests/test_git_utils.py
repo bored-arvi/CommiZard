@@ -70,3 +70,31 @@ def test_is_inside_working_tree(mock_run, mock_val, expected_result):
     res: bool = git_utils.is_inside_working_tree()
     mock_run.assert_called_once_with(["rev-parse", "--is-inside-work-tree"])
     assert res == expected_result
+
+
+@pytest.mark.parametrize(
+    "mock_val, expected",
+    [
+        # This shouldn't happen based on the code's structure of running
+        # is_inside_working_tree at start.
+        (subprocess.CompletedProcess(args=['git', 'diff', '--name-only'],
+                                     returncode=128, stdout='',
+                                     stderr='fatal: this operation must be run in a work tree\n'),
+         False),
+        (subprocess.CompletedProcess(args=['git', 'diff', '--name-only'],
+                                     returncode=0,
+                                     stdout='tests/test_git_utils.py\n',
+                                     stderr=''),
+         True),
+        (subprocess.CompletedProcess(args=['git', 'diff', '--name-only'],
+                                     returncode=0, stdout='', stderr=''),
+         False),
+    ]
+
+)
+@patch("commizard.git_utils.run_git_command")
+def test_is_changed(mock_run, mock_val, expected):
+    mock_run.return_value = mock_val
+    res = git_utils.is_changed()
+    mock_run.assert_called_once_with(["diff", "--name-only"])
+    assert res == expected
