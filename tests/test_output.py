@@ -4,16 +4,12 @@ from output import print_success, print_error, print_warning, \
     print_generated, wrap_text
 
 
-# We'll use capsys to capture stdout where rich prints its output.
-
-
 def test_print_success(capsys):
     print_success("All good")
     captured = capsys.readouterr()
-    # Rich wraps output with ANSI codes; check substring instead
+
     assert "All good" in captured.out
     assert "[green]" not in captured.out  # markup should be rendered
-    # ensure no stderr
     assert captured.err == ""
 
 
