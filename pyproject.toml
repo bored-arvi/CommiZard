@@ -39,3 +39,7 @@ commizard = "commizard.cli:main"
 
 [tool.hatch.version]
 path = "src/commizard/__init__.py"
+
+[tool.pytest.ini_options]
+pythonpath = "src"
+testpaths = "tests"

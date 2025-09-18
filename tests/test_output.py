@@ -1,6 +1,6 @@
 import pytest
 
-from output import print_success, print_error, print_warning, \
+from commizard.output import print_success, print_error, print_warning, \
     print_generated, wrap_text
 
 
