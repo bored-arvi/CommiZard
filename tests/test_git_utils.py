@@ -5,6 +5,7 @@ import pytest
 from commizard import git_utils
 
 
+# TODO: add valid test cases that mock actual returns or subprocess.run
 @pytest.mark.parametrize(
     "args, mock_result, raised_exception",
     [
