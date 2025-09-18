@@ -41,6 +41,14 @@ def test_print_generated(capsys):
         ("a long line that should wrap", 10,
          "a long\nline that\nshould\nwrap"),
         ("para1\n\npara2", 10, "para1\n\npara2"),
+        ("This is a simple sentence that should wrap neatly.", 10,
+         "This is a\nsimple\nsentence\nthat\nshould\nwrap\nneatly."),
+        ("First paragraph here with some text.\n\nSecond paragraph is also here.",
+         15,
+         "First paragraph\nhere with some\ntext.\n\nSecond\nparagraph is\nalso here."),
+        ("\n\nHello world\n\n", 5, "\n\nHello\nworld\n\n"),
+        ("Extraordinarilylongword", 5, "Extraordinarilylongword"),
+        ("", 10, ""),
     ],
 )
 def test_wrap_text(text, width, expected):
