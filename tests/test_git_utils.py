@@ -46,3 +46,27 @@ def test_run_git_command(mock_run, args, mock_result, raised_exception):
                                      text=True)
 
     assert result is mock_result
+
+
+@pytest.mark.parametrize(
+    "mock_val, expected_result",
+    [
+        (subprocess.CompletedProcess(
+            args=['git', 'rev-parse', '--is-inside-work-tree'],
+            returncode=128, stdout='',
+            stderr='fatal: not a git repository (or any of the parent directories): .git\n'),
+         False),
+        (subprocess.CompletedProcess(
+            args=['git', 'rev-parse', '--is-inside-work-tree'], returncode=0,
+            stdout='true\n', stderr=''), True),
+        (subprocess.CompletedProcess(
+            args=['git', 'rev-parse', '--is-inside-work-tree'], returncode=0,
+            stdout='false\n', stderr=''), False),
+    ]
+)
+@patch("commizard.git_utils.run_git_command")
+def test_is_inside_working_tree(mock_run, mock_val, expected_result):
+    mock_run.return_value = mock_val
+    res: bool = git_utils.is_inside_working_tree()
+    mock_run.assert_called_once_with(["rev-parse", "--is-inside-work-tree"])
+    assert res == expected_result
