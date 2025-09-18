@@ -38,7 +38,8 @@ def test_print_generated(capsys):
     "text,width,expected",
     [
         ("short line", 10, "short line"),
-        ("a long line that should wrap", 10, "a long line\nthat should\nwrap"),
+        ("a long line that should wrap", 10,
+         "a long\nline that\nshould\nwrap"),
         ("para1\n\npara2", 10, "para1\n\npara2"),
     ],
 )
