@@ -90,11 +90,35 @@ def test_is_inside_working_tree(mock_run, mock_val, expected_result):
                                      returncode=0, stdout='', stderr=''),
          False),
     ]
-
 )
 @patch("commizard.git_utils.run_git_command")
 def test_is_changed(mock_run, mock_val, expected):
     mock_run.return_value = mock_val
     res = git_utils.is_changed()
     mock_run.assert_called_once_with(["diff", "--name-only"])
+    assert res == expected
+
+
+@pytest.mark.parametrize(
+    "mock_val, expected",
+    [
+        (subprocess.CompletedProcess(args=['git', '--no-pager', 'diff'],
+                                     returncode=0, stdout='', stderr=''), ""),
+        (subprocess.CompletedProcess(args=['git', '--no-pager', 'diff'],
+                                     returncode=0,
+                                     stdout='test_out\n',
+                                     stderr=''), "test_out"),
+    ]
+)
+@patch("commizard.git_utils.run_git_command")
+def test_get_diff(mock_run, mock_val, expected):
+    mock_run.return_value = mock_val
+    res = git_utils.get_diff()
+
+    if expected == "":
+        mock_run.assert_called_once_with(["diff", "--name-only"])
+    else:
+        mock_run.assert_any_call(["diff", "--name-only"])
+        mock_run.assert_any_call(["--no-pager", "diff"])
+
     assert res == expected
