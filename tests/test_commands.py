@@ -75,23 +75,21 @@ def test_start_model(mock_init, mock_select, mock_error, monkeypatch,
 
 
 @pytest.mark.parametrize(
-    "available_models",
+    "available_models, opts",
     [
-        ([]),
-        (["gpt-1"]),
-        (["gpt-1", "gpt-2", "gpt-3"]),
+        ([], "-v"),
+        (["gpt-1"], "-q"),
+        (["gpt-1", "gpt-2", "gpt-3"], "--all-info"),
     ]
 )
 @patch("builtins.print")  # thanks chat-GPT. I never would've found this.
 @patch("commizard.llm_providers.init_model_list")
-def test_print_available_models(mock_init, mock_print, available_models,
+def test_print_available_models(mock_init, mock_print, available_models, opts,
                                 monkeypatch):
-    # make init_model_list behave realistically
     mock_init.side_effect = lambda: setattr(llm_providers, "available_models",
                                             available_models)
-    commands.print_available_models([])
+    commands.print_available_models(opts)
 
-    # ensure init_model_list is always called
     mock_init.assert_called_once()
 
     # assert prints match number of models
