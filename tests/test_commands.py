@@ -52,13 +52,14 @@ def test_start_model(mock_init, mock_select, mock_error, monkeypatch,
     # set available_models dynamically
     monkeypatch.setattr(llm_providers, "available_models", available_models)
 
+    # mock the behavior of mock_init
+    mock_init.side_effect = lambda x: monkeypatch.setattr(llm_providers,
+                                                          "available_models",
+                                                          ["grok", "GPT"])
     commands.start_model(opts)
 
     if expect_init:
         mock_init.assert_called_once()
-        # now we mock the behavior of mock_init (setting up available models to
-        # now not be None
-        monkeypatch.setattr(llm_providers, "available_models", ["grok", "GPT"])
     else:
         mock_init.assert_not_called()
 
