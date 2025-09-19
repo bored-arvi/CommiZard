@@ -72,3 +72,30 @@ def test_start_model(mock_init, mock_select, mock_error, monkeypatch,
         mock_select.assert_called_once_with(opts[0])
     else:
         mock_select.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    "available_models",
+    [
+        ([]),
+        (["gpt-1"]),
+        (["gpt-1", "gpt-2", "gpt-3"]),
+    ]
+)
+@patch("builtins.print")  # thanks chat-GPT. I never would've found this.
+@patch("commizard.llm_providers.init_model_list")
+def test_print_available_models(mock_init, mock_print, available_models,
+                                monkeypatch):
+    # make init_model_list behave realistically
+    mock_init.side_effect = lambda: setattr(llm_providers, "available_models",
+                                            available_models)
+    commands.print_available_models([])
+
+    # ensure init_model_list is always called
+    mock_init.assert_called_once()
+
+    # assert prints match number of models
+    assert mock_print.call_count == len(available_models)
+
+    for model in available_models:
+        mock_print.assert_any_call(model)
