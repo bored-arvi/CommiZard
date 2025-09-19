@@ -53,3 +53,32 @@ def test_gradient_text(text, start_color, end_color, expected_substrings):
         if char != "\n":
             assert "[#" in result
             assert f"]{char}" in result
+
+
+@pytest.mark.parametrize("color_system, expect_gradient", [
+    ("truecolor", True),
+    ("256", True),
+    ("windows", False),
+    (None, False),
+])
+def test_print_welcome(monkeypatch, capsys, color_system, expect_gradient):
+    # class to patch instead of rich.Console() class
+    class DummyConsole:
+        def __init__(self):
+            self.color_system = color_system
+
+        def print(self, msg):
+            print(msg)
+
+    monkeypatch.setattr(start, "Console", DummyConsole)
+
+    start.print_welcome()
+
+    # Hook to stdout
+    captured = capsys.readouterr().out
+
+    if expect_gradient:
+        assert "[#" in captured
+    else:
+        # Should contain fallback purple markup
+        assert "[bold purple]" in captured
