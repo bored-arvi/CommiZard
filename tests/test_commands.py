@@ -99,3 +99,18 @@ def test_print_available_models(mock_init, mock_print, available_models,
 
     for model in available_models:
         mock_print.assert_any_call(model)
+
+
+@pytest.mark.parametrize(
+    "opts",
+    [
+        [],  # no options
+        ["--dry-run"],  # single option
+        ["--foo", "--bar"],  # multiple options
+    ]
+)
+@patch("commizard.llm_providers.generate")
+def test_generate_message(mock_generate, opts):
+    commands.generate_message(opts)
+
+    mock_generate.assert_called_once_with()
