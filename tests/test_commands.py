@@ -102,9 +102,9 @@ def test_print_available_models(mock_init, mock_print, available_models, opts,
 @pytest.mark.parametrize(
     "opts",
     [
-        [],  # no options
-        ["--dry-run"],  # single option
-        ["--foo", "--bar"],  # multiple options
+        [],
+        ["--dry-run"],
+        ["--foo", "--bar"],
     ]
 )
 @patch("commizard.llm_providers.generate")
