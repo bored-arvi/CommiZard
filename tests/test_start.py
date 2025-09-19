@@ -1,3 +1,5 @@
+import shutil
+
 import pytest
 from commizard import start
 from rich.color import Color
@@ -82,3 +84,17 @@ def test_print_welcome(monkeypatch, capsys, color_system, expect_gradient):
     else:
         # Should contain fallback purple markup
         assert "[bold purple]" in captured
+
+
+@pytest.mark.parametrize("git_path, expected", [
+    ("/usr/bin/git", True),
+    ("C:\\Program Files\\Git\\cmd\\git.EXE", True),
+    (None, False),
+    ("some/other/path/maybe/in/macOS", True),
+])
+def test_check_git_installed(monkeypatch, git_path, expected):
+    # Monkeypatch shutil.which to simulate environment
+    monkeypatch.setattr(shutil, "which",
+                        lambda cmd: git_path if cmd == "git" else None)
+
+    assert start.check_git_installed() is expected
