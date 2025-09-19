@@ -51,4 +51,5 @@ def test_gradient_text(text, start_color, end_color, expected_substrings):
     # Check result structure: every char should be wrapped
     for char in text:
         if char != "\n":
+            assert "[#" in result
             assert f"]{char}" in result
