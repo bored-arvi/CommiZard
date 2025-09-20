@@ -124,11 +124,13 @@ def test_generate_message(mock_generate, opts):
         ("  commit                  arg1   arg2", ["arg1", "arg2"]),
     ]
 )
-@patch('commizard.commands.handle_commit_req')
+@patch("commizard.commands.handle_commit_req")
 def test_parser_commit(mock_func, user_input, expected_args):
-    result = commands.parser(user_input)
-    assert result == 0
-    mock_func.assert_called_once_with(expected_args)
+    with patch.dict("commizard.commands.supported_commands",
+                    {"commit": mock_func}):
+        result = commands.parser(user_input)
+        assert result == 0
+        mock_func.assert_called_once_with(expected_args)
 
 
 @pytest.mark.parametrize(
@@ -139,11 +141,13 @@ def test_parser_commit(mock_func, user_input, expected_args):
         ("help f'ed up input 😣  😬", ["f'ed", "up", "input", "😣", "😬"]),
     ]
 )
-@patch('commizard.commands.print_help')
+@patch("commizard.commands.print_help")
 def test_parser_help(mock_func, user_input, expected_args):
-    result = commands.parser(user_input)
-    assert result == 0
-    mock_func.assert_called_once_with(expected_args)
+    with patch.dict("commizard.commands.supported_commands",
+                    {"help": mock_func}):
+        result = commands.parser(user_input)
+        assert result == 0
+        mock_func.assert_called_once_with(expected_args)
 
 
 @pytest.mark.parametrize(
@@ -156,9 +160,11 @@ def test_parser_help(mock_func, user_input, expected_args):
 )
 @patch('commizard.commands.copy_command')
 def test_parser_cp(mock_func, user_input, expected_args):
-    result = commands.parser(user_input)
-    assert result == 0
-    mock_func.assert_called_once_with(expected_args)
+    with patch.dict("commizard.commands.supported_commands",
+                    {"cp": mock_func}):
+        result = commands.parser(user_input)
+        assert result == 0
+        mock_func.assert_called_once_with(expected_args)
 
 
 @pytest.mark.parametrize(
@@ -171,9 +177,11 @@ def test_parser_cp(mock_func, user_input, expected_args):
 )
 @patch('commizard.commands.start_model')
 def test_parser_start(mock_func, user_input, expected_args):
-    result = commands.parser(user_input)
-    assert result == 0
-    mock_func.assert_called_once_with(expected_args)
+    with patch.dict("commizard.commands.supported_commands",
+                    {"start": mock_func}):
+        result = commands.parser(user_input)
+        assert result == 0
+        mock_func.assert_called_once_with(expected_args)
 
 
 @pytest.mark.parametrize(
@@ -186,9 +194,11 @@ def test_parser_start(mock_func, user_input, expected_args):
 )
 @patch('commizard.commands.print_available_models')
 def test_parser_list(mock_func, user_input, expected_args):
-    result = commands.parser(user_input)
-    assert result == 0
-    mock_func.assert_called_once_with(expected_args)
+    with patch.dict("commizard.commands.supported_commands",
+                    {"list": mock_func}):
+        result = commands.parser(user_input)
+        assert result == 0
+        mock_func.assert_called_once_with(expected_args)
 
 
 @pytest.mark.parametrize(
@@ -202,9 +212,11 @@ def test_parser_list(mock_func, user_input, expected_args):
 )
 @patch('commizard.commands.generate_message')
 def test_parser_gen(mock_func, user_input, expected_args):
-    result = commands.parser(user_input)
-    assert result == 0
-    mock_func.assert_called_once_with(expected_args)
+    with patch.dict("commizard.commands.supported_commands",
+                    {"gen": mock_func, "generate": mock_func}):
+        result = commands.parser(user_input)
+        assert result == 0
+        mock_func.assert_called_once_with(expected_args)
 
 
 @pytest.mark.parametrize(
