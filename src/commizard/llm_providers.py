@@ -101,23 +101,15 @@ def list_locals() -> list[str]:
     return a list of available local AI models
     """
     # TODO: see issue #6
-    try:
-        response = requests.get('http://localhost:11434/api/tags', timeout=0.3)
-    except requests.exceptions.ConnectionError:
+    # TODO: see issue #10
+    url = "http://localhost:11434/api/tags"
+    out = http_request("GET", url, timeout=0.3)
+    if out.is_error():
         output.print_error(
             "failed to list available local AI models. Is ollama running?")
         return []
-
-    # Right now we assume that the response is OK:
-    response = response.json()
-    response = response["models"]
-    res = []
-
-    # TODO: see issue #10
-    for model in response:
-        res.append(model["name"])
-
-    return res
+    out = out.response["models"]
+    return [model["name"] for model in out]
 
 
 def select_model(select_str: str) -> None:
