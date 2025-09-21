@@ -53,6 +53,7 @@ class HttpResponse:
 
 
 def http_request(method: str, url: str, **kwargs) -> HttpResponse:
+    resp = None
     try:
         if method.upper() == "GET":
             r = requests.get(url, **kwargs)
@@ -70,19 +71,14 @@ def http_request(method: str, url: str, **kwargs) -> HttpResponse:
             resp = r.text
         ret_val = r.status_code
     except requests.ConnectionError:
-        resp = None
         ret_val = -1
     except requests.HTTPError:
-        resp = None
         ret_val = -2
     except requests.TooManyRedirects:
-        resp = None
         ret_val = -3
     except requests.Timeout:
-        resp = None
         ret_val = -4
     except requests.RequestException:
-        resp = None
         ret_val = -5
     return HttpResponse(resp, ret_val)
 
