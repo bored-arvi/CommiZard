@@ -147,7 +147,7 @@ def unload_model() -> None:
     url = "http://localhost:11434/api/generate"
     payload = {"model": selected_model, "keep_alive": 0}
     selected_model = None
-    r = requests.post(url, json=payload)
+    out = http_request("POST", url, json=payload)
 
 
 # TODO: see issues #11 and #15
