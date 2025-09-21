@@ -162,9 +162,9 @@ def generate() -> None:
         return
     payload = {"model": selected_model, "prompt": generation_prompt + diff,
                "stream": False}
-    r = requests.post(url, json=payload)
+    r = http_request("POST", url, json=payload)
 
-    r = output.wrap_text(r.json().get("response").strip(), 72)
+    r = output.wrap_text(r.response.get("response").strip(), 72)
 
     global gen_message
     gen_message = r
