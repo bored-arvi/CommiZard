@@ -30,6 +30,55 @@ Here is the diff:
 """
 
 
+class HttpResponse:
+
+    def __init__(self, response, return_code):
+        self.response = response
+        # if the value is less than zero, there's something wrong.
+        self.return_code = return_code
+
+    def is_error(self) -> bool:
+        return self.return_code < 0
+
+    def err_message(self) -> str:
+        pass
+
+
+def http_request(method: str, url: str, **kwargs) -> HttpResponse:
+    try:
+        if method.upper() == "GET":
+            r = requests.get(url, **kwargs)
+        elif method.upper() == "POST":
+            r = requests.post(url, **kwargs)
+
+        else:
+            if method.upper() in ("PUT", "DELETE", "PUT"):
+                raise NotImplementedError(f"{method} is not implemented.")
+            else:
+                raise ValueError(f"{method} is not a valid method.")
+        try:
+            resp = r.json()
+        except requests.exceptions.JSONDecodeError:
+            resp = r.text
+        ret_val = r.status_code
+    except requests.ConnectionError:
+        resp = None
+        ret_val = -1
+    except requests.HTTPError:
+        resp = None
+        ret_val = -2
+    except requests.TooManyRedirects:
+        resp = None
+        ret_val = -3
+    except requests.Timeout:
+        resp = None
+        ret_val = -4
+    except requests.RequestException:
+        resp = None
+        ret_val = -5
+    return HttpResponse(resp, ret_val)
+
+
 def init_model_list() -> None:
     """
     Initialize the list of available models inside the available_models global
