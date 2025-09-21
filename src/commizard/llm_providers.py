@@ -134,13 +134,20 @@ def load_model(model_name: str) -> dict:
     """
     print("Loading local model...")
     payload = {"model": selected_model}
-    try:
-        r = requests.post("http://localhost:11434/api/generate", json=payload)
-    except requests.exceptions.ConnectionError:
+    url = "http://localhost:11434/api/generate"
+    out = http_request("POST", url, json=payload)
+    if out.is_error():
         output.print_error(
-            f"Failed to connect to {model_name}. Is ollama running?")
+            f"Failed to load {model_name}. Is ollama running?")
         return {}
-    return r.json()
+    return out.response
+    # try:
+    #     r = requests.post("http://localhost:11434/api/generate", json=payload)
+    # except requests.exceptions.ConnectionError:
+    #     output.print_error(
+    #         f"Failed to connect to {model_name}. Is ollama running?")
+    #     return {}
+    # return r.json()
 
 
 def unload_model() -> None:
