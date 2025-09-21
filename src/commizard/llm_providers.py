@@ -41,7 +41,15 @@ class HttpResponse:
         return self.return_code < 0
 
     def err_message(self) -> str:
-        pass
+        if not self.is_error():
+            return ""
+        err_dict = {
+            -1: "can't connect to the server",
+            -2: "HTTP error occurred",
+            -3: "too many redirects",
+            -4: "the request timed out"
+        }
+        return err_dict[self.return_code]
 
 
 def http_request(method: str, url: str, **kwargs) -> HttpResponse:
