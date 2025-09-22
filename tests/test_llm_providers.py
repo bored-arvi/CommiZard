@@ -33,75 +33,65 @@ def test_http_response(response, return_code, expected_is_error,
 
 
 @pytest.mark.parametrize(
-    "method, url, target, side_effect, json_value, text_value, status_code,"
-    "expected_response, expected_code, expected_exception",
+    "method, return_value, side_effect, expected_response, expected_code, expected_exception",
     [
         # --- Success cases ---
-        # GET with JSON
-        ("GET", "http://test.com", "requests.get", None, {"key": "val"}, None,
-         200, {"key": "val"}, 200, None),
+        ("GET", {"json": {"key": "val"}, "status": 200}, None, {"key": "val"},
+         200, None),
 
-        # GET with text (json raises JSONDecodeError)
-        ("GET", "http://test.com", "requests.get", None,
-         requests.exceptions.JSONDecodeError("err", "doc", 0),
-         "plain text", 200, "plain text", 200, None),
+        ("GET", {"json": requests.exceptions.JSONDecodeError("err", "doc", 0),
+                 "text": "plain text", "status": 200}, None, "plain text", 200,
+         None),
 
-        # POST with JSON
-        ("POST", "http://test.com", "requests.post", None, {"ok": True}, None,
-         201, {"ok": True}, 201, None),
+        ("POST", {"json": {"ok": True}, "status": 201}, None, {"ok": True}, 201,
+         None),
+        ("GET", {"json": {"key": "val"}, "status": 503}, None, {"key": "val"},
+         503, None),
 
         # --- Error branches ---
-        ("GET", "http://test.com", "requests.get", requests.ConnectionError,
-         None, None, None, None, -1, None),
-        ("GET", "http://test.com", "requests.get", requests.HTTPError, None,
-         None, None, None, -2, None),
-        ("GET", "http://test.com", "requests.get", requests.TooManyRedirects,
-         None, None, None, None, -3, None),
-        ("GET", "http://test.com", "requests.get", requests.Timeout, None, None,
-         None, None, -4, None),
-        ("GET", "http://test.com", "requests.get", requests.RequestException,
-         None, None, None, None, -5, None),
+        ("GET", None, requests.ConnectionError, None, -1, None),
+        ("GET", None, requests.HTTPError, None, -2, None),
+        ("GET", None, requests.TooManyRedirects, None, -3, None),
+        ("GET", None, requests.Timeout, None, -4, None),
+        ("GET", None, requests.RequestException, None, -5, None),
 
         # --- Invalid methods ---
-        ("PUT", "http://test.com", None, None, None, None, None, None, None,
-         NotImplementedError),
-        ("FOO", "http://test.com", None, None, None, None, None, None, None,
-         ValueError),
+        ("PUT", None, None, None, None, NotImplementedError),
+        ("FOO", None, None, None, None, ValueError),
     ],
 )
 @patch("requests.get")
 @patch("requests.post")
-def test_http_request(
-        mock_post, mock_get,
-        method, url, target, side_effect, json_value, text_value, status_code,
-        expected_response, expected_code, expected_exception
-):
-    # select which mock to configure, if any
+def test_http_request(mock_post, mock_get, method, return_value, side_effect,
+                      expected_response, expected_code, expected_exception):
+    # pick which mock to configure
     mock_target = None
-    if target:
-        mock_target = mock_get if target.endswith("get") else mock_post
+    if method.upper() == "GET":
+        mock_target = mock_get
+    elif method.upper() == "POST":
+        mock_target = mock_post
 
     if mock_target:
         if side_effect:
             mock_target.side_effect = side_effect
         else:
             mock_resp = Mock()
-            mock_resp.status_code = status_code
-            if isinstance(json_value, Exception):
-                mock_resp.json.side_effect = json_value
+            mock_resp.status_code = return_value["status"]
+            if isinstance(return_value.get("json"), Exception):
+                mock_resp.json.side_effect = return_value["json"]
             else:
-                mock_resp.json.return_value = json_value
-            mock_resp.text = text_value
+                mock_resp.json.return_value = return_value.get("json")
+            mock_resp.text = return_value.get("text")
             mock_target.return_value = mock_resp
 
     if expected_exception:
         with pytest.raises(expected_exception):
-            llm.http_request(method, url)
+            llm.http_request(method, "http://test.com")
     else:
-        result = llm.http_request(method, url)
+        result = llm.http_request(method, "http://test.com")
         assert isinstance(result, llm.HttpResponse)
-        assert result.return_code == expected_code
         assert result.response == expected_response
+        assert result.return_code == expected_code
 
 
 @pytest.mark.parametrize(
