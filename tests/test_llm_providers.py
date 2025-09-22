@@ -33,7 +33,8 @@ def test_http_response(response, return_code, expected_is_error,
 
 
 @pytest.mark.parametrize(
-    "method, return_value, side_effect, expected_response, expected_code, expected_exception",
+    "method, return_value, side_effect, expected_response, expected_code,"
+    "expected_exception",
     [
         # --- Success cases ---
         ("GET", {"json": {"key": "val"}, "status": 200}, None, {"key": "val"},
