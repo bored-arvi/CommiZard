@@ -6,6 +6,10 @@ import requests
 from commizard import llm_providers as llm
 
 
+# TODO: implement test for: init_model_list, list_locals, select_model,
+#       load_model
+
+
 @pytest.mark.parametrize(
     "response, return_code, expected_is_error, expected_err_message",
     [
