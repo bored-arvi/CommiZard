@@ -71,6 +71,7 @@ def test_http_request(mock_post, mock_get, method, return_value, side_effect,
     elif method.upper() == "POST":
         mock_target = mock_post
 
+    # setup mock_target based on the return_value dict
     if mock_target:
         if side_effect:
             mock_target.side_effect = side_effect
