@@ -22,8 +22,8 @@ from commizard import llm_providers as llm
         ("", -4, True, "the request timed out"),
     ],
 )
-def test_http_response(response, return_code, expected_is_error,
-                       expected_err_message):
+def test_HttpResponse(response, return_code, expected_is_error,
+                      expected_err_message):
     http_resp = llm.HttpResponse(response, return_code)
 
     assert http_resp.response == response
