@@ -34,67 +34,74 @@ def test_http_response(response, return_code, expected_is_error,
 
 @pytest.mark.parametrize(
     "method, url, target, side_effect, json_value, text_value, status_code,"
-    "expected_response, expected_code",
+    "expected_response, expected_code, expected_exception",
     [
+        # --- Success cases ---
         # GET with JSON
         ("GET", "http://test.com", "requests.get", None, {"key": "val"}, None,
-         200, {"key": "val"}, 200),
+         200, {"key": "val"}, 200, None),
 
         # GET with text (json raises JSONDecodeError)
         ("GET", "http://test.com", "requests.get", None,
          requests.exceptions.JSONDecodeError("err", "doc", 0),
-         "plain text", 200, "plain text", 200),
+         "plain text", 200, "plain text", 200, None),
 
         # POST with JSON
         ("POST", "http://test.com", "requests.post", None, {"ok": True}, None,
-         201, {"ok": True}, 201),
+         201, {"ok": True}, 201, None),
 
-        # ConnectionError
+        # --- Error branches ---
         ("GET", "http://test.com", "requests.get", requests.ConnectionError,
-         None, None, None, None, -1),
-
-        # HTTPError
+         None, None, None, None, -1, None),
         ("GET", "http://test.com", "requests.get", requests.HTTPError, None,
-         None, None, None, -2),
-
-        # TooManyRedirects
+         None, None, None, -2, None),
         ("GET", "http://test.com", "requests.get", requests.TooManyRedirects,
-         None, None, None, None, -3),
-
-        # Timeout
+         None, None, None, None, -3, None),
         ("GET", "http://test.com", "requests.get", requests.Timeout, None, None,
-         None, None, -4),
-
-        # Generic RequestException
+         None, None, -4, None),
         ("GET", "http://test.com", "requests.get", requests.RequestException,
-         None, None, None, None, -5),
+         None, None, None, None, -5, None),
+
+        # --- Invalid methods ---
+        ("PUT", "http://test.com", None, None, None, None, None, None, None,
+         NotImplementedError),
+        ("FOO", "http://test.com", None, None, None, None, None, None, None,
+         ValueError),
     ],
 )
 @patch("requests.get")
 @patch("requests.post")
-def test_http_request(mock_post, mock_get, method, url, target, side_effect,
-                      json_value, text_value, status_code, expected_response,
-                      expected_code):
-    # pick the right mock to configure
-    mock_target = mock_get if target.endswith("get") else mock_post
+def test_http_request(
+        mock_post, mock_get,
+        method, url, target, side_effect, json_value, text_value, status_code,
+        expected_response, expected_code, expected_exception
+):
+    # select which mock to configure, if any
+    mock_target = None
+    if target:
+        mock_target = mock_get if target.endswith("get") else mock_post
 
-    if side_effect:
-        mock_target.side_effect = side_effect
-    else:
-        mock_resp = Mock()
-        mock_resp.status_code = status_code
-        if isinstance(json_value, Exception):
-            mock_resp.json.side_effect = json_value
+    if mock_target:
+        if side_effect:
+            mock_target.side_effect = side_effect
         else:
-            mock_resp.json.return_value = json_value
-        mock_resp.text = text_value
-        mock_target.return_value = mock_resp
+            mock_resp = Mock()
+            mock_resp.status_code = status_code
+            if isinstance(json_value, Exception):
+                mock_resp.json.side_effect = json_value
+            else:
+                mock_resp.json.return_value = json_value
+            mock_resp.text = text_value
+            mock_target.return_value = mock_resp
 
-    result = llm.http_request(method, url)
-
-    assert isinstance(result, llm.HttpResponse)
-    assert result.return_code == expected_code
-    assert result.response == expected_response
+    if expected_exception:
+        with pytest.raises(expected_exception):
+            llm.http_request(method, url)
+    else:
+        result = llm.http_request(method, url)
+        assert isinstance(result, llm.HttpResponse)
+        assert result.return_code == expected_code
+        assert result.response == expected_response
 
 
 @pytest.mark.parametrize(
