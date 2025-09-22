@@ -96,6 +96,21 @@ def test_http_request(mock_post, mock_get, method, return_value, side_effect,
         assert result.return_code == expected_code
 
 
+@patch("commizard.llm_providers.http_request")
+def test_unload_model(mock_http_request, monkeypatch):
+    # Patch the global variable
+    monkeypatch.setattr(llm, "selected_model", "mymodel")
+
+    # Act
+    llm.unload_model()
+
+    # Assert http_request called once with expected args
+    mock_http_request.assert_called_once_with(
+        "POST", "http://localhost:11434/api/generate", json={"model": "mymodel",
+                                                             "keep_alive": 0})
+    assert llm.selected_model is None
+
+
 @pytest.mark.parametrize(
     "select_str, load_val, should_print",
     [
