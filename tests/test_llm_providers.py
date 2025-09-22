@@ -112,6 +112,59 @@ def test_unload_model(mock_http_request, monkeypatch):
 
 
 @pytest.mark.parametrize(
+    "diff, expected_gen_message, expect_warning, expect_http",
+    [
+        ("", None, True, False),
+        ("diff --git a/file.txt b/file.txt", "Generated commit message", False,
+         True),
+    ],
+)
+@patch("commizard.output.print_generated")
+@patch("commizard.output.wrap_text")
+@patch("commizard.llm_providers.http_request")
+@patch("commizard.git_utils.get_diff")
+@patch("commizard.output.print_warning")
+def test_generate(mock_print_warning, mock_get_diff, mock_http_request,
+                  mock_wrap_text, mock_print_generated, monkeypatch,
+                  diff, expected_gen_message, expect_warning, expect_http):
+    monkeypatch.setattr(llm, "selected_model", "mymodel")
+    monkeypatch.setattr(llm, "gen_message", None)
+
+    mock_get_diff.return_value = diff
+    mock_wrap_text.return_value = expected_gen_message
+    # Configure http_request / wrap_text if HTTP is expected
+    if expect_http:
+        fake_response = Mock()
+        fake_response.response = {"response": " the sky is black, I'm retard\n"}
+        mock_http_request.return_value = fake_response
+
+    llm.generate()
+
+    # Assert warning
+    if expect_warning:
+        mock_print_warning.assert_called_once_with(
+            "No changes to the repository.")
+    else:
+        mock_print_warning.assert_not_called()
+
+    # Assert HTTP request
+    if expect_http:
+        mock_http_request.assert_called_once_with(
+            "POST", "http://localhost:11434/api/generate",
+            json={"model": "mymodel",
+                  "prompt": llm.generation_prompt + diff,
+                  "stream": False
+                  }
+        )
+        mock_wrap_text.assert_called_once()
+        mock_print_generated.assert_called_once_with(expected_gen_message)
+        assert llm.gen_message == expected_gen_message
+    else:
+        mock_http_request.assert_not_called()
+        assert llm.gen_message is None
+
+
+@pytest.mark.parametrize(
     "select_str, load_val, should_print",
     [
         ("modelA", {"done_reason": "load"}, True),
