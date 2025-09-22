@@ -6,7 +6,34 @@
 from unittest.mock import patch
 
 import pytest
+
 from commizard import llm_providers as llm
+
+
+@pytest.mark.parametrize(
+    "response, return_code, expected_is_error, expected_err_message",
+    [
+        # Non-error responses
+        ("ok", 200, False, ""),
+        ("created", 201, False, ""),
+        ("empty", 0, False, ""),
+        ({"reason": "not found"}, 404, False, ""),
+
+        # Error cases
+        ("404", -1, True, "can't connect to the server"),
+        ("success", -2, True, "HTTP error occurred"),
+        ({1: "found"}, -3, True, "too many redirects"),
+        ("", -4, True, "the request timed out"),
+    ],
+)
+def test_http_response(response, return_code, expected_is_error,
+                       expected_err_message):
+    http_resp = llm.HttpResponse(response, return_code)
+
+    assert http_resp.response == response
+    assert http_resp.return_code == return_code
+    assert http_resp.is_error() == expected_is_error
+    assert http_resp.err_message() == expected_err_message
 
 
 @pytest.mark.parametrize(
