@@ -30,6 +30,59 @@ Here is the diff:
 """
 
 
+class HttpResponse:
+
+    def __init__(self, response, return_code):
+        self.response = response
+        # if the value is less than zero, there's something wrong.
+        self.return_code = return_code
+
+    def is_error(self) -> bool:
+        return self.return_code < 0
+
+    def err_message(self) -> str:
+        if not self.is_error():
+            return ""
+        err_dict = {
+            -1: "can't connect to the server",
+            -2: "HTTP error occurred",
+            -3: "too many redirects",
+            -4: "the request timed out"
+        }
+        return err_dict[self.return_code]
+
+
+def http_request(method: str, url: str, **kwargs) -> HttpResponse:
+    resp = None
+    try:
+        if method.upper() == "GET":
+            r = requests.get(url, **kwargs)
+        elif method.upper() == "POST":
+            r = requests.post(url, **kwargs)
+
+        else:
+            if method.upper() in ("PUT", "DELETE", "PUT"):
+                raise NotImplementedError(f"{method} is not implemented.")
+            else:
+                raise ValueError(f"{method} is not a valid method.")
+        try:
+            resp = r.json()
+        except requests.exceptions.JSONDecodeError:
+            resp = r.text
+        ret_val = r.status_code
+    except requests.ConnectionError:
+        ret_val = -1
+    except requests.HTTPError:
+        ret_val = -2
+    except requests.TooManyRedirects:
+        ret_val = -3
+    except requests.Timeout:
+        ret_val = -4
+    except requests.RequestException:
+        ret_val = -5
+    return HttpResponse(resp, ret_val)
+
+
 def init_model_list() -> None:
     """
     Initialize the list of available models inside the available_models global
@@ -44,23 +97,15 @@ def list_locals() -> list[str]:
     return a list of available local AI models
     """
     # TODO: see issue #6
-    try:
-        response = requests.get('http://localhost:11434/api/tags', timeout=0.3)
-    except requests.exceptions.ConnectionError:
+    # TODO: see issue #10
+    url = "http://localhost:11434/api/tags"
+    r = http_request("GET", url, timeout=0.3)
+    if r.is_error():
         output.print_error(
             "failed to list available local AI models. Is ollama running?")
         return []
-
-    # Right now we assume that the response is OK:
-    response = response.json()
-    response = response["models"]
-    res = []
-
-    # TODO: see issue #10
-    for model in response:
-        res.append(model["name"])
-
-    return res
+    r = r.response["models"]
+    return [model["name"] for model in r]
 
 
 def select_model(select_str: str) -> None:
@@ -85,13 +130,13 @@ def load_model(model_name: str) -> dict:
     """
     print("Loading local model...")
     payload = {"model": selected_model}
-    try:
-        r = requests.post("http://localhost:11434/api/generate", json=payload)
-    except requests.exceptions.ConnectionError:
+    url = "http://localhost:11434/api/generate"
+    out = http_request("POST", url, json=payload)
+    if out.is_error():
         output.print_error(
-            f"Failed to connect to {model_name}. Is ollama running?")
+            f"Failed to load {model_name}. Is ollama running?")
         return {}
-    return r.json()
+    return out.response
 
 
 def unload_model() -> None:
@@ -102,7 +147,7 @@ def unload_model() -> None:
     url = "http://localhost:11434/api/generate"
     payload = {"model": selected_model, "keep_alive": 0}
     selected_model = None
-    r = requests.post(url, json=payload)
+    out = http_request("POST", url, json=payload)
 
 
 # TODO: see issues #11 and #15
@@ -117,9 +162,9 @@ def generate() -> None:
         return
     payload = {"model": selected_model, "prompt": generation_prompt + diff,
                "stream": False}
-    r = requests.post(url, json=payload)
+    r = http_request("POST", url, json=payload)
 
-    r = output.wrap_text(r.json().get("response").strip(), 72)
+    r = output.wrap_text(r.response.get("response").strip(), 72)
 
     global gen_message
     gen_message = r
