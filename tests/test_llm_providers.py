@@ -108,13 +108,9 @@ def test_init_model_list(mock_list, monkeypatch):
 
 @patch("commizard.llm_providers.http_request")
 def test_unload_model(mock_http_request, monkeypatch):
-    # Patch the global variable
     monkeypatch.setattr(llm, "selected_model", "mymodel")
-
-    # Act
     llm.unload_model()
-
-    # Assert http_request called once with expected args
+    # http_request called once with expected args
     mock_http_request.assert_called_once_with(
         "POST", "http://localhost:11434/api/generate", json={"model": "mymodel",
                                                              "keep_alive": 0})
