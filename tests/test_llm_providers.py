@@ -107,6 +107,32 @@ def test_init_model_list(mock_list, monkeypatch):
 
 
 @pytest.mark.parametrize(
+    "load_return, expect_success",
+    [
+        ({"done_reason": "load"}, True),
+        ({"done_reason": "other"}, False),
+    ],
+)
+@patch("commizard.output.print_success")
+@patch("commizard.llm_providers.load_model")
+def test_select_model(mock_load_model, mock_print_success, monkeypatch,
+                      load_return, expect_success):
+    monkeypatch.setattr(llm, "selected_model", None)
+    mock_load_model.return_value = load_return
+
+    llm.select_model("cool_model")
+
+    assert llm.selected_model == "cool_model"
+
+    mock_load_model.assert_called_once_with("cool_model")
+
+    if expect_success:
+        mock_print_success.assert_called_once_with("cool_model loaded.")
+    else:
+        mock_print_success.assert_not_called()
+
+
+@pytest.mark.parametrize(
     "is_error, response, expected_result, expect_error",
     [
         # http_request returns error
