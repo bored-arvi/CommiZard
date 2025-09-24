@@ -6,7 +6,7 @@ import requests
 from commizard import llm_providers as llm
 
 
-# TODO: implement test for: select_model, load_model
+# TODO: implement test for: load_model
 
 
 @pytest.mark.parametrize(
