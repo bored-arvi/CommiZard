@@ -39,11 +39,9 @@ def test_HttpResponse(response, return_code, expected_is_error,
         # --- Success cases ---
         ("GET", {"json": {"key": "val"}, "status": 200}, None, {"key": "val"},
          200, None),
-
         ("GET", {"json": requests.exceptions.JSONDecodeError("err", "doc", 0),
                  "text": "plain text", "status": 200}, None, "plain text", 200,
          None),
-
         ("POST", {"json": {"ok": True}, "status": 201}, None, {"ok": True}, 201,
          None),
         ("GET", {"json": {"key": "val"}, "status": 503}, None, {"key": "val"},
