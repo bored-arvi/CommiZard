@@ -103,6 +103,7 @@ def test_http_request(mock_post, mock_get, method, return_value, side_effect,
 @patch("commizard.llm_providers.list_locals")
 def test_init_model_list(mock_list, monkeypatch):
     monkeypatch.setattr(llm, "available_models", None)
+    llm.init_model_list()
     assert mock_list.assert_called_once()
 
 
