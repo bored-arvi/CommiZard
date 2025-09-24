@@ -6,9 +6,6 @@ import requests
 from commizard import llm_providers as llm
 
 
-# TODO: implement test for: load_model
-
-
 @pytest.mark.parametrize(
     "response, return_code, expected_is_error, expected_err_message",
     [
@@ -163,6 +160,35 @@ def test_list_locals(mock_http_request, mock_print_error,
     mock_http_request.assert_called_once_with("GET",
                                               "http://localhost:11434/api/tags",
                                               timeout=0.3)
+
+
+@pytest.mark.parametrize(
+    "is_error, response, expect_error, expected_result",
+    [
+        (True, None, True, {}),
+        (False, {"done_reason": "load"}, False, {"done_reason": "load"}),
+    ],
+)
+@patch("commizard.llm_providers.output.print_error")
+@patch("commizard.llm_providers.http_request")
+def test_load_model(mock_http_request, mock_print_error, monkeypatch, is_error,
+                    response, expect_error, expected_result):
+    fake_response = Mock()
+    fake_response.is_error.return_value = is_error
+    fake_response.response = response
+    mock_http_request.return_value = fake_response
+    monkeypatch.setattr(llm, "selected_model", "patched_model")
+    result = llm.load_model("test_model")
+
+    mock_http_request.assert_called_once_with("POST",
+                                              "http://localhost:11434/api/generate",
+                                              json={"model": "patched_model"})
+    if expect_error:
+        mock_print_error.assert_called_once_with(
+            "Failed to load test_model. Is ollama running?")
+    else:
+        mock_print_error.assert_not_called()
+    assert result == expected_result
 
 
 @patch("commizard.llm_providers.http_request")
