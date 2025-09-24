@@ -109,12 +109,12 @@ def test_init_model_list(mock_list, monkeypatch):
 @pytest.mark.parametrize(
     "is_error, response, expected_result, expect_error",
     [
-        # Case 1: http_request returns error
+        # http_request returns error
         (True, None, [], True),
-        # Case 2: http_request succeeds with models
+        # http_request succeeds with models
         (False, {"models": [{"name": "model1"}, {"name": "model2"}]},
          ["model1", "model2"], False),
-        # Case 3: http_request succeeds but no models
+        # http_request succeeds but no models
         (False, {"models": []}, [], False),
     ],
 )
