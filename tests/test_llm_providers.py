@@ -110,7 +110,7 @@ def test_init_model_list(mock_list, monkeypatch):
         ({"done_reason": "other"}, False),
     ],
 )
-@patch("commizard.output.print_success")
+@patch("commizard.llm_providers.output.print_success")
 @patch("commizard.llm_providers.load_model")
 def test_select_model(mock_load_model, mock_print_success, monkeypatch,
                       load_return, expect_success):
@@ -141,7 +141,7 @@ def test_select_model(mock_load_model, mock_print_success, monkeypatch,
         (False, {"models": []}, [], False),
     ],
 )
-@patch("commizard.output.print_error")
+@patch("commizard.llm_providers.output.print_error")
 @patch("commizard.llm_providers.http_request")
 def test_list_locals(mock_http_request, mock_print_error,
                      is_error, response, expected_result, expect_error):
@@ -195,7 +195,6 @@ def test_load_model(mock_http_request, mock_print_error, monkeypatch, is_error,
 def test_unload_model(mock_http_request, monkeypatch):
     monkeypatch.setattr(llm, "selected_model", "mymodel")
     llm.unload_model()
-    # http_request called once with expected args
     mock_http_request.assert_called_once_with(
         "POST", "http://localhost:11434/api/generate", json={"model": "mymodel",
                                                              "keep_alive": 0})
@@ -210,15 +209,15 @@ def test_unload_model(mock_http_request, monkeypatch):
          True),
     ],
 )
-@patch("commizard.output.print_generated")
-@patch("commizard.output.wrap_text")
+@patch("commizard.llm_providers.output.print_generated")
+@patch("commizard.llm_providers.output.wrap_text")
 @patch("commizard.llm_providers.http_request")
-@patch("commizard.git_utils.get_diff")
-@patch("commizard.output.print_warning")
+@patch("commizard.llm_providers.git_utils.get_diff")
+@patch("commizard.llm_providers.output.print_warning")
 def test_generate(mock_print_warning, mock_get_diff, mock_http_request,
                   mock_wrap_text, mock_print_generated, monkeypatch,
                   diff, expected_gen_message, expect_warning, expect_http):
-    monkeypatch.setattr(llm, "selected_model", "mymodel")
+    monkeypatch.setattr(llm, "selected_model", "my_model")
     monkeypatch.setattr(llm, "gen_message", None)
 
     mock_get_diff.return_value = diff
@@ -226,7 +225,7 @@ def test_generate(mock_print_warning, mock_get_diff, mock_http_request,
     # Configure http_request / wrap_text if HTTP is expected
     if expect_http:
         fake_response = Mock()
-        fake_response.response = {"response": " the sky is black, I'm retard\n"}
+        fake_response.response = {"response": " the sky is black, I'm dumb\n"}
         mock_http_request.return_value = fake_response
 
     llm.generate()
@@ -238,11 +237,10 @@ def test_generate(mock_print_warning, mock_get_diff, mock_http_request,
     else:
         mock_print_warning.assert_not_called()
 
-    # Assert HTTP request
     if expect_http:
         mock_http_request.assert_called_once_with(
             "POST", "http://localhost:11434/api/generate",
-            json={"model": "mymodel",
+            json={"model": "my_model",
                   "prompt": llm.generation_prompt + diff,
                   "stream": False
                   }
