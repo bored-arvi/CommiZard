@@ -106,6 +106,39 @@ def test_init_model_list(mock_list, monkeypatch):
     assert mock_list.assert_called_once()
 
 
+@pytest.mark.parametrize(
+    "is_error, response, expected_result, expect_error",
+    [
+        # Case 1: http_request returns error
+        (True, None, [], True),
+        # Case 2: http_request succeeds with models
+        (False, {"models": [{"name": "model1"}, {"name": "model2"}]},
+         ["model1", "model2"], False),
+        # Case 3: http_request succeeds but no models
+        (False, {"models": []}, [], False),
+    ],
+)
+@patch("commizard.output.print_error")
+@patch("commizard.llm_providers.http_request")
+def test_list_locals(mock_http_request, mock_print_error,
+                     is_error, response, expected_result, expect_error):
+    fake_response = Mock()
+    fake_response.is_error.return_value = is_error
+    fake_response.response = response
+    mock_http_request.return_value = fake_response
+
+    result = llm.list_locals()
+    assert result == expected_result
+    if expect_error:
+        mock_print_error.assert_called_once_with(
+            "failed to list available local AI models. Is ollama running?")
+    else:
+        mock_print_error.assert_not_called()
+    mock_http_request.assert_called_once_with("GET",
+                                              "http://localhost:11434/api/tags",
+                                              timeout=0.3)
+
+
 @patch("commizard.llm_providers.http_request")
 def test_unload_model(mock_http_request, monkeypatch):
     monkeypatch.setattr(llm, "selected_model", "mymodel")
