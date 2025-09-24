@@ -6,7 +6,7 @@ import requests
 from commizard import llm_providers as llm
 
 
-# TODO: implement test for: init_model_list, list_locals, select_model,
+# TODO: implement test for: list_locals, select_model,
 #       load_model
 
 
@@ -98,6 +98,12 @@ def test_http_request(mock_post, mock_get, method, return_value, side_effect,
         assert isinstance(result, llm.HttpResponse)
         assert result.response == expected_response
         assert result.return_code == expected_code
+
+
+@patch("commizard.llm_providers.list_locals")
+def test_init_model_list(mock_list, monkeypatch):
+    monkeypatch.setattr(llm, "available_models", None)
+    assert mock_list.assert_called_once()
 
 
 @patch("commizard.llm_providers.http_request")
