@@ -132,9 +132,11 @@ def test_select_model(mock_load_model, mock_print_success, monkeypatch,
     [
         # http_request returns error
         (True, None, [], True),
+
         # http_request succeeds with models
         (False, {"models": [{"name": "model1"}, {"name": "model2"}]},
          ["model1", "model2"], False),
+
         # http_request succeeds but no models
         (False, {"models": []}, [], False),
     ],
