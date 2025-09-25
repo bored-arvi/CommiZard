@@ -106,8 +106,11 @@ def test_check_git_installed(monkeypatch, git_path, expected):
     "ret_code, resp, expected",
     [
         (200, {"version": "something"}, True),
+        (200, {"version": "something", 123: 456, "another_key": "Owlama", 2: 5},
+         True),
         (404, {"error": "something"}, False),
         (200, {"version": 3.1415}, True),
+        (200, {"another_api_result": 3.1415}, False),
         (-5, {"version": "something"}, False),
         (-1, {"version": "something"}, False),
         (200, "not a dict", False),
