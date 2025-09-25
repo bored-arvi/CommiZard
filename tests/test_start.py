@@ -1,8 +1,10 @@
 import shutil
+from unittest.mock import patch
 
 import pytest
-from commizard import start
 from rich.color import Color
+
+from commizard import start
 
 
 @pytest.mark.parametrize(
@@ -98,3 +100,23 @@ def test_check_git_installed(monkeypatch, git_path, expected):
                         lambda cmd: git_path if cmd == "git" else None)
 
     assert start.check_git_installed() is expected
+
+
+@pytest.mark.parametrize(
+    "ret_code, resp, expected",
+    [
+        (200, {"version": "something"}, True),
+        (404, {"error": "something"}, False),
+        (200, {"version": 3.1415}, True),
+        (-5, {"version": "something"}, False),
+        (-1, {"version": "something"}, False),
+        (200, "not a dict", False),
+        (69420, 12345, False),
+    ]
+)
+@patch("commizard.start.llm_providers.http_request")
+def test_local_ai_available(mock_req, ret_code, resp, expected):
+    mock_req.return_value.return_code = ret_code
+    mock_req.return_value.response = resp
+    out = start.local_ai_available()
+    assert out == expected
