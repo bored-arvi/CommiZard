@@ -1,9 +1,9 @@
 import shutil
-import subprocess
 
 from rich.color import Color
 from rich.console import Console
 
+from . import git_utils
 from . import llm_providers
 
 text_banner = r"""
@@ -92,9 +92,4 @@ def is_inside_working_tree() -> bool:
     Check if we're inside a working directory (can execute commit and diff
     commands)
     """
-    out = subprocess.run(["git", "rev-parse", "--is-inside-work-tree"],
-                         capture_output=True, text=True)
-    if out.returncode == 0 and out.stdout.strip() == "true":
-        return True
-    else:
-        return False
+    return git_utils.is_inside_working_tree()
