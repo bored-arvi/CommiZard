@@ -9,14 +9,8 @@ def run_git_command(args: list[str]) -> subprocess.CompletedProcess:
         a CompletedProcess object
     """
     cmd = ['git'] + args
-    try:
-        res = subprocess.run(cmd, capture_output=True, text=True,
-                             encoding='utf-8')
-    except UnicodeDecodeError:
-        res = subprocess.run(cmd, capture_output=True, text=False)
-        res.stdout = res.stdout.decode('utf-8', errors='ignore')
-        res.stderr = res.stderr.decode('utf-8', errors='ignore')
-    return res
+    return subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8',
+                          errors='ignore')
 
 
 def is_inside_working_tree() -> bool:
