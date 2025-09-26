@@ -1,9 +1,10 @@
 import shutil
-import subprocess
 
-import requests
 from rich.color import Color
 from rich.console import Console
+
+from . import git_utils
+from . import llm_providers
 
 text_banner = r"""
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗██╗███████╗ █████╗ ██████╗ ██████╗
@@ -75,21 +76,15 @@ def check_git_installed() -> bool:
     return shutil.which("git") != None
 
 
-# TODO: see issue #6
 def local_ai_available() -> bool:
     """
-    Check if there's an ollama server running on port 11434
+    Check if there's an ollama server running.
     """
-    try:
-        # Very rare for servers to have this api, so let's test this.
-        response = requests.get("http://localhost:11434/api/version",
-                                timeout=0.3)
-        if response.status_code == 200:
-            return isinstance(response.json(),
-                              dict) and "version" in response.json()
-    except:
-        return False
-    return False
+    # Very rare for a server to run on this port AND have this api endpoint.
+    url = "http://localhost:11434/api/version"
+    r = llm_providers.http_request("get", url, timeout=0.3)
+    return ((r.return_code == 200) and (isinstance(r.response, dict)) and (
+                "version" in r.response))
 
 
 def is_inside_working_tree() -> bool:
@@ -97,9 +92,4 @@ def is_inside_working_tree() -> bool:
     Check if we're inside a working directory (can execute commit and diff
     commands)
     """
-    out = subprocess.run(["git", "rev-parse", "--is-inside-work-tree"],
-                         capture_output=True, text=True)
-    if out.returncode == 0 and out.stdout.strip() == "true":
-        return True
-    else:
-        return False
+    return git_utils.is_inside_working_tree()
