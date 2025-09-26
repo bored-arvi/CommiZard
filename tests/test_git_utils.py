@@ -43,7 +43,7 @@ def test_run_git_command(mock_run, args, mock_result, raised_exception):
 
     # was subprocess.run called with correct arguments
     mock_run.assert_called_once_with(["git"] + args, capture_output=True,
-                                     text=True)
+                                     text=True, encoding='utf-8')
 
     assert result is mock_result
 
