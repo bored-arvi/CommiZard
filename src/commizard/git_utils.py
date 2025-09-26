@@ -40,7 +40,7 @@ def get_diff() -> str:
     if not is_changed():
         return ""
 
-    out = run_git_command(["--no-pager", "diff"])
+    out = run_git_command(["--no-pager", "diff", "--no-color"])
 
     if out.returncode == 0:
         return out.stdout.strip()
