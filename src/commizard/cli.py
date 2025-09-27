@@ -1,10 +1,20 @@
 import sys
 
-from commizard import __version__ as version
-
+from . import __version__ as version
 from . import commands
 from . import start
 from .output import *
+
+help_msg = """
+Commit writing wizard
+
+Usage:
+  commizard [-v | --version] [-h | --help]
+
+Options:
+  -h, --help       Show help for commizard
+  -v, --version    Show version information
+"""
 
 
 def handle_args():
@@ -12,6 +22,9 @@ def handle_args():
         return
     if sys.argv[1] in ("-v", "--version"):
         print(f"CommiZard {version}")
+        sys.exit(0)
+    elif sys.argv[1] in ("-h", "--help"):
+        print(help_msg.strip(), end="\n")
         sys.exit(0)
 
 
