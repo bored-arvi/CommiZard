@@ -1,7 +1,6 @@
 import subprocess
 
 
-# fixme: see issue #9
 def run_git_command(args: list[str]) -> subprocess.CompletedProcess:
     """
     Run a git command with the given args.
@@ -10,7 +9,8 @@ def run_git_command(args: list[str]) -> subprocess.CompletedProcess:
         a CompletedProcess object
     """
     cmd = ['git'] + args
-    return subprocess.run(cmd, capture_output=True, text=True)
+    return subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8',
+                          errors='ignore')
 
 
 def is_inside_working_tree() -> bool:
@@ -40,7 +40,7 @@ def get_diff() -> str:
     if not is_changed():
         return ""
 
-    out = run_git_command(["--no-pager", "diff"])
+    out = run_git_command(["--no-pager", "diff", "--no-color"])
 
     if out.returncode == 0:
         return out.stdout.strip()

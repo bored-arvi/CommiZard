@@ -43,7 +43,8 @@ def test_run_git_command(mock_run, args, mock_result, raised_exception):
 
     # was subprocess.run called with correct arguments
     mock_run.assert_called_once_with(["git"] + args, capture_output=True,
-                                     text=True)
+                                     text=True, encoding='utf-8',
+                                     errors='ignore')
 
     assert result is mock_result
 
@@ -119,6 +120,6 @@ def test_get_diff(mock_run, mock_val, expected):
         mock_run.assert_called_once_with(["diff", "--name-only"])
     else:
         mock_run.assert_any_call(["diff", "--name-only"])
-        mock_run.assert_any_call(["--no-pager", "diff"])
+        mock_run.assert_any_call(["--no-pager", "diff", "--no-color"])
 
     assert res == expected
