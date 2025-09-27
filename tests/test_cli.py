@@ -5,6 +5,35 @@ from commizard import cli
 
 
 @pytest.mark.parametrize(
+    "argv,expected_print,expect_exit",
+    [
+        (["prog"], "", False),
+        (["prog", "-v"], f"CommiZard {cli.version}\n", True),
+        (["prog", "--version"], f"CommiZard {cli.version}\n", True),
+        (["prog", "--version", "ignored"], f"CommiZard {cli.version}\n", True),
+        (["prog", "-h"], cli.help_msg.strip() + "\n", True),
+        (["prog", "--help"], cli.help_msg.strip() + "\n", True),
+        (["prog", "not", "recognized"], "", False),
+    ],
+)
+@patch("commizard.cli.sys.exit")
+def test_handle_args(mock_exit, argv, expected_print, expect_exit, capsys,
+                     monkeypatch):
+    monkeypatch.setattr(cli.sys, "argv", argv)
+
+    cli.handle_args()
+
+    captured = capsys.readouterr()
+    assert captured.out == expected_print
+    assert captured.err == ""
+
+    if expect_exit:
+        mock_exit.assert_called_once_with(0)
+    else:
+        mock_exit.assert_not_called()
+
+
+@pytest.mark.parametrize(
     "git_installed, local_ai_avail, inside_work_tree, user_inputs, num_parse",
     [
         (False, True, True, [""], 0),
