@@ -1,45 +1,22 @@
-import subprocess
-
 import pyperclip
 
 from . import llm_providers
 from . import output
+from .git_utils import commit
 
 
-# TODO: see issue #4
-def handle_commit_req(opts: list) -> int:
+def handle_commit_req(opts: list) -> None:
     """
-    commits the generated prompt according to options:
-        If none specified, commits both the Title and the Body
-        If passed body or title like : commit body, or: commit title,
-        only commits the parts specified.
-
-    Args:
-        opts: a list of options following the commit command passed to the cli.
-
-    Returns:
-        a status code: 0 for success, 1 for failure, 2 for incorrect
-        prompt input.
+    commits the generated prompt. prints an error message if commiting fails
     """
-    if opts == []:
-        out = subprocess.run(
-            ["git", "commit", "-a", "-m", gen_head, "-m", gen_body],
-            capture_output=True)
-    elif opts[0] in ("-h", "--help"):
-        # TODO: Do something for the helps. This will get super bad super quick
-        print("""options:\n
-        The commit command will commit both the title and the body by default.\n
-        head | title: Just commit the head, ignore the body.\n
-        body: Commit the body without the head""")
-    elif opts[0] in ("head", "title"):
-        out = subprocess.run(
-            ["git", "commit", "-a", "-m", gen_head], capture_output=True)
-    elif opts[0] == "body":
-        out = subprocess.run(
-            ["git", "commit", "-a", "-m", gen_body], capture_output=True)
+    if llm_providers.gen_message == None or llm_providers.gen_message == "":
+        output.print_warning("No commit message detected. Skipping.")
+        return
+    out, msg = commit(llm_providers.gen_message)
+    if out == 0:
+        output.print_success(msg)
     else:
-        output.print_error(f"Error: {opts[0]} is not a valid commit command.")
-        return 2
+        output.print_warning(msg)
 
 
 # TODO: implement
