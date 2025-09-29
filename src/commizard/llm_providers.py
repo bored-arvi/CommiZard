@@ -5,9 +5,6 @@ from . import output
 
 available_models = None
 selected_model = None
-
-gen_head = ""
-gen_body = ""
 gen_message = None
 
 # Ironically enough, I've used Chat-GPT to write a prompt to prompt other
