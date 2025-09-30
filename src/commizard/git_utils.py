@@ -44,3 +44,14 @@ def get_diff() -> str:
 
     if out.returncode == 0:
         return out.stdout.strip()
+
+
+def commit(msg: str) -> tuple[int, str]:
+    """
+    commit with msg as the commit text.
+    Returns:
+        the return value from running the commit command, stdout, and stderr
+    """
+    out = run_git_command(["commit", "-a", "-m", msg])
+    ret = out.stdout.strip() if out.stdout.strip() != "" else out.stderr.strip()
+    return out.returncode, ret

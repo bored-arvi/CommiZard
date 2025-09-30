@@ -123,3 +123,26 @@ def test_get_diff(mock_run, mock_val, expected):
         mock_run.assert_any_call(["--no-pager", "diff", "--no-color"])
 
     assert res == expected
+
+
+@pytest.mark.parametrize(
+    "stdout, stderr, expected_ret",
+    [
+        ("Commit successful\n", "", "Commit successful"),
+        ("   \n", "Some error\n", "Some error"),
+        ("   \n", "   \n", ""),
+    ],
+)
+@patch("commizard.git_utils.run_git_command")
+def test_commit(mock_run_git_command, stdout, stderr, expected_ret):
+    # arrange: directly configure the mock return value
+    mock_run_git_command.return_value.stdout = stdout
+    mock_run_git_command.return_value.stderr = stderr
+    mock_run_git_command.return_value.returncode = 42
+
+    code, output = git_utils.commit("test message")
+
+    mock_run_git_command.assert_called_once_with(
+        ["commit", "-a", "-m", "test message"])
+    assert code == 42
+    assert output == expected_ret
