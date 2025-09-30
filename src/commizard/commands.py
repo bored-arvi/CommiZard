@@ -5,7 +5,7 @@ from . import output
 from .git_utils import commit
 
 
-def handle_commit_req(opts: list) -> None:
+def handle_commit_req(opts: list[str]) -> None:
     """
     commits the generated prompt. prints an error message if commiting fails
     """
@@ -20,7 +20,7 @@ def handle_commit_req(opts: list) -> None:
 
 
 # TODO: implement
-def print_help(opts: list) -> None:
+def print_help(opts: list[str]) -> None:
     """
     prints a list of all commands and a brief description
 
@@ -33,7 +33,7 @@ def print_help(opts: list) -> None:
     pass
 
 
-def copy_command(opts: list) -> None:
+def copy_command(opts: list[str]) -> None:
     """
     copies the generated prompt to clipboard according to options passed.
 
@@ -69,7 +69,7 @@ def start_model(opts: list[str]) -> None:
     llm_providers.select_model(model_name)
 
 
-def print_available_models(opts: list) -> None:
+def print_available_models(opts: list[str]) -> None:
     """
     prints the available models according to options passed.
     """
@@ -78,7 +78,7 @@ def print_available_models(opts: list) -> None:
         print(model)
 
 
-def generate_message(opts: list) -> None:
+def generate_message(opts: list[str]) -> None:
     """
     generate and print a commit message
     """
