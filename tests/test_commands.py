@@ -4,6 +4,37 @@ import pytest
 from commizard import commands, llm_providers
 
 
+@pytest.mark.parametrize(
+    "gen_message, commit_ret, expected_func, expected_arg",
+    [
+        (None, None, "print_warning", "No commit message detected. Skipping."),
+        ("", None, "print_warning", "No commit message detected. Skipping."),
+        ("Generated msg", (0, "Commit success"), "print_success",
+         "Commit success"),
+        ("Generated msg", (1, "Commit failed"), "print_warning",
+         "Commit failed"),
+    ],
+)
+@patch("commizard.commands.output.print_warning")
+@patch("commizard.commands.output.print_success")
+@patch("commizard.commands.commit")
+def test_handle_commit_req(mock_commit, mock_print_success, mock_print_warning,
+                           gen_message, commit_ret, expected_func, expected_arg,
+                           monkeypatch):
+    monkeypatch.setattr(llm_providers, "gen_message", gen_message)
+    if commit_ret is not None:
+        mock_commit.return_value = commit_ret
+
+    commands.handle_commit_req([])
+
+    if expected_func == "print_success":
+        mock_print_success.assert_called_once_with(expected_arg)
+        mock_print_warning.assert_not_called()
+    else:
+        mock_print_warning.assert_called_once_with(expected_arg)
+        mock_print_success.assert_not_called()
+
+
 @pytest.mark.parametrize("gen_message, opts, expect_warning", [
     # No message. warning only
     (None, [], True),
