@@ -9,7 +9,7 @@ def handle_commit_req(opts: list) -> None:
     """
     commits the generated prompt. prints an error message if commiting fails
     """
-    if llm_providers.gen_message == None or llm_providers.gen_message == "":
+    if llm_providers.gen_message is None or llm_providers.gen_message == "":
         output.print_warning("No commit message detected. Skipping.")
         return
     out, msg = commit(llm_providers.gen_message)
