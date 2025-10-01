@@ -55,3 +55,15 @@ def commit(msg: str) -> tuple[int, str]:
     out = run_git_command(["commit", "-a", "-m", msg])
     ret = out.stdout.strip() if out.stdout.strip() != "" else out.stderr.strip()
     return out.returncode, ret
+
+
+def clean_diff(diff: str) -> str:
+    """
+    Remove unnecessary information from the diff.
+    """
+    lines = diff.splitlines()
+    for line in lines[:]:
+        if (line.startswith("diff --git") or line.startswith("index ") or
+                line.startswith("warning:")):
+            lines.remove(line)
+    return "\n".join(lines)
