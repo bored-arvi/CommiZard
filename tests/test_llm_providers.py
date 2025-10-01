@@ -2,7 +2,6 @@ from unittest.mock import patch, Mock
 
 import pytest
 import requests
-
 from commizard import llm_providers as llm
 
 
@@ -212,7 +211,7 @@ def test_unload_model(mock_http_request, monkeypatch):
 @patch("commizard.llm_providers.output.print_generated")
 @patch("commizard.llm_providers.output.wrap_text")
 @patch("commizard.llm_providers.http_request")
-@patch("commizard.llm_providers.git_utils.get_diff")
+@patch("commizard.llm_providers.git_utils.get_clean_diff")
 @patch("commizard.llm_providers.output.print_warning")
 def test_generate(mock_print_warning, mock_get_diff, mock_http_request,
                   mock_wrap_text, mock_print_generated, monkeypatch,

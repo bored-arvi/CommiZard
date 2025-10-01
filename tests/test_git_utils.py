@@ -146,3 +146,31 @@ def test_commit(mock_run_git_command, stdout, stderr, expected_ret):
         ["commit", "-a", "-m", "test message"])
     assert code == 42
     assert output == expected_ret
+
+
+@pytest.mark.parametrize(
+    "input_diff, expected_output",
+    [
+        (
+                "diff --git a/file.py b/file.py\nindex abc..def\n+added line\n"
+                "-removed line",
+                "+added line\n-removed line"
+        ),
+        (
+                "+added line\n-removed line",
+                "+added line\n-removed line"
+        ),
+        (
+                "",
+                ""
+        ),
+        (
+                "diff --git a/file.py b/file.py\nindex abc..def\n"
+                "warning: something",
+                ""
+        ),
+    ]
+)
+def test_clean_diff(input_diff, expected_output):
+    result = git_utils.clean_diff(input_diff)
+    assert result == expected_output
