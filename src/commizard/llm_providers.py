@@ -152,7 +152,7 @@ def generate() -> None:
     generate commit message
     """
     url = "http://localhost:11434/api/generate"
-    diff = git_utils.get_diff()
+    diff = git_utils.get_clean_diff()
     if diff == "":
         output.print_warning("No changes to the repository.")
         return
