@@ -57,9 +57,7 @@ def start_model(opts: list[str]) -> None:
     if llm_providers.available_models is None:
         llm_providers.init_model_list()
 
-    # TODO: we can get partial name of the model. For example, the user writes:
-    #       start codellama instead of: start codellama:7b-instruct . implement
-    #       that
+    # TODO: see issue #42
 
     model_name = opts[0]
 
