@@ -67,3 +67,10 @@ def clean_diff(diff: str) -> str:
                 line.startswith("warning:")):
             lines.remove(line)
     return "\n".join(lines)
+
+
+def get_clean_diff() -> str:
+    """
+    Get the current git diff, sanitized for LLM consumption.
+    """
+    return clean_diff(get_diff())
