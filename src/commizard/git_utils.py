@@ -35,7 +35,7 @@ def get_diff() -> str:
     Get the diff from the current working directory.
 
     Returns:
-        the diff as a string
+        the diff as a string (raw Git output)
     """
     if not is_changed():
         return ""
