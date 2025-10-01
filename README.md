@@ -3,30 +3,30 @@
 <div align="center">
 
 ![CommiZard's banner](https://github.com/user-attachments/assets/851536f3-49a0-42a9-961d-20d975595d04)
-[![Python version](https://img.shields.io/badge/python-3.9+-blue.svg?logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOmNjPSJodHRwOi8vd2ViLnJlc291cmNlLm9yZy9jYy8iIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIgeG1sbnM6c3ZnPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSIxMTBweCIgaGVpZ2h0PSIxMTBweCIgdmlld0JveD0iMC4yMSAtMC4wNzcgMTEwIDExMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwLjIxIC0wLjA3NyAxMTAgMTEwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzFfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjYzLjgxNTkiIHkxPSI1Ni42ODI5IiB4Mj0iMTE4LjQ5MzQiIHkyPSIxLjgyMjUiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoMSAwIDAgLTEgLTUzLjI5NzQgNjYuNDMyMSkiPiA8c3RvcCBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOiMzODdFQjgiLz4gPHN0b3Agb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojMzY2OTk0Ii8+PC9saW5lYXJHcmFkaWVudD48cGF0aCBmaWxsPSJ1cmwoI1NWR0lEXzFfKSIgZD0iTTU1LjAyMy0wLjA3N2MtMjUuOTcxLDAtMjYuMjUsMTAuMDgxLTI2LjI1LDEyLjE1NmMwLDMuMTQ4LDAsMTIuNTk0LDAsMTIuNTk0aDI2Ljc1djMuNzgxIGMwLDAtMjcuODUyLDAtMzcuMzc1LDBjLTcuOTQ5LDAtMTcuOTM4LDQuODMzLTE3LjkzOCwyNi4yNWMwLDE5LjY3Myw3Ljc5MiwyNy4yODEsMTUuNjU2LDI3LjI4MWMyLjMzNSwwLDkuMzQ0LDAsOS4zNDQsMCBzMC05Ljc2NSwwLTEzLjEyNWMwLTUuNDkxLDIuNzIxLTE1LjY1NiwxNS40MDYtMTUuNjU2YzE1LjkxLDAsMTkuOTcxLDAsMjYuNTMxLDBjMy45MDIsMCwxNC45MDYtMS42OTYsMTQuOTA2LTE0LjQwNiBjMC0xMy40NTIsMC0xNy44OSwwLTI0LjIxOUM4Mi4wNTQsMTEuNDI2LDgxLjUxNS0wLjA3Nyw1NS4wMjMtMC4wNzd6IE00MC4yNzMsOC4zOTJjMi42NjIsMCw0LjgxMywyLjE1LDQuODEzLDQuODEzIGMwLDIuNjYxLTIuMTUxLDQuODEzLTQuODEzLDQuODEzcy00LjgxMy0yLjE1MS00LjgxMy00LjgxM0MzNS40NiwxMC41NDIsMzcuNjExLDguMzkyLDQwLjI3Myw4LjM5MnoiLz48bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzJfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9Ijk3LjA0NDQiIHkxPSIyMS42MzIxIiB4Mj0iMTU1LjY2NjUiIHkyPSItMzQuNTMwOCIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgxIDAgMCAtMSAtNTMuMjk3NCA2Ni40MzIxKSI+IDxzdG9wIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRTA1MiIvPiA8c3RvcCBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkMzMzEiLz48L2xpbmVhckdyYWRpZW50PjxwYXRoIGZpbGw9InVybCgjU1ZHSURfMl8pIiBkPSJNNTUuMzk3LDEwOS45MjNjMjUuOTU5LDAsMjYuMjgyLTEwLjI3MSwyNi4yODItMTIuMTU2YzAtMy4xNDgsMC0xMi41OTQsMC0xMi41OTRINTQuODk3di0zLjc4MSBjMCwwLDI4LjAzMiwwLDM3LjM3NSwwYzguMDA5LDAsMTcuOTM4LTQuOTU0LDE3LjkzOC0yNi4yNWMwLTIzLjMyMi0xMC41MzgtMjcuMjgxLTE1LjY1Ni0yNy4yODFjLTIuMzM2LDAtOS4zNDQsMC05LjM0NCwwIHMwLDEwLjIxNiwwLDEzLjEyNWMwLDUuNDkxLTIuNjMxLDE1LjY1Ni0xNS40MDYsMTUuNjU2Yy0xNS45MSwwLTE5LjQ3NiwwLTI2LjUzMiwwYy0zLjg5MiwwLTE0LjkwNiwxLjg5Ni0xNC45MDYsMTQuNDA2IGMwLDE0LjQ3NSwwLDE4LjI2NSwwLDI0LjIxOUMyOC4zNjYsMTAwLjQ5NywzMS41NjIsMTA5LjkyMyw1NS4zOTcsMTA5LjkyM3ogTTcwLjE0OCwxMDEuNDU0Yy0yLjY2MiwwLTQuODEzLTIuMTUxLTQuODEzLTQuODEzIHMyLjE1LTQuODEzLDQuODEzLTQuODEzYzIuNjYxLDAsNC44MTMsMi4xNTEsNC44MTMsNC44MTNTNzIuODA5LDEwMS40NTQsNzAuMTQ4LDEwMS40NTR6Ii8+PC9zdmc+)](https://www.python.org/downloads/)
+[![Python version](https://img.shields.io/badge/python-3.9+-blue.svg?logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDMyIDMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImEiIHgxPSItMTMzLjI2OCIgeTE9Ii0yMDIuOTEiIHgyPSItMTMzLjE5OCIgeTI9Ii0yMDIuODQiIGdyYWRpZW50VHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjUyNDMuMDYxIDM4NTE5LjE3KSBzY2FsZSgxODkuMzggMTg5LjgxKSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzM4N2ViOCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzM2Njk5NCIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiIiB4MT0iLTEzMy41NzUiIHkxPSItMjAzLjIwMyIgeDI9Ii0xMzMuNDk1IiB5Mj0iLTIwMy4xMzMiIGdyYWRpZW50VHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjUzMDkuMDYxIDM4NTgzLjQyKSBzY2FsZSgxODkuMzggMTg5LjgxKSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2ZmZTA1MiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmYzMzMSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjx0aXRsZT5maWxlX3R5cGVfcHl0aG9uPC90aXRsZT48cGF0aCBkPSJNMTUuODg1LDIuMWMtNy4xLDAtNi42NTEsMy4wNy02LjY1MSwzLjA3VjguMzZoNi43NTJ2MUg2LjU0NVMyLDguOCwyLDE2LjAwNXM0LjAxMyw2LjkxMiw0LjAxMyw2LjkxMkg4LjMzVjE5LjU1NnMtLjEzLTQuMDEzLDMuOS00LjAxM2g2Ljc2MnMzLjc3Mi4wNiwzLjc3Mi0zLjY1MlY1LjhzLjU3Mi0zLjcxMi02Ljg0Mi0zLjcxMmgwWk0xMi4xNTMsNC4yMzdhMS4yMTQsMS4yMTQsMCwxLDEtMS4xODMsMS4yNDR2LS4wMmExLjIxNCwxLjIxNCwwLDAsMSwxLjIxNC0xLjIxNGgwWiIgc3R5bGU9ImZpbGw6dXJsKCNhKSIvPjxwYXRoIGQ9Ik0xNi4wODUsMjkuOTFjNy4xLDAsNi42NTEtMy4wOCw2LjY1MS0zLjA4VjIzLjY1SDE1Ljk4NXYtMWg5LjQ3UzMwLDIzLjE1OCwzMCwxNS45OTVzLTQuMDEzLTYuOTEyLTQuMDEzLTYuOTEySDIzLjY0VjEyLjRzLjEzLDQuMDEzLTMuOSw0LjAxM0gxMi45NzVTOS4yLDE2LjM1Niw5LjIsMjAuMDY4VjI2LjJzLS41NzIsMy43MTIsNi44NDIsMy43MTJoLjA0Wm0zLjczMi0yLjE0N0ExLjIxNCwxLjIxNCwwLDEsMSwyMSwyNi41MTl2LjAzYTEuMjE0LDEuMjE0LDAsMCwxLTEuMjE0LDEuMjE0aC4wM1oiIHN0eWxlPSJmaWxsOnVybCgjYikiLz48L3N2Zz4=)](https://www.python.org/downloads/)
 [![GitHub License](https://img.shields.io/github/license/Chungzter/Commizard?logo=data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwMjQiIHdpZHRoPSIxMDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGQ9Ik01MTQgMTkyYzM0LTEgNjEtMjggNjItNjIgMS0zNy0yOS02Ny02Ni02Ni0zNCAxLTYxIDI4LTYyIDYyLTEgMzcgMjkgNjcgNjYgNjZ6IG00NjQgMzg0aC0xOGwtMTI3LTI0NmMxOC0yIDM2LTkgNTItMTYgMjQtMTEgMjktNDMgMTEtNjJsLTEtMWMtMTEtMTEtMjgtMTUtNDMtOC0xNCA2LTM0IDEzLTUzIDEzLTU2IDAtODEtNjQtMjg3LTY0cy0yMzEgNjQtMjg3IDY0Yy0yMCAwLTM5LTYtNTMtMTMtMTUtNi0zMi0zLTQzIDhsLTEgMWMtMTggMTktMTMgNTAgMTEgNjIgMTYgOCAzNCAxNCA1MiAxNmwtMTI3IDI0NmgtMThjLTggMC0xNCA3LTEzIDE1IDExIDY0IDkyIDExMyAxOTEgMTEzczE4MC00OSAxOTEtMTEzYzEtOC01LTE1LTEzLTE1aC0xOGwtMTI3LTI0NWM4My03IDEyNy00OSAxOTEtNDl2NDg2Yy0zNSAwLTY0IDI5LTY0IDY0aC03MWMtMjggMC01NyAyOS01NyA2NGg1MTJjMC0zNS0yOS02NC03MS02NGgtNTdjMC0zNS0yOS02NC02NC02NHYtNDg2YzY0IDAgMTA4IDQyIDE5MSA0OWwtMTI3IDI0NWgtMThjLTggMC0xNCA3LTEzIDE1IDExIDY0IDkyIDExMyAxOTEgMTEzczE4MC00OSAxOTEtMTEzYzEtOC01LTE1LTEzLTE1eiBtLTY1OCAwaC0xOTJsOTYtMTgwIDk2IDE4MHogbTM4NCAwbDk2LTE4MCA5NiAxODBoLTE5MnoiIGZpbGw9IiNlMGUwZTAiLz4KPC9zdmc+Cg==)](LICENSE)
 
 </div>
 
-CommiZard — An interactive commit assistant, powered by AI! 🧙‍♂️
-Generate, tweak, and copy commit messages with full control — right from a REPL.
+CommiZard is an interactive commit assistant, powered by AI! 🧙‍♂️
+Generate, tweak, and copy commit messages with full control, right from a REPL.
 
 ## Features
 
-- **REPL-style Interface** — Stay in an interactive session. Generate multiple
+- **REPL-style Interface**: Stay in an interactive session. Generate multiple
   commit variations without restarting.
-- **Smart Generation** — Creates commit messages directly from your `git diff`.
-- **Simple CLI** — Familiar, intuitive commands. No learning curve.
-- **Flexible AI** backends — Easily swap models. Online model support planned!
-- **Clipboard Magic** — Instantly copy generated messages to your system
+- **Smart Generation**: Creates commit messages directly from your `git diff`.
+- **Simple CLI**: Familiar, intuitive commands. No learning curve.
+- **Flexible AI** backends: Easily swap models. Online model support planned!
+- **Clipboard Magic**: Instantly copy generated messages to your system
   clipboard, ready to paste into `git commit`.
-- **Zero Daemons** — No background processes, No Git hooks, no surprises.
-- **Absolute Control** — Run it when *you* want, and you decide to commit,
+- **Zero Daemons**: No background processes, No Git hooks, no surprises.
+- **Absolute Control**: Run it when *you* want, and you decide to commit,
   copy, tweak, or discard.
 
 > [!WARNING]
 >
-> ⚠️ **Heads up!** CommiZard is in **early alpha**. Not all features are
+> ⚠️ **Heads up!** CommiZard is in **alpha development**. Not all features are
 > complete or stable yet.
 >
 > CommiZard is under active development — expect bugs, crashes, and missing
@@ -39,21 +39,35 @@ Generate, tweak, and copy commit messages with full control — right from a REP
 
 ## ⚙️ Installation
 
-Install via [pip](https://pip.pypa.io/en/stable/) (from GitHub):
+There are several ways to install this tool. Here are the most common
+approaches:
+
+1. The easiest way to get started is with [pip](https://pip.pypa.io/en/stable/):
 
 ```bash
-pip install git+https://github.com/Chungzter/CommiZard
+pip install commizard
 ```
 
-Install from source:
+> [!TIP]
+> Use `pipx` to install in an isolated environment and avoid dependency
+> conflicts.
+
+2. If you want the latest development version (bleeding-edge), clone the repo
+   and install in editable mode:
 
 ```bash
 git clone https://github.com/Chungzter/CommiZard
 cd CommiZard
-pip install .
+pip install -e .
 ```
 
-Or build from source using PEP 517 (e.g., with `build` or `hatchling`):
+You can update anytime with:
+
+```bash
+git pull && pip install -e .
+```
+
+3. You can also build from source yourself (e.g., with `build` or `hatchling`):
 
 ```bash
 git clone https://github.com/Chungzter/CommiZard
@@ -72,6 +86,8 @@ the interactive REPL in your Git repository:
 commizard
 ```
 
+You can also use -h or --help to see the available options.
+
 Once launched, you’ll enter the interactive CommiZard terminal, where you can
 use the following commands:
 
@@ -79,6 +95,7 @@ use the following commands:
 
 |     Command      |                         Description                          |
 |:----------------:|:------------------------------------------------------------:|
+| `start <model>`  |        select a particular model to generate for you.        |
 |      `list`      |  List all available Ollama models installed on your system.  |
 |      `gen`       | Generate a new commit message based on the current Git diff. |
 |       `cp`       |         Copy the generated output to your clipboard          |
@@ -94,18 +111,18 @@ meaningful commit message.
 
 ## 🧭 Alternatives & Similar Tools
 
-When I started building CommiZard, I made sure to look around — and guess what?
+When I started building CommiZard, I made sure to look around. Guess what?
 
 > CommiZard isn’t the only wizard in town! 😊
 
 If you’re exploring AI-powered commit tools, here are some other great projects
 worth checking out:
 
-- **[easycommit](https://github.com/blackironj/easycommit)** — written in Go,
+- **[easycommit](https://github.com/blackironj/easycommit)**: written in Go,
   supports Ollama models out of the box.
-- **[aicommit](https://github.com/suenot/aicommit)** — Packed with features —
+- **[aicommit](https://github.com/suenot/aicommit)**: Packed with features —
   including a handy VS Code extension.
-- **[AICommit2](https://github.com/tak-bro/aicommit2)** — The most complete FOSS
+- **[AICommit2](https://github.com/tak-bro/aicommit2)**: The most complete FOSS
   option I've found
 
 > *Why did I still follow through and build this?*
@@ -113,7 +130,7 @@ worth checking out:
 > Because I couldn’t find a tool that gave me both full user control and the
 > little UX comforts I wanted.
 >
-> So yeah — I built CommiZard for me… and maybe for you too 😉
+> So yeah. I built CommiZard for *me*… and maybe for you too!
 
 ## Contributing
 
