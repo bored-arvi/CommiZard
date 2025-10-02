@@ -38,6 +38,8 @@ def test_handle_args(mock_exit, argv, expected_print, expect_exit, capsys,
     [
         (False, True, True, [""], 0),
         (True, True, False, [""], 0),
+        (True, True, True, [""], 0),
+        (True, True, True, ["\n            \n \n"], 0),
         (True, True, True, ["exit"], 0),
         (True, False, True, ["quit"], 0),
         (True, True, True, ["cmd1", "cmd2", "cmd3"], 3),
@@ -46,6 +48,8 @@ def test_handle_args(mock_exit, argv, expected_print, expect_exit, capsys,
     ids=[
         "git_not_installed",
         "not_in_work_tree",
+        "empty_input",
+        "whitespace_input",
         "happy_exit",
         "ai_unavailable_quit",
         "multiple_commands_then_exit",
@@ -58,8 +62,8 @@ def test_handle_args(mock_exit, argv, expected_print, expect_exit, capsys,
 @patch("commizard.cli.start.print_welcome")
 @patch("commizard.cli.commands.parser")
 @patch("commizard.cli.input")
-@patch("commizard.cli.print_error")
-@patch("commizard.cli.print_warning")
+@patch("commizard.cli.output.print_error")
+@patch("commizard.cli.output.print_warning")
 @patch("commizard.cli.print")
 @patch("commizard.cli.handle_args")
 def test_main(mock_args, mock_print, mock_warning, mock_error, mock_input,
