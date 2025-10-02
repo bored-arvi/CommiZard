@@ -57,8 +57,11 @@ def start_model(opts: list[str]) -> None:
     if llm_providers.available_models is None:
         llm_providers.init_model_list()
 
+    if opts == []:
+        output.print_error("Please specify a model.")
+        return
+    
     # TODO: see issue #42
-
     model_name = opts[0]
 
     if model_name not in llm_providers.available_models:
