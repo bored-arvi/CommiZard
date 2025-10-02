@@ -53,6 +53,8 @@ def main() -> None:
         if user_input in ("exit", "quit"):
             print("Goodbye!")
             break
+        elif user_input == "":
+            continue
         commands.parser(user_input)
 
 
