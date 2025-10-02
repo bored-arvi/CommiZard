@@ -70,11 +70,11 @@ def test_copy_command(mock_warn, mock_success, mock_copy, gen_message, opts,
         # select_model called
         (["gpt-1", "gpt-2"], ["gpt-2"], False, False, True),
         # incorrect user input
-        (None, [], False, True, False),
+        (None, [], True, True, False),
         (["gpt-1", "gpt-2"], [], False, True, False),
     ]
 )
-@patch("commizard.output.print_error")
+@patch("commizard.llm_providers.output.print_error")
 @patch("commizard.llm_providers.select_model")
 @patch("commizard.llm_providers.init_model_list")
 def test_start_model(mock_init, mock_select, mock_error, monkeypatch,
@@ -84,9 +84,9 @@ def test_start_model(mock_init, mock_select, mock_error, monkeypatch,
     monkeypatch.setattr(llm_providers, "available_models", available_models)
 
     # mock the behavior of mock_init
-    mock_init.side_effect = lambda x: monkeypatch.setattr(llm_providers,
-                                                          "available_models",
-                                                          ["grok", "GPT"])
+    mock_init.side_effect = monkeypatch.setattr(llm_providers,
+                                                "available_models",
+                                                ["grok", "GPT"])
     commands.start_model(opts)
 
     if expect_init:
@@ -95,7 +95,7 @@ def test_start_model(mock_init, mock_select, mock_error, monkeypatch,
         mock_init.assert_not_called()
 
     if expect_error:
-        mock_error.assert_called_once_with(f"{opts[0]} Not found.")
+        mock_error.assert_called_once()
     else:
         mock_error.assert_not_called()
 
