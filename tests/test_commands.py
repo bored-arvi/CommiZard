@@ -17,7 +17,7 @@ from commizard import commands, llm_providers
 )
 @patch("commizard.commands.output.print_warning")
 @patch("commizard.commands.output.print_success")
-@patch("commizard.commands.commit")
+@patch("commizard.commands.git_utils.commit")
 def test_handle_commit_req(mock_commit, mock_print_success, mock_print_warning,
                            gen_message, commit_ret, expected_func, expected_arg,
                            monkeypatch):
