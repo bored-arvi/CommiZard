@@ -26,6 +26,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `__init__.py`.
 - Improved the diff sent to the LLM, allowing for more accurate commits with
   fewer tokens.
+- Added wrapping functionality: Now the commit lines all wrap at 70 lines.
 - Refactored significant parts of the codebase. This is still a work in
   progress, but the program’s flow is now cleaner and more maintainable.
 
