@@ -62,8 +62,8 @@ def test_handle_args(mock_exit, argv, expected_print, expect_exit, capsys,
 @patch("commizard.cli.start.print_welcome")
 @patch("commizard.cli.commands.parser")
 @patch("commizard.cli.input")
-@patch("commizard.cli.print_error")
-@patch("commizard.cli.print_warning")
+@patch("commizard.cli.output.print_error")
+@patch("commizard.cli.output.print_warning")
 @patch("commizard.cli.print")
 @patch("commizard.cli.handle_args")
 def test_main(mock_args, mock_print, mock_warning, mock_error, mock_input,
