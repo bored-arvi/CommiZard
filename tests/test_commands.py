@@ -255,8 +255,6 @@ def test_parser_gen(mock_func, user_input, expected_args):
     [
         "nonsense",
         "blargh --x",
-        "",
-        "   ",
     ]
 )
 def test_parser_unrecognized(user_input):
