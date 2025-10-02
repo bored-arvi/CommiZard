@@ -164,7 +164,7 @@ def generate(prompt: str) -> tuple[int, str]:
     elif r.return_code == 200:
         return 0, r.response.get("response")
     else:
-        return r.return_code, f"Unknown status code: {r.err_message()}"
+        return r.return_code, f"Unknown status code: {r.return_code}"
 
 
 def regenerate(prompt: str) -> None:
