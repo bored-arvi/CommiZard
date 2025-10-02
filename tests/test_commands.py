@@ -64,7 +64,7 @@ def test_copy_command(mock_warn, mock_success, mock_copy, gen_message, opts,
     "available_models, opts, expect_init, expect_error, expect_select",
     [
         # init_model_list called
-        (None, ["gpt-test"], True, False, False),
+        (None, ["grok"], True, False, True),
         # print_error called
         (["gpt-1", "gpt-2"], ["gpt-3"], False, True, False),
         # select_model called
@@ -84,20 +84,14 @@ def test_start_model(mock_init, mock_select, mock_error, monkeypatch,
     monkeypatch.setattr(llm_providers, "available_models", available_models)
 
     # mock the behavior of mock_init
-    mock_init.side_effect = monkeypatch.setattr(llm_providers,
-                                                "available_models",
-                                                ["grok", "GPT"])
+    def fake_init():
+        monkeypatch.setattr(llm_providers, "available_models", ["grok", "GPT"])
+
+    mock_init.side_effect = fake_init
     commands.start_model(opts)
 
-    if expect_init:
-        mock_init.assert_called_once()
-    else:
-        mock_init.assert_not_called()
-
-    if expect_error:
-        mock_error.assert_called_once()
-    else:
-        mock_error.assert_not_called()
+    assert mock_init.called == expect_init
+    assert mock_error.called == expect_error
 
     if expect_select:
         mock_select.assert_called_once_with(opts[0])
