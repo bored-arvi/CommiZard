@@ -8,6 +8,14 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Documents are updated (README.md and CONTRIBUTING.md)
+
+### Fixed
+
+- Fixed blank input crashing the program
+
 ## [0.1.0] - 2025/10/01
 
 ### Added
