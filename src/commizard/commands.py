@@ -87,12 +87,13 @@ def generate_message(opts: list[str]) -> None:
 
     prompt = llm_providers.generation_prompt + diff
     stat, res = llm_providers.generate(prompt)
-    llm_providers.gen_message = res
-
-    if stat == 0:
-        output.print_generated(res)
-    else:
+    if stat != 0:
         output.print_error(res)
+        return
+
+    res = output.wrap_text(res, 72)
+    llm_providers.gen_message = res
+    output.print_generated(res)
 
 
 supported_commands = {"commit": handle_commit_req,
