@@ -1,6 +1,5 @@
 import requests
 
-from . import git_utils
 from . import output
 
 available_models = None
@@ -147,25 +146,19 @@ def unload_model() -> None:
 
 
 # TODO: see issues #11 and #15
-def generate() -> None:
+def generate(prompt: str) -> str:
     """
-    generate commit message
+    generates a response by prompting the selected_model.
+    Args:
+        prompt: the prompt to send to the LLM.
+    Returns:
+        response from the LLM.
     """
     url = "http://localhost:11434/api/generate"
-    diff = git_utils.get_clean_diff()
-    if diff == "":
-        output.print_warning("No changes to the repository.")
-        return
-    payload = {"model": selected_model, "prompt": generation_prompt + diff,
+    payload = {"model": selected_model, "prompt": prompt,
                "stream": False}
     r = http_request("POST", url, json=payload)
-
-    r = output.wrap_text(r.response.get("response").strip(), 72)
-
-    global gen_message
-    gen_message = r
-
-    output.print_generated(r)
+    return r.response.get("response")
 
 
 def regenerate(prompt: str) -> None:
