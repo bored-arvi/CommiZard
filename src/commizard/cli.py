@@ -2,8 +2,8 @@ import sys
 
 from . import __version__ as version
 from . import commands
+from . import output
 from . import start
-from .output import *
 
 help_msg = """
 Commit writing wizard
@@ -36,14 +36,14 @@ def main() -> None:
     """
     handle_args()
     if not start.check_git_installed():
-        print_error("git not installed")
+        output.print_error("git not installed")
         return
 
     if not start.local_ai_available():
-        print_warning("local AI not available")
+        output.print_warning("local AI not available")
 
     if not start.is_inside_working_tree():
-        print_error("not inside work tree")
+        output.print_error("not inside work tree")
         return
 
     start.print_welcome()
