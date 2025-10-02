@@ -1,8 +1,8 @@
 import pyperclip
 
+from . import git_utils
 from . import llm_providers
 from . import output
-from .git_utils import commit
 
 
 def handle_commit_req(opts: list[str]) -> None:
@@ -12,7 +12,7 @@ def handle_commit_req(opts: list[str]) -> None:
     if llm_providers.gen_message is None or llm_providers.gen_message == "":
         output.print_warning("No commit message detected. Skipping.")
         return
-    out, msg = commit(llm_providers.gen_message)
+    out, msg = git_utils.commit(llm_providers.gen_message)
     if out == 0:
         output.print_success(msg)
     else:
@@ -60,7 +60,7 @@ def start_model(opts: list[str]) -> None:
     if opts == []:
         output.print_error("Please specify a model.")
         return
-    
+
     # TODO: see issue #42
     model_name = opts[0]
 
@@ -80,10 +80,19 @@ def print_available_models(opts: list[str]) -> None:
 
 
 def generate_message(opts: list[str]) -> None:
-    """
-    generate and print a commit message
-    """
-    llm_providers.generate()
+    diff = git_utils.get_clean_diff()
+    if diff == "":
+        output.print_warning("No changes to the repository.")
+        return
+
+    prompt = llm_providers.generation_prompt + diff
+    stat, res = llm_providers.generate(prompt)
+    llm_providers.gen_message = res
+
+    if stat == 0:
+        output.print_generated(res)
+    else:
+        output.print_error(res)
 
 
 supported_commands = {"commit": handle_commit_req,
