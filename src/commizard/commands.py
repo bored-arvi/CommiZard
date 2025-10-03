@@ -1,3 +1,6 @@
+import os
+import sys
+import platform
 import pyperclip
 
 from . import llm_providers
@@ -60,7 +63,7 @@ def start_model(opts: list[str]) -> None:
     if opts == []:
         output.print_error("Please specify a model.")
         return
-    
+
     # TODO: see issue #42
     model_name = opts[0]
 
@@ -86,14 +89,28 @@ def generate_message(opts: list[str]) -> None:
     llm_providers.generate()
 
 
-supported_commands = {"commit": handle_commit_req,
-                      "help": print_help,
-                      "cp": copy_command,
-                      "start": start_model,
-                      "list": print_available_models,
-                      "gen": generate_message,
-                      "generate": generate_message
-                      }
+# ------------------- NEW CLEAR COMMAND -------------------
+def cmd_clear(_args=None):
+    """Clear terminal screen (Windows/macOS/Linux)."""
+    cmd = "cls" if platform.system().lower().startswith("win") else "clear"
+    rc = os.system(cmd)
+    if rc != 0:  # fallback to ANSI if shell command failed
+        sys.stdout.write("\033[2J\033[H")
+        sys.stdout.flush()
+# ---------------------------------------------------------
+
+
+supported_commands = {
+    "commit": handle_commit_req,
+    "help": print_help,
+    "cp": copy_command,
+    "start": start_model,
+    "list": print_available_models,
+    "gen": generate_message,
+    "generate": generate_message,
+    "clear": cmd_clear,   # <-- added
+    "cls": cmd_clear      # <-- added
+}
 
 
 def parser(user_input: str) -> int:

@@ -4,7 +4,6 @@ from . import __version__ as version
 from . import commands
 from . import output
 from . import start
-from .utils.terminal import clear_screen  # <-- added
 
 help_msg = """
 Commit writing wizard
@@ -15,11 +14,6 @@ Usage:
 Options:
   -h, --help       Show help for commizard
   -v, --version    Show version information
-
-Notes:
-  Inside the interactive prompt you can type:
-    clear | cls     Clear the terminal screen
-    exit  | quit    Exit CommiZard
 """
 
 
@@ -59,9 +53,6 @@ def main() -> None:
         if user_input in ("exit", "quit"):
             print("Goodbye!")
             break
-        elif user_input in ("clear", "cls"):  # <-- added
-            clear_screen()                    # <-- added
-            continue                          # <-- added
         elif user_input == "":
             continue
         commands.parser(user_input)
