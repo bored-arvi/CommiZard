@@ -5,6 +5,58 @@ free time, so your help means the world.
 
 Here are some ways you can help improve this project:
 
+## 🛠️ Setting Up for Development
+
+Want to contribute code? Here's how to get your development environment ready:
+
+### Prerequisites
+
+- Python 3.9 or higher
+- Git
+- pip
+
+### Installation Steps
+
+1. **Fork and clone the repository:**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/CommiZard.git
+   cd CommiZard
+
+2. Install in development mode with dev dependencies:
+pip install -e ".[dev]"
+2. This installs CommiZard in editable mode plus all development tools (pytest, black, ruff, mypy).
+3. Verify installation:
+commizard --help
+pytest
+
+Development Workflow
+
+Before committing your changes:
+
+1. Format your code with Black:
+black src/ tests/
+2. Lint with Ruff:
+ruff check src/ tests/
+3. Type check with mypy (optional but recommended):
+mypy src/
+4. Run tests:
+pytest
+
+4. Or with coverage:
+pytest --cov=commizard tests/
+
+Making Changes
+
+1. Create a new branch: git checkout -b my-feature-or-fix
+2. Make your changes
+3. Run formatters and linters (see above)
+4. Run tests to ensure nothing broke
+5. Commit with a clear message
+6. Push to your fork and open a PR
+
+[!TIP]
+Run black . and ruff check . before every commit to keep code style consistent!
+
 ## 🐞 Reporting Bugs / Requesting Features
 
 1. First, Check if it’s already reported.

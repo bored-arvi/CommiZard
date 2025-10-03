@@ -1,3 +1,4 @@
+
 [build-system]
 requires = ["hatchling >= 1.26"]
 build-backend = "hatchling.build"
@@ -14,6 +15,16 @@ dependencies = [
     "requests>=2.32.2,<=2.32.5",
     "pyperclip>=1.8.0,<=1.9.0",
 ]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",     
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
