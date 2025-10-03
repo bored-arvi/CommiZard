@@ -1,6 +1,5 @@
 import requests
 
-from . import git_utils
 from . import output
 
 available_models = None
@@ -147,25 +146,25 @@ def unload_model() -> None:
 
 
 # TODO: see issues #11 and #15
-def generate() -> None:
+def generate(prompt: str) -> tuple[int, str]:
     """
-    generate commit message
+    generates a response by prompting the selected_model.
+    Args:
+        prompt: the prompt to send to the LLM.
+    Returns:
+        a tuple of the return code and the response. The return code is 0 if the
+        response is ok, 1 otherwise. The response is the error message if the
+        request fails and the return code is 1.
     """
     url = "http://localhost:11434/api/generate"
-    diff = git_utils.get_clean_diff()
-    if diff == "":
-        output.print_warning("No changes to the repository.")
-        return
-    payload = {"model": selected_model, "prompt": generation_prompt + diff,
-               "stream": False}
+    payload = {"model": selected_model, "prompt": prompt, "stream": False}
     r = http_request("POST", url, json=payload)
-
-    r = output.wrap_text(r.response.get("response").strip(), 72)
-
-    global gen_message
-    gen_message = r
-
-    output.print_generated(r)
+    if r.is_error():
+        return 1, r.err_message()
+    elif r.return_code == 200:
+        return 0, r.response.get("response")
+    else:
+        return r.return_code, f"Unknown status code: {r.return_code}"
 
 
 def regenerate(prompt: str) -> None:

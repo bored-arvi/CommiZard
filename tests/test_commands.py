@@ -17,7 +17,7 @@ from commizard import commands, llm_providers
 )
 @patch("commizard.commands.output.print_warning")
 @patch("commizard.commands.output.print_success")
-@patch("commizard.commands.commit")
+@patch("commizard.commands.git_utils.commit")
 def test_handle_commit_req(mock_commit, mock_print_success, mock_print_warning,
                            gen_message, commit_ret, expected_func, expected_arg,
                            monkeypatch):
@@ -124,19 +124,52 @@ def test_print_available_models(mock_init, mock_print, available_models, opts,
         mock_print.assert_any_call(model)
 
 
-@pytest.mark.parametrize(
-    "opts",
-    [
-        [],
-        ["--dry-run"],
-        ["--foo", "--bar"],
-    ]
-)
-@patch("commizard.llm_providers.generate")
-def test_generate_message(mock_generate, opts):
-    commands.generate_message(opts)
+@patch("commizard.commands.output.print_warning")
+@patch("commizard.commands.git_utils.get_clean_diff")
+def test_generate_message_no_diff(mock_diff, mock_output, monkeypatch):
+    mock_diff.return_value = ""
+    monkeypatch.setattr(commands.llm_providers, "gen_message", None)
 
-    mock_generate.assert_called_once_with()
+    commands.generate_message(["--dummy"])
+
+    mock_output.assert_called_once_with("No changes to the repository.")
+    assert commands.llm_providers.gen_message is None
+
+
+@patch("commizard.commands.output.print_error")
+@patch("commizard.commands.git_utils.get_clean_diff")
+@patch("commizard.commands.llm_providers.generate")
+def test_generate_message_err(mock_gen, mock_diff, mock_output, monkeypatch):
+    mock_diff.return_value = "some diff"
+    mock_gen.return_value = (1, "Error happened")
+    monkeypatch.setattr(commands.llm_providers, "generation_prompt", "PROMPT:")
+    monkeypatch.setattr(commands.llm_providers, "gen_message", None)
+
+    commands.generate_message(["--dummy"])
+
+    mock_gen.assert_called_once_with("PROMPT:some diff")
+    mock_output.assert_called_once_with("Error happened")
+    assert commands.llm_providers.gen_message is None
+
+
+@patch("commizard.commands.output.wrap_text")
+@patch("commizard.commands.output.print_generated")
+@patch("commizard.commands.git_utils.get_clean_diff")
+@patch("commizard.commands.llm_providers.generate")
+def test_generate_message_success(mock_gen, mock_diff, mock_output, mock_wrap,
+                                  monkeypatch):
+    mock_diff.return_value = "some diff"
+    mock_gen.return_value = (0, "The generated commit message")
+    monkeypatch.setattr(commands.llm_providers, "generation_prompt", "PROMPT:")
+    monkeypatch.setattr(commands.llm_providers, "gen_message", None)
+    mock_wrap.side_effect = lambda text, width: f"WRAPPED({text})"
+
+    commands.generate_message(["--dummy"])
+
+    mock_gen.assert_called_once_with("PROMPT:some diff")
+    mock_wrap.assert_called_once_with("The generated commit message", 72)
+    mock_output.assert_called_once_with("WRAPPED(The generated commit message)")
+    assert llm_providers.gen_message == "WRAPPED(The generated commit message)"
 
 
 @pytest.mark.parametrize(

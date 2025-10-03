@@ -1,4 +1,4 @@
-from unittest.mock import patch, Mock
+from unittest.mock import patch, Mock, MagicMock
 
 import pytest
 import requests
@@ -201,55 +201,42 @@ def test_unload_model(mock_http_request, monkeypatch):
 
 
 @pytest.mark.parametrize(
-    "diff, expected_gen_message, expect_warning, expect_http",
+    "is_error, return_code, response_dict, err_msg, expected",
     [
-        ("", None, True, False),
-        ("diff --git a/file.txt b/file.txt", "Generated commit message", False,
-         True),
+        (
+                True, -1, None, "can't connect to the server",
+                (1, "can't connect to the server")
+        ),
+        (
+                False, 200, {"response": "Hello world"}, None,
+                (0, "Hello world")
+        ),
+        (
+                False, 500, {"error": "ignored"}, None,
+                (500, "Unknown status code: 500")
+        ),
     ],
 )
-@patch("commizard.llm_providers.output.print_generated")
-@patch("commizard.llm_providers.output.wrap_text")
 @patch("commizard.llm_providers.http_request")
-@patch("commizard.llm_providers.git_utils.get_clean_diff")
-@patch("commizard.llm_providers.output.print_warning")
-def test_generate(mock_print_warning, mock_get_diff, mock_http_request,
-                  mock_wrap_text, mock_print_generated, monkeypatch,
-                  diff, expected_gen_message, expect_warning, expect_http):
-    monkeypatch.setattr(llm, "selected_model", "my_model")
-    monkeypatch.setattr(llm, "gen_message", None)
+def test_generate(mock_http_request, is_error, return_code, response_dict,
+                  err_msg, expected, monkeypatch):
+    fake_response = MagicMock()
+    fake_response.is_error.return_value = is_error
+    fake_response.return_code = return_code
+    fake_response.response = response_dict
+    fake_response.err_message.return_value = err_msg
+    mock_http_request.return_value = fake_response
 
-    mock_get_diff.return_value = diff
-    mock_wrap_text.return_value = expected_gen_message
-    # Configure http_request / wrap_text if HTTP is expected
-    if expect_http:
-        fake_response = Mock()
-        fake_response.response = {"response": " the sky is black, I'm dumb\n"}
-        mock_http_request.return_value = fake_response
+    monkeypatch.setattr(llm, "selected_model", "mymodel")
 
-    llm.generate()
+    result = llm.generate("Test prompt")
 
-    # Assert warning
-    if expect_warning:
-        mock_print_warning.assert_called_once_with(
-            "No changes to the repository.")
-    else:
-        mock_print_warning.assert_not_called()
-
-    if expect_http:
-        mock_http_request.assert_called_once_with(
-            "POST", "http://localhost:11434/api/generate",
-            json={"model": "my_model",
-                  "prompt": llm.generation_prompt + diff,
-                  "stream": False
-                  }
-        )
-        mock_wrap_text.assert_called_once()
-        mock_print_generated.assert_called_once_with(expected_gen_message)
-        assert llm.gen_message == expected_gen_message
-    else:
-        mock_http_request.assert_not_called()
-        assert llm.gen_message is None
+    mock_http_request.assert_called_once_with(
+        "POST",
+        "http://localhost:11434/api/generate",
+        json={"model": "mymodel", "prompt": "Test prompt", "stream": False}
+    )
+    assert result == expected
 
 
 @pytest.mark.parametrize(
