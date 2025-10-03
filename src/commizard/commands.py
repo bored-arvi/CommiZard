@@ -1,3 +1,7 @@
+import os
+import platform
+import sys
+
 import pyperclip
 
 from . import git_utils
@@ -96,14 +100,28 @@ def generate_message(opts: list[str]) -> None:
     output.print_generated(res)
 
 
-supported_commands = {"commit": handle_commit_req,
-                      "help": print_help,
-                      "cp": copy_command,
-                      "start": start_model,
-                      "list": print_available_models,
-                      "gen": generate_message,
-                      "generate": generate_message
-                      }
+def cmd_clear(_args=None):
+    """
+    Clear terminal screen (Windows/macOS/Linux).
+    """
+    cmd = "cls" if platform.system().lower().startswith("win") else "clear"
+    rc = os.system(cmd)
+    if rc != 0:  # fallback to ANSI if shell command failed
+        sys.stdout.write("\033[2J\033[H")
+        sys.stdout.flush()
+
+
+supported_commands = {
+    "commit": handle_commit_req,
+    "help": print_help,
+    "cp": copy_command,
+    "start": start_model,
+    "list": print_available_models,
+    "gen": generate_message,
+    "generate": generate_message,
+    "clear": cmd_clear,
+    "cls": cmd_clear
+}
 
 
 def parser(user_input: str) -> int:
