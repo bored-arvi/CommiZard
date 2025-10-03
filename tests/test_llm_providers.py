@@ -220,22 +220,17 @@ def test_unload_model(mock_http_request, monkeypatch):
 @patch("commizard.llm_providers.http_request")
 def test_generate(mock_http_request, is_error, return_code, response_dict,
                   err_msg, expected, monkeypatch):
-    # Use MagicMock to mock the HttpResponse object
     fake_response = MagicMock()
     fake_response.is_error.return_value = is_error
     fake_response.return_code = return_code
     fake_response.response = response_dict
     fake_response.err_message.return_value = err_msg
-
     mock_http_request.return_value = fake_response
 
-    # patch global selected_model
     monkeypatch.setattr(llm, "selected_model", "mymodel")
 
-    # act
     result = llm.generate("Test prompt")
 
-    # assert
     mock_http_request.assert_called_once_with(
         "POST",
         "http://localhost:11434/api/generate",
