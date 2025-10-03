@@ -11,11 +11,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Updated documents  (README.md and CONTRIBUTING.md)
+- Rewrote the generation portion for clearer control flow and behavior
 
 ### Fixed
 
 - Fixed blank input crashing the program
 - Fixed empty start argument crashing the program
+- Fixed crashes from invalid uses of `gen`/`generate`
 
 ## [0.1.0] - 2025/10/01
 
