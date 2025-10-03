@@ -256,11 +256,17 @@ def test_parser_unrecognized(user_input):
     assert result == 1
 
 
-# ---------------- NEW TESTS for clear/cls ----------------
-@pytest.mark.parametrize("cmd", ["clear", "cls"])
+@pytest.mark.parametrize(
+    "cmd",
+    [
+        "clear", "cls"
+    ]
+)
 def test_parser_clear_and_cls(monkeypatch, cmd):
     called = {"v": False}
+
     def fake(_=None): called["v"] = True
+
     monkeypatch.setattr(commands, "cmd_clear", fake)
     with patch.dict("commizard.commands.supported_commands",
                     {cmd: fake}):

@@ -1,6 +1,7 @@
 import os
-import sys
 import platform
+import sys
+
 import pyperclip
 
 from . import llm_providers
@@ -89,15 +90,15 @@ def generate_message(opts: list[str]) -> None:
     llm_providers.generate()
 
 
-# ------------------- NEW CLEAR COMMAND -------------------
 def cmd_clear(_args=None):
-    """Clear terminal screen (Windows/macOS/Linux)."""
+    """
+    Clear terminal screen (Windows/macOS/Linux).
+    """
     cmd = "cls" if platform.system().lower().startswith("win") else "clear"
     rc = os.system(cmd)
     if rc != 0:  # fallback to ANSI if shell command failed
         sys.stdout.write("\033[2J\033[H")
         sys.stdout.flush()
-# ---------------------------------------------------------
 
 
 supported_commands = {
@@ -108,8 +109,8 @@ supported_commands = {
     "list": print_available_models,
     "gen": generate_message,
     "generate": generate_message,
-    "clear": cmd_clear,   # <-- added
-    "cls": cmd_clear      # <-- added
+    "clear": cmd_clear,
+    "cls": cmd_clear
 }
 
 
