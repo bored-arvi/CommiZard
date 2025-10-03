@@ -100,6 +100,7 @@ use the following commands:
 |      `gen`       | Generate a new commit message based on the current Git diff. |
 |       `cp`       |         Copy the generated output to your clipboard          |
 |     `commit`     |             Directly commit the generated output             |
+| `cls` or `clear` |                  Clear the terminal screen                   |
 | `exit` or `quit` |                    Exit the REPL session.                    |
 
 ### Example Usage

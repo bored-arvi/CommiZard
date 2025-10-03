@@ -8,6 +8,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- New `cls`/`clear` command to clear the screen (thanks
+  [@MRADULTRIPATHI](https://github.com/MRADULTRIPATHI))
+
 ### Changed
 
 - Updated documents  (README.md and CONTRIBUTING.md)
