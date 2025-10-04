@@ -26,11 +26,12 @@ Here are some ways you can help improve this project:
 5. Push to your fork and when you're done, open a PR against `master`.
 
 ✅ I'll review it as soon as I can!
-✅ Even small fixes — typos, docs, or tests — are welcome!
+✅ Even small fixes like typos, docs, or tests are welcome!
 
 ### Setting Up for Development
 
 **Prerequisites:**
+
 - [Ollama](https://ollama.ai/) (required only for local LLM API work)
 
 **Installation:**
@@ -76,7 +77,8 @@ Before committing your changes:
    ```
 
 > [!TIP]
-> Run `black .` and `ruff check .` before every commit to keep code style consistent!
+> Run `black .` and `ruff check .` before every commit to keep code style
+> consistent!
 
 ## 🧪 Testing & Quality
 
