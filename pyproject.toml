@@ -113,7 +113,7 @@ extend-select = [
     "RUF", # Ruff-specific rules – additional Ruff checks
 ]
 
-lint.ignore = [
+ignore = [
     "D1", # Pydocstyle - missing docstring in public module, class, or function
     "FBT003", # Flake8-boolean-trap - boolean position value in function call
     "D203", # Pydocstyle - one blank line required before class docstring
