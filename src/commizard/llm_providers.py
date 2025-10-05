@@ -145,6 +145,8 @@ def unload_model() -> None:
     response = http_request("POST", url, json=payload)
     if response.is_error():
         output.print_error(f"Failed to unload model: {response.err_message()}")
+    else:
+        output.print_success("Model unloaded successfully.")
 
 
 # TODO: see issues #11 and #15

@@ -82,4 +82,4 @@ def get_clean_diff() -> str:
     diff = get_diff()
     if diff is None:
         return ""
-    return clean_diff(get_diff())
+    return clean_diff(diff)
