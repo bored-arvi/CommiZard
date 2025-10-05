@@ -8,9 +8,10 @@ def run_git_command(args: list[str]) -> subprocess.CompletedProcess:
     Returns:
         a CompletedProcess object
     """
-    cmd = ['git'] + args
-    return subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8',
-                          errors='ignore')
+    cmd = ["git"] + args
+    return subprocess.run(
+        cmd, capture_output=True, text=True, encoding="utf-8", errors="ignore"
+    )
 
 
 def is_inside_working_tree() -> bool:
@@ -63,8 +64,11 @@ def clean_diff(diff: str) -> str:
     """
     lines = diff.splitlines()
     for line in lines[:]:
-        if (line.startswith("diff --git") or line.startswith("index ") or
-                line.startswith("warning:")):
+        if (
+            line.startswith("diff --git")
+            or line.startswith("index ")
+            or line.startswith("warning:")
+        ):
             lines.remove(line)
     return "\n".join(lines)
 

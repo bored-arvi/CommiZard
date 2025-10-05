@@ -1,7 +1,12 @@
 import pytest
 
-from commizard.output import print_success, print_error, print_warning, \
-    print_generated, wrap_text
+from commizard.output import (
+    print_success,
+    print_error,
+    print_warning,
+    print_generated,
+    wrap_text,
+)
 
 
 def test_print_success(capsys):
@@ -39,14 +44,18 @@ def test_print_generated(capsys):
     "text,width,expected",
     [
         ("short line", 10, "short line"),
-        ("a long line that should wrap", 10,
-         "a long\nline that\nshould\nwrap"),
+        ("a long line that should wrap", 10, "a long\nline that\nshould\nwrap"),
         ("para1\n\npara2", 10, "para1\n\npara2"),
-        ("This is a simple sentence that should wrap neatly.", 10,
-         "This is a\nsimple\nsentence\nthat\nshould\nwrap\nneatly."),
-        ("First paragraph here with some text.\n\nSecond paragraph is also here.",
-         15,
-         "First paragraph\nhere with some\ntext.\n\nSecond\nparagraph is\nalso here."),
+        (
+            "This is a simple sentence that should wrap neatly.",
+            10,
+            "This is a\nsimple\nsentence\nthat\nshould\nwrap\nneatly.",
+        ),
+        (
+            "First paragraph here with some text.\n\nSecond paragraph is also here.",
+            15,
+            "First paragraph\nhere with some\ntext.\n\nSecond\nparagraph is\nalso here.",
+        ),
         ("\n\nHello world\n\n", 5, "\n\nHello\nworld\n\n"),
         ("Extraordinarilylongword", 5, "Extraordinarilylongword"),
         ("", 10, ""),

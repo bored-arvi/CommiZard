@@ -27,7 +27,6 @@ Here is the diff:
 
 
 class HttpResponse:
-
     def __init__(self, response, return_code):
         self.response = response
         # if the value is less than zero, there's something wrong.
@@ -43,7 +42,7 @@ class HttpResponse:
             -1: "can't connect to the server",
             -2: "HTTP error occurred",
             -3: "too many redirects",
-            -4: "the request timed out"
+            -4: "the request timed out",
         }
         return err_dict[self.return_code]
 
@@ -97,7 +96,8 @@ def list_locals() -> list[str]:
     r = http_request("GET", url, timeout=0.3)
     if r.is_error():
         output.print_error(
-            "failed to list available local AI models. Is ollama running?")
+            "failed to list available local AI models. Is ollama running?"
+        )
         return []
     r = r.response["models"]
     return [model["name"] for model in r]
@@ -128,8 +128,7 @@ def load_model(model_name: str) -> dict:
     url = "http://localhost:11434/api/generate"
     out = http_request("POST", url, json=payload)
     if out.is_error():
-        output.print_error(
-            f"Failed to load {model_name}. Is ollama running?")
+        output.print_error(f"Failed to load {model_name}. Is ollama running?")
         return {}
     return out.response
 

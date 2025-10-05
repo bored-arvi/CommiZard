@@ -39,16 +39,21 @@ def gradient_text(text: str, start_color: Color, end_color: Color) -> str:
     for line in lines:
         colored_line = ""
         for i, char in enumerate(line):
-            r = int(start_color.triplet[0] + (
-                    end_color.triplet[0] - start_color.triplet[0]) * (
-                            i / total_chars))
+            r = int(
+                start_color.triplet[0]
+                + (end_color.triplet[0] - start_color.triplet[0])
+                * (i / total_chars)
+            )
             g = int(
-                start_color.triplet[1] + (
-                        end_color.triplet[1] - start_color.triplet[1]) * (
-                        i / total_chars))
-            b = int(start_color.triplet[2] + (
-                    end_color.triplet[2] - start_color.triplet[2]) * (
-                            i / total_chars))
+                start_color.triplet[1]
+                + (end_color.triplet[1] - start_color.triplet[1])
+                * (i / total_chars)
+            )
+            b = int(
+                start_color.triplet[2]
+                + (end_color.triplet[2] - start_color.triplet[2])
+                * (i / total_chars)
+            )
             colored_line += f"[#{r:02x}{g:02x}{b:02x}]{char}"
         result_lines.append(colored_line)
     return "\n".join(result_lines)
@@ -83,8 +88,11 @@ def local_ai_available() -> bool:
     # Very rare for a server to run on this port AND have this api endpoint.
     url = "http://localhost:11434/api/version"
     r = llm_providers.http_request("get", url, timeout=0.3)
-    return ((r.return_code == 200) and (isinstance(r.response, dict)) and (
-                "version" in r.response))
+    return (
+        (r.return_code == 200)
+        and (isinstance(r.response, dict))
+        and ("version" in r.response)
+    )
 
 
 def is_inside_working_tree() -> bool:

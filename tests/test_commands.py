@@ -9,18 +9,33 @@ from commizard import commands, llm_providers
     [
         (None, None, "print_warning", "No commit message detected. Skipping."),
         ("", None, "print_warning", "No commit message detected. Skipping."),
-        ("Generated msg", (0, "Commit success"), "print_success",
-         "Commit success"),
-        ("Generated msg", (1, "Commit failed"), "print_warning",
-         "Commit failed"),
+        (
+            "Generated msg",
+            (0, "Commit success"),
+            "print_success",
+            "Commit success",
+        ),
+        (
+            "Generated msg",
+            (1, "Commit failed"),
+            "print_warning",
+            "Commit failed",
+        ),
     ],
 )
 @patch("commizard.commands.output.print_warning")
 @patch("commizard.commands.output.print_success")
 @patch("commizard.commands.git_utils.commit")
-def test_handle_commit_req(mock_commit, mock_print_success, mock_print_warning,
-                           gen_message, commit_ret, expected_func, expected_arg,
-                           monkeypatch):
+def test_handle_commit_req(
+    mock_commit,
+    mock_print_success,
+    mock_print_warning,
+    gen_message,
+    commit_ret,
+    expected_func,
+    expected_arg,
+    monkeypatch,
+):
     monkeypatch.setattr(llm_providers, "gen_message", gen_message)
     if commit_ret is not None:
         mock_commit.return_value = commit_ret
@@ -35,18 +50,27 @@ def test_handle_commit_req(mock_commit, mock_print_success, mock_print_warning,
         mock_print_success.assert_not_called()
 
 
-@pytest.mark.parametrize("gen_message, opts, expect_warning", [
-    # No message. warning only
-    (None, [], True),
-    # copied + success
-    ("The sky is blue because of rayleigh scattering", [], False),
-
-])
+@pytest.mark.parametrize(
+    "gen_message, opts, expect_warning",
+    [
+        # No message. warning only
+        (None, [], True),
+        # copied + success
+        ("The sky is blue because of rayleigh scattering", [], False),
+    ],
+)
 @patch("pyperclip.copy")
 @patch("commizard.output.print_success")
 @patch("commizard.output.print_warning")
-def test_copy_command(mock_warn, mock_success, mock_copy, gen_message, opts,
-                      expect_warning, monkeypatch):
+def test_copy_command(
+    mock_warn,
+    mock_success,
+    mock_copy,
+    gen_message,
+    opts,
+    expect_warning,
+    monkeypatch,
+):
     monkeypatch.setattr(llm_providers, "gen_message", gen_message)
     commands.copy_command(opts)
 
@@ -72,14 +96,22 @@ def test_copy_command(mock_warn, mock_success, mock_copy, gen_message, opts,
         # incorrect user input
         (None, [], True, True, False),
         (["gpt-1", "gpt-2"], [], False, True, False),
-    ]
+    ],
 )
 @patch("commizard.llm_providers.output.print_error")
 @patch("commizard.llm_providers.select_model")
 @patch("commizard.llm_providers.init_model_list")
-def test_start_model(mock_init, mock_select, mock_error, monkeypatch,
-                     available_models, opts, expect_init, expect_error,
-                     expect_select):
+def test_start_model(
+    mock_init,
+    mock_select,
+    mock_error,
+    monkeypatch,
+    available_models,
+    opts,
+    expect_init,
+    expect_error,
+    expect_select,
+):
     # set available_models dynamically
     monkeypatch.setattr(llm_providers, "available_models", available_models)
 
@@ -105,14 +137,16 @@ def test_start_model(mock_init, mock_select, mock_error, monkeypatch,
         ([], "-v"),
         (["gpt-1"], "-q"),
         (["gpt-1", "gpt-2", "gpt-3"], "--all-info"),
-    ]
+    ],
 )
 @patch("builtins.print")  # thanks chat-GPT. I never would've found this.
 @patch("commizard.llm_providers.init_model_list")
-def test_print_available_models(mock_init, mock_print, available_models, opts,
-                                monkeypatch):
-    mock_init.side_effect = lambda: setattr(llm_providers, "available_models",
-                                            available_models)
+def test_print_available_models(
+    mock_init, mock_print, available_models, opts, monkeypatch
+):
+    mock_init.side_effect = lambda: setattr(
+        llm_providers, "available_models", available_models
+    )
     commands.print_available_models(opts)
 
     mock_init.assert_called_once()
@@ -156,8 +190,9 @@ def test_generate_message_err(mock_gen, mock_diff, mock_output, monkeypatch):
 @patch("commizard.commands.output.print_generated")
 @patch("commizard.commands.git_utils.get_clean_diff")
 @patch("commizard.commands.llm_providers.generate")
-def test_generate_message_success(mock_gen, mock_diff, mock_output, mock_wrap,
-                                  monkeypatch):
+def test_generate_message_success(
+    mock_gen, mock_diff, mock_output, mock_wrap, monkeypatch
+):
     mock_diff.return_value = "some diff"
     mock_gen.return_value = (0, "The generated commit message")
     monkeypatch.setattr(commands.llm_providers, "generation_prompt", "PROMPT:")
@@ -180,12 +215,13 @@ def test_generate_message_success(mock_gen, mock_diff, mock_output, mock_wrap,
         ("                     commit       ", []),
         ("commit arg            ", ["arg"]),
         ("  commit                  arg1   arg2", ["arg1", "arg2"]),
-    ]
+    ],
 )
 @patch("commizard.commands.handle_commit_req")
 def test_parser_commit(mock_func, user_input, expected_args):
-    with patch.dict("commizard.commands.supported_commands",
-                    {"commit": mock_func}):
+    with patch.dict(
+        "commizard.commands.supported_commands", {"commit": mock_func}
+    ):
         result = commands.parser(user_input)
         assert result == 0
         mock_func.assert_called_once_with(expected_args)
@@ -197,12 +233,13 @@ def test_parser_commit(mock_func, user_input, expected_args):
         ("help", []),
         ("help this-cmd", ["this-cmd"]),
         ("help f'ed up input 😣  😬", ["f'ed", "up", "input", "😣", "😬"]),
-    ]
+    ],
 )
 @patch("commizard.commands.print_help")
 def test_parser_help(mock_func, user_input, expected_args):
-    with patch.dict("commizard.commands.supported_commands",
-                    {"help": mock_func}):
+    with patch.dict(
+        "commizard.commands.supported_commands", {"help": mock_func}
+    ):
         result = commands.parser(user_input)
         assert result == 0
         mock_func.assert_called_once_with(expected_args)
@@ -214,12 +251,11 @@ def test_parser_help(mock_func, user_input, expected_args):
         ("cp src dest", ["src", "dest"]),
         ("cp head", ["head"]),
         (" cp ", []),
-    ]
+    ],
 )
-@patch('commizard.commands.copy_command')
+@patch("commizard.commands.copy_command")
 def test_parser_cp(mock_func, user_input, expected_args):
-    with patch.dict("commizard.commands.supported_commands",
-                    {"cp": mock_func}):
+    with patch.dict("commizard.commands.supported_commands", {"cp": mock_func}):
         result = commands.parser(user_input)
         assert result == 0
         mock_func.assert_called_once_with(expected_args)
@@ -231,12 +267,13 @@ def test_parser_cp(mock_func, user_input, expected_args):
         ("start gpt-4", ["gpt-4"]),
         ("start llama --temp=0.8", ["llama", "--temp=0.8"]),
         ("start         mistral:latest", ["mistral:latest"]),
-    ]
+    ],
 )
-@patch('commizard.commands.start_model')
+@patch("commizard.commands.start_model")
 def test_parser_start(mock_func, user_input, expected_args):
-    with patch.dict("commizard.commands.supported_commands",
-                    {"start": mock_func}):
+    with patch.dict(
+        "commizard.commands.supported_commands", {"start": mock_func}
+    ):
         result = commands.parser(user_input)
         assert result == 0
         mock_func.assert_called_once_with(expected_args)
@@ -248,12 +285,13 @@ def test_parser_start(mock_func, user_input, expected_args):
         ("list", []),
         ("list --all", ["--all"]),
         ("          list             --q", ["--q"]),
-    ]
+    ],
 )
-@patch('commizard.commands.print_available_models')
+@patch("commizard.commands.print_available_models")
 def test_parser_list(mock_func, user_input, expected_args):
-    with patch.dict("commizard.commands.supported_commands",
-                    {"list": mock_func}):
+    with patch.dict(
+        "commizard.commands.supported_commands", {"list": mock_func}
+    ):
         result = commands.parser(user_input)
         assert result == 0
         mock_func.assert_called_once_with(expected_args)
@@ -266,12 +304,14 @@ def test_parser_list(mock_func, user_input, expected_args):
         ("gen --length=100", ["--length=100"]),
         ("generate --style=funny", ["--style=funny"]),
         ("generate", []),
-    ]
+    ],
 )
-@patch('commizard.commands.generate_message')
+@patch("commizard.commands.generate_message")
 def test_parser_gen(mock_func, user_input, expected_args):
-    with patch.dict("commizard.commands.supported_commands",
-                    {"gen": mock_func, "generate": mock_func}):
+    with patch.dict(
+        "commizard.commands.supported_commands",
+        {"gen": mock_func, "generate": mock_func},
+    ):
         result = commands.parser(user_input)
         assert result == 0
         mock_func.assert_called_once_with(expected_args)
@@ -282,27 +322,22 @@ def test_parser_gen(mock_func, user_input, expected_args):
     [
         "nonsense",
         "blargh --x",
-    ]
+    ],
 )
 def test_parser_unrecognized(user_input):
     result = commands.parser(user_input)
     assert result == 1
 
 
-@pytest.mark.parametrize(
-    "cmd",
-    [
-        "clear", "cls"
-    ]
-)
+@pytest.mark.parametrize("cmd", ["clear", "cls"])
 def test_parser_clear_and_cls(monkeypatch, cmd):
     called = {"v": False}
 
-    def fake(_=None): called["v"] = True
+    def fake(_=None):
+        called["v"] = True
 
     monkeypatch.setattr(commands, "cmd_clear", fake)
-    with patch.dict("commizard.commands.supported_commands",
-                    {cmd: fake}):
+    with patch.dict("commizard.commands.supported_commands", {cmd: fake}):
         result = commands.parser(cmd)
         assert result == 0
         assert called["v"] is True
