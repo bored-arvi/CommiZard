@@ -13,7 +13,6 @@ from commizard import llm_providers as llm
         ("created", 201, False, ""),
         ("empty", 0, False, ""),
         ({"reason": "not found"}, 404, False, ""),
-
         # Error cases
         ("404", -1, True, "can't connect to the server"),
         ("success", -2, True, "HTTP error occurred"),
@@ -21,8 +20,9 @@ from commizard import llm_providers as llm
         ("", -4, True, "the request timed out"),
     ],
 )
-def test_HttpResponse(response, return_code, expected_is_error,
-                      expected_err_message):
+def test_HttpResponse(
+    response, return_code, expected_is_error, expected_err_message
+):
     http_resp = llm.HttpResponse(response, return_code)
 
     assert http_resp.response == response
@@ -36,23 +36,48 @@ def test_HttpResponse(response, return_code, expected_is_error,
     "expected_exception",
     [
         # --- Success cases ---
-        ("GET", {"json": {"key": "val"}, "status": 200}, None, {"key": "val"},
-         200, None),
-        ("GET", {"json": requests.exceptions.JSONDecodeError("err", "doc", 0),
-                 "text": "plain text", "status": 200}, None, "plain text", 200,
-         None),
-        ("POST", {"json": {"ok": True}, "status": 201}, None, {"ok": True}, 201,
-         None),
-        ("GET", {"json": {"key": "val"}, "status": 503}, None, {"key": "val"},
-         503, None),
-
+        (
+            "GET",
+            {"json": {"key": "val"}, "status": 200},
+            None,
+            {"key": "val"},
+            200,
+            None,
+        ),
+        (
+            "GET",
+            {
+                "json": requests.exceptions.JSONDecodeError("err", "doc", 0),
+                "text": "plain text",
+                "status": 200,
+            },
+            None,
+            "plain text",
+            200,
+            None,
+        ),
+        (
+            "POST",
+            {"json": {"ok": True}, "status": 201},
+            None,
+            {"ok": True},
+            201,
+            None,
+        ),
+        (
+            "GET",
+            {"json": {"key": "val"}, "status": 503},
+            None,
+            {"key": "val"},
+            503,
+            None,
+        ),
         # --- Error branches ---
         ("GET", None, requests.ConnectionError, None, -1, None),
         ("GET", None, requests.HTTPError, None, -2, None),
         ("GET", None, requests.TooManyRedirects, None, -3, None),
         ("GET", None, requests.Timeout, None, -4, None),
         ("GET", None, requests.RequestException, None, -5, None),
-
         # --- Invalid methods ---
         ("PUT", None, None, None, None, NotImplementedError),
         ("FOO", None, None, None, None, ValueError),
@@ -60,8 +85,16 @@ def test_HttpResponse(response, return_code, expected_is_error,
 )
 @patch("requests.get")
 @patch("requests.post")
-def test_http_request(mock_post, mock_get, method, return_value, side_effect,
-                      expected_response, expected_code, expected_exception):
+def test_http_request(
+    mock_post,
+    mock_get,
+    method,
+    return_value,
+    side_effect,
+    expected_response,
+    expected_code,
+    expected_exception,
+):
     # pick which mock to configure
     mock_target = None
     if method.upper() == "GET":
@@ -109,8 +142,13 @@ def test_init_model_list(mock_list, monkeypatch):
 )
 @patch("commizard.llm_providers.output.print_success")
 @patch("commizard.llm_providers.load_model")
-def test_select_model(mock_load_model, mock_print_success, monkeypatch,
-                      load_return, expect_success):
+def test_select_model(
+    mock_load_model,
+    mock_print_success,
+    monkeypatch,
+    load_return,
+    expect_success,
+):
     monkeypatch.setattr(llm, "selected_model", None)
     mock_load_model.return_value = load_return
 
@@ -131,19 +169,27 @@ def test_select_model(mock_load_model, mock_print_success, monkeypatch,
     [
         # http_request returns error
         (True, None, [], True),
-
         # http_request succeeds with models
-        (False, {"models": [{"name": "model1"}, {"name": "model2"}]},
-         ["model1", "model2"], False),
-
+        (
+            False,
+            {"models": [{"name": "model1"}, {"name": "model2"}]},
+            ["model1", "model2"],
+            False,
+        ),
         # http_request succeeds but no models
         (False, {"models": []}, [], False),
     ],
 )
 @patch("commizard.llm_providers.output.print_error")
 @patch("commizard.llm_providers.http_request")
-def test_list_locals(mock_http_request, mock_print_error,
-                     is_error, response, expected_result, expect_error):
+def test_list_locals(
+    mock_http_request,
+    mock_print_error,
+    is_error,
+    response,
+    expected_result,
+    expect_error,
+):
     fake_response = Mock()
     fake_response.is_error.return_value = is_error
     fake_response.response = response
@@ -153,12 +199,13 @@ def test_list_locals(mock_http_request, mock_print_error,
     assert result == expected_result
     if expect_error:
         mock_print_error.assert_called_once_with(
-            "failed to list available local AI models. Is ollama running?")
+            "failed to list available local AI models. Is ollama running?"
+        )
     else:
         mock_print_error.assert_not_called()
-    mock_http_request.assert_called_once_with("GET",
-                                              "http://localhost:11434/api/tags",
-                                              timeout=0.3)
+    mock_http_request.assert_called_once_with(
+        "GET", "http://localhost:11434/api/tags", timeout=0.3
+    )
 
 
 @pytest.mark.parametrize(
@@ -170,8 +217,15 @@ def test_list_locals(mock_http_request, mock_print_error,
 )
 @patch("commizard.llm_providers.output.print_error")
 @patch("commizard.llm_providers.http_request")
-def test_load_model(mock_http_request, mock_print_error, monkeypatch, is_error,
-                    response, expect_error, expected_result):
+def test_load_model(
+    mock_http_request,
+    mock_print_error,
+    monkeypatch,
+    is_error,
+    response,
+    expect_error,
+    expected_result,
+):
     fake_response = Mock()
     fake_response.is_error.return_value = is_error
     fake_response.response = response
@@ -179,12 +233,15 @@ def test_load_model(mock_http_request, mock_print_error, monkeypatch, is_error,
     monkeypatch.setattr(llm, "selected_model", "patched_model")
     result = llm.load_model("test_model")
 
-    mock_http_request.assert_called_once_with("POST",
-                                              "http://localhost:11434/api/generate",
-                                              json={"model": "patched_model"})
+    mock_http_request.assert_called_once_with(
+        "POST",
+        "http://localhost:11434/api/generate",
+        json={"model": "patched_model"},
+    )
     if expect_error:
         mock_print_error.assert_called_once_with(
-            "Failed to load test_model. Is ollama running?")
+            "Failed to load test_model. Is ollama running?"
+        )
     else:
         mock_print_error.assert_not_called()
     assert result == expected_result
@@ -195,8 +252,10 @@ def test_unload_model(mock_http_request, monkeypatch):
     monkeypatch.setattr(llm, "selected_model", "mymodel")
     llm.unload_model()
     mock_http_request.assert_called_once_with(
-        "POST", "http://localhost:11434/api/generate", json={"model": "mymodel",
-                                                             "keep_alive": 0})
+        "POST",
+        "http://localhost:11434/api/generate",
+        json={"model": "mymodel", "keep_alive": 0},
+    )
     assert llm.selected_model is None
 
 
@@ -204,22 +263,32 @@ def test_unload_model(mock_http_request, monkeypatch):
     "is_error, return_code, response_dict, err_msg, expected",
     [
         (
-                True, -1, None, "can't connect to the server",
-                (1, "can't connect to the server")
+            True,
+            -1,
+            None,
+            "can't connect to the server",
+            (1, "can't connect to the server"),
         ),
+        (False, 200, {"response": "Hello world"}, None, (0, "Hello world")),
         (
-                False, 200, {"response": "Hello world"}, None,
-                (0, "Hello world")
-        ),
-        (
-                False, 500, {"error": "ignored"}, None,
-                (500, "Unknown status code: 500")
+            False,
+            500,
+            {"error": "ignored"},
+            None,
+            (500, "Unknown status code: 500"),
         ),
     ],
 )
 @patch("commizard.llm_providers.http_request")
-def test_generate(mock_http_request, is_error, return_code, response_dict,
-                  err_msg, expected, monkeypatch):
+def test_generate(
+    mock_http_request,
+    is_error,
+    return_code,
+    response_dict,
+    err_msg,
+    expected,
+    monkeypatch,
+):
     fake_response = MagicMock()
     fake_response.is_error.return_value = is_error
     fake_response.return_code = return_code
@@ -234,7 +303,7 @@ def test_generate(mock_http_request, is_error, return_code, response_dict,
     mock_http_request.assert_called_once_with(
         "POST",
         "http://localhost:11434/api/generate",
-        json={"model": "mymodel", "prompt": "Test prompt", "stream": False}
+        json={"model": "mymodel", "prompt": "Test prompt", "stream": False},
     )
     assert result == expected
 
@@ -245,12 +314,13 @@ def test_generate(mock_http_request, is_error, return_code, response_dict,
         ("modelA", {"done_reason": "load"}, True),
         ("modelB", {"done_reason": "error"}, False),
         ("modelC", {}, False),
-    ]
+    ],
 )
 @patch("commizard.llm_providers.load_model")
 @patch("commizard.llm_providers.output.print_success")
-def test_select_model(mock_print, mock_load, select_str, load_val,
-                      should_print, monkeypatch):
+def test_select_model(
+    mock_print, mock_load, select_str, load_val, should_print, monkeypatch
+):
     monkeypatch.setattr(llm, "selected_model", None)
 
     mock_load.return_value = load_val

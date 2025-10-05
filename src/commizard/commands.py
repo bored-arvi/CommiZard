@@ -45,8 +45,9 @@ def copy_command(opts: list[str]) -> None:
         opts: list of options following the command
     """
     if llm_providers.gen_message == None:
-        output.print_warning("No generated message found."
-                             " Please run 'generate' first.")
+        output.print_warning(
+            "No generated message found. Please run 'generate' first."
+        )
         return
 
     pyperclip.copy(llm_providers.gen_message)
@@ -120,7 +121,7 @@ supported_commands = {
     "gen": generate_message,
     "generate": generate_message,
     "clear": cmd_clear,
-    "cls": cmd_clear
+    "cls": cmd_clear,
 }
 
 

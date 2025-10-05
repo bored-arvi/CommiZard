@@ -19,12 +19,6 @@ Here are some ways you can help improve this project:
 
 ## ️ Pull Requests (Code Contributions)
 
-1. Fork the repo, then clone your fork.
-2. Create a new branch: `git checkout -b my-feature-or-fix`
-3. Code your fix/feature. try to match existing style.
-4. Write a clear commit message (ironic, right? 😄).
-5. Push to your fork and when you're done, open a PR against `master`.
-
 ✅ I'll review it as soon as I can!
 ✅ Even small fixes like typos, docs, or tests are welcome!
 
@@ -53,12 +47,12 @@ Before committing your changes:
 
 1. Format your code with Black:
    ```bash
-   black src/ tests/
+   ruff format .
    ```
 
 2. Lint with Ruff:
    ```bash
-   ruff check src/ tests/
+   ruff check .
    ```
 
 3. Type check with mypy (optional but recommended):
@@ -77,8 +71,11 @@ Before committing your changes:
    ```
 
 > [!TIP]
-> Run `black .` and `ruff check .` before every commit to keep code style
+> Run `ruff format .` and `ruff check .` before every commit to keep code style
 > consistent!
+
+✅ I'll review your PR as soon as I can!
+✅ Even small fixes like typos, docs, or tests are welcome!
 
 ## 🧪 Testing & Quality
 

@@ -11,37 +11,42 @@ from commizard import start
     "text, start_color, end_color, expected_substrings",
     [
         (
-                "Hi",
-                Color.from_rgb(255, 0, 0),  # red
-                Color.from_rgb(0, 0, 255),  # blue
-                ["[#ff0000]H", "[#7f007f]i"],
+            "Hi",
+            Color.from_rgb(255, 0, 0),  # red
+            Color.from_rgb(0, 0, 255),  # blue
+            ["[#ff0000]H", "[#7f007f]i"],
         ),
         (
-                "OK",
-                Color.from_rgb(0, 255, 0),  # green
-                Color.from_rgb(0, 255, 0),  # same color
-                ["[#00ff00]O", "[#00ff00]K"],
+            "OK",
+            Color.from_rgb(0, 255, 0),  # green
+            Color.from_rgb(0, 255, 0),  # same color
+            ["[#00ff00]O", "[#00ff00]K"],
         ),
         (
-                "X",
-                Color.from_rgb(0, 0, 0),  # black
-                Color.from_rgb(255, 255, 255),  # white
-                ["[#000000]X"],
+            "X",
+            Color.from_rgb(0, 0, 0),  # black
+            Color.from_rgb(255, 255, 255),  # white
+            ["[#000000]X"],
         ),
         (
-                "Yo\nHi",
-                Color.from_rgb(0, 0, 255),  # blue
-                Color.from_rgb(255, 0, 0),  # red
-                ["[#0000ff]Y", "[#7f007f]o", "[#0000ff]H", "[#7f007f]i"],
-                # checks gradient + newline preserved
+            "Yo\nHi",
+            Color.from_rgb(0, 0, 255),  # blue
+            Color.from_rgb(255, 0, 0),  # red
+            ["[#0000ff]Y", "[#7f007f]o", "[#0000ff]H", "[#7f007f]i"],
+            # checks gradient + newline preserved
         ),
         # Case 6: Longer string gradient black → white
         (
-                "ABCDE",
-                Color.from_rgb(0, 0, 0),  # black
-                Color.from_rgb(255, 255, 255),  # white
-                ["[#000000]A", "[#333333]B", "[#666666]C", "[#999999]D",
-                 "[#cccccc]E"],
+            "ABCDE",
+            Color.from_rgb(0, 0, 0),  # black
+            Color.from_rgb(255, 255, 255),  # white
+            [
+                "[#000000]A",
+                "[#333333]B",
+                "[#666666]C",
+                "[#999999]D",
+                "[#cccccc]E",
+            ],
         ),
     ],
 )
@@ -59,12 +64,15 @@ def test_gradient_text(text, start_color, end_color, expected_substrings):
             assert f"]{char}" in result
 
 
-@pytest.mark.parametrize("color_system, expect_gradient", [
-    ("truecolor", True),
-    ("256", True),
-    ("windows", False),
-    (None, False),
-])
+@pytest.mark.parametrize(
+    "color_system, expect_gradient",
+    [
+        ("truecolor", True),
+        ("256", True),
+        ("windows", False),
+        (None, False),
+    ],
+)
 def test_print_welcome(monkeypatch, capsys, color_system, expect_gradient):
     # class to patch instead of rich.Console() class
     class DummyConsole:
@@ -88,16 +96,20 @@ def test_print_welcome(monkeypatch, capsys, color_system, expect_gradient):
         assert "[bold purple]" in captured
 
 
-@pytest.mark.parametrize("git_path, expected", [
-    ("/usr/bin/git", True),
-    ("C:\\Program Files\\Git\\cmd\\git.EXE", True),
-    (None, False),
-    ("some/other/path/maybe/in/macOS", True),
-])
+@pytest.mark.parametrize(
+    "git_path, expected",
+    [
+        ("/usr/bin/git", True),
+        ("C:\\Program Files\\Git\\cmd\\git.EXE", True),
+        (None, False),
+        ("some/other/path/maybe/in/macOS", True),
+    ],
+)
 def test_check_git_installed(monkeypatch, git_path, expected):
     # Monkeypatch shutil.which to simulate environment
-    monkeypatch.setattr(shutil, "which",
-                        lambda cmd: git_path if cmd == "git" else None)
+    monkeypatch.setattr(
+        shutil, "which", lambda cmd: git_path if cmd == "git" else None
+    )
 
     assert start.check_git_installed() is expected
 
@@ -106,8 +118,11 @@ def test_check_git_installed(monkeypatch, git_path, expected):
     "ret_code, resp, expected",
     [
         (200, {"version": "something"}, True),
-        (200, {"version": "something", 123: 456, "another_key": "Owlama", 2: 5},
-         True),
+        (
+            200,
+            {"version": "something", 123: 456, "another_key": "Owlama", 2: 5},
+            True,
+        ),
         (404, {"error": "something"}, False),
         (200, {"version": 3.1415}, True),
         (200, {"another_api_result": 3.1415}, False),
@@ -115,7 +130,7 @@ def test_check_git_installed(monkeypatch, git_path, expected):
         (-1, {"version": "something"}, False),
         (200, "not a dict", False),
         (69420, 12345, False),
-    ]
+    ],
 )
 @patch("commizard.start.llm_providers.http_request")
 def test_local_ai_available(mock_req, ret_code, resp, expected):

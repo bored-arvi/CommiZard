@@ -32,11 +32,10 @@ keywords = [
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.0.0",
-    "pytest-cov>=4.0.0",
-    "black>=23.0.0",
-    "ruff>=0.1.0",
-    "mypy>=1.0.0",
+    "pytest>=7.0.0,<=8.4.2",
+    "pytest-cov>=4.0.0,<=7.0.0",
+    "ruff>=0.1.0,<=0.13.3",
+    "mypy>=1.0.0,<=1.18.2",
 ]
 
 [project.urls]
@@ -52,3 +51,41 @@ path = "src/commizard/__init__.py"
 [tool.pytest.ini_options]
 pythonpath = "src"
 testpaths = "tests"
+
+[tool.ruff]
+line-length = 80
+
+[tool.ruff.lint]
+extend-select = [
+    "E",   # Pycodestyle errors (style issues)
+    "W",   # Pycodestyle warnings (style issues)
+    "I",   # isort – import ordering checks
+    "N",   # PEP8 Naming – naming conventions
+    "UP",  # Pyupgrade – upgrades syntax to newer Python versions
+    "S",   # Flake8-bandit – security issues
+    "BLE", # Flake8-blind-except – flags bare excepts
+    "B",   # Flake8-bugbear – common bug patterns
+    "A",   # Flake8-builtins – misuse of Python built-in names
+    "C4",  # Flake8-comprehensions – best practices in comprehensions
+    "PIE", # Flake8-pie – Python improvement suggestions
+    "RSE", # Flake8-raise – proper raise statement usage
+    "SLF", # Flake8-self – flags instance methods that don't use self
+    "SIM", # Flake8-simplify – code simplification hints
+    "TC",  # Flake8-type-checking – proper import of typing in type checks
+    "PTH", # Flake8-use-pathlib – encourages pathlib over os.path
+    "RUF", # Ruff-specific rules – additional Ruff checks
+]
+
+ignore = [
+    "S311", # Standard PRNGs are not suitable for security/cryptographic purposes
+    "E501", # Checks for lines that exceed the specified maximum character length.
+]
+
+[tool.ruff.format]
+line-ending = "lf"
+docstring-code-format = true
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/*" = [
+    "S101",  # Checks for uses of the assert keyword
+]
