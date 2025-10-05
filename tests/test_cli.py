@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 import pytest
+
 from commizard import cli
 
 
@@ -87,7 +88,7 @@ def test_main(
     mock_check_git_installed.return_value = git_installed
     mock_is_inside_work_tree.return_value = inside_work_tree
     mock_local_ai.return_value = local_ai_avail
-    mock_input.side_effect = user_inputs + ["exit"]
+    mock_input.side_effect = [*user_inputs, "exit"]
     cli.main()
     mock_args.assert_called_once()
     mock_check_git_installed.assert_called_once()

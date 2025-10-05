@@ -1,10 +1,10 @@
 import pytest
 
 from commizard.output import (
-    print_success,
     print_error,
-    print_warning,
     print_generated,
+    print_success,
+    print_warning,
     wrap_text,
 )
 

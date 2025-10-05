@@ -3,8 +3,7 @@ import shutil
 from rich.color import Color
 from rich.console import Console
 
-from . import git_utils
-from . import llm_providers
+from . import git_utils, llm_providers
 
 text_banner = r"""
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗██╗███████╗ █████╗ ██████╗ ██████╗
@@ -36,6 +35,8 @@ def gradient_text(text: str, start_color: Color, end_color: Color) -> str:
     lines = text.splitlines()
     total_chars = max(len(line) for line in lines)
     result_lines = []
+    if not start_color.triplet or not end_color.triplet:
+        return text  # Return original text if colors are not valid
     for line in lines:
         colored_line = ""
         for i, char in enumerate(line):
@@ -78,7 +79,7 @@ def check_git_installed() -> bool:
     """
     Check if the git package is installed.
     """
-    return shutil.which("git") != None
+    return shutil.which("git") is not None
 
 
 def local_ai_available() -> bool:

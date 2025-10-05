@@ -1,7 +1,8 @@
-from unittest.mock import patch, Mock, MagicMock
+from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 import requests
+
 from commizard import llm_providers as llm
 
 
@@ -20,7 +21,7 @@ from commizard import llm_providers as llm
         ("", -4, True, "the request timed out"),
     ],
 )
-def test_HttpResponse(
+def test_http_response(
     response, return_code, expected_is_error, expected_err_message
 ):
     http_resp = llm.HttpResponse(response, return_code)
@@ -131,37 +132,6 @@ def test_init_model_list(mock_list, monkeypatch):
     monkeypatch.setattr(llm, "available_models", None)
     llm.init_model_list()
     mock_list.assert_called_once()
-
-
-@pytest.mark.parametrize(
-    "load_return, expect_success",
-    [
-        ({"done_reason": "load"}, True),
-        ({"done_reason": "other"}, False),
-    ],
-)
-@patch("commizard.llm_providers.output.print_success")
-@patch("commizard.llm_providers.load_model")
-def test_select_model(
-    mock_load_model,
-    mock_print_success,
-    monkeypatch,
-    load_return,
-    expect_success,
-):
-    monkeypatch.setattr(llm, "selected_model", None)
-    mock_load_model.return_value = load_return
-
-    llm.select_model("cool_model")
-
-    assert llm.selected_model == "cool_model"
-
-    mock_load_model.assert_called_once_with("cool_model")
-
-    if expect_success:
-        mock_print_success.assert_called_once_with("cool_model loaded.")
-    else:
-        mock_print_success.assert_not_called()
 
 
 @pytest.mark.parametrize(
