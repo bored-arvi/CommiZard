@@ -62,7 +62,6 @@ extend-select = [
     "C90", # McCabe – complexity metric for functions
     "I", # isort – import ordering checks
     "N", # PEP8 Naming – naming conventions
-    "D", # Pydocstyle – docstring formatting
     "UP", # Pyupgrade – upgrades syntax to newer Python versions
     "YTT", # Flake8-2020 – checks for Python 2020 best practices
     "ANN", # Flake8-annotations – enforces type annotation style
@@ -114,11 +113,7 @@ extend-select = [
 ]
 
 ignore = [
-    "D1", # Pydocstyle - missing docstring in public module, class, or function
     "FBT003", # Flake8-boolean-trap - boolean position value in function call
-    "D203", # Pydocstyle - one blank line required before class docstring
-    "D212", # Pydocstyle - summary line should be immediately after the opening quotes.
-    "D401", # Pydocstyle - Checks for docstring first lines that are not in an imperative mood.
     "S311", # Flake8-bandit - Standard pseudo-random generators are not suitable for security/cryptographic purposes
     "PERF401", # Perflint - Checks for for loops that can be replaced by a list comprehension.
     "RET504", # Flake8-return - Checks for variable assignments that immediately precede a return of the assigned variable.
@@ -131,4 +126,3 @@ ignore = [
 [tool.ruff.format]
 line-ending = "lf"
 docstring-code-format = true
-skip-magic-trailing-comma = true
