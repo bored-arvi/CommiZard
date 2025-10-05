@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 import pytest
+
 from commizard import commands, llm_providers
 
 

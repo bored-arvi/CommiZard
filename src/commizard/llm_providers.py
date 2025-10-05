@@ -1,10 +1,11 @@
-import requests
+import requests  # type: ignore[import-untyped]
 
 from . import output
 
-available_models = None
-selected_model = None
-gen_message = None
+available_models: list[str] | None = None
+selected_model: str | None = None
+gen_message: str | None = None
+TIMEOUT = 120  # seconds
 
 # Ironically enough, I've used Chat-GPT to write a prompt to prompt other
 # Models (or even itself in the future!)
@@ -51,12 +52,12 @@ def http_request(method: str, url: str, **kwargs) -> HttpResponse:
     resp = None
     try:
         if method.upper() == "GET":
-            r = requests.get(url, **kwargs)
+            r = requests.get(url, **kwargs, timeout=TIMEOUT)
         elif method.upper() == "POST":
-            r = requests.post(url, **kwargs)
+            r = requests.post(url, **kwargs, timeout=TIMEOUT)
 
         else:
-            if method.upper() in ("PUT", "DELETE", "PUT"):
+            if method.upper() in ("PUT", "DELETE", "PATCH"):
                 raise NotImplementedError(f"{method} is not implemented.")
             else:
                 raise ValueError(f"{method} is not a valid method.")
@@ -141,7 +142,11 @@ def unload_model() -> None:
     url = "http://localhost:11434/api/generate"
     payload = {"model": selected_model, "keep_alive": 0}
     selected_model = None
-    out = http_request("POST", url, json=payload)
+    response = http_request("POST", url, json=payload)
+    if response.is_error():
+        output.print_error(f"Failed to unload model: {response.err_message()}")
+    else:
+        output.print_success("Model unloaded successfully.")
 
 
 # TODO: see issues #11 and #15
@@ -170,4 +175,3 @@ def regenerate(prompt: str) -> None:
     """
     regenerate commit message based on prompt
     """
-    pass

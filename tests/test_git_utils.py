@@ -2,6 +2,7 @@ import subprocess
 from unittest.mock import patch
 
 import pytest
+
 from commizard import git_utils
 
 
@@ -50,26 +51,33 @@ from commizard import git_utils
         ),
     ],
 )
-@patch("subprocess.run")
+@patch("commizard.git_utils.subprocess.run")
 def test_run_git_command(mock_run, args, mock_result, raised_exception):
     if raised_exception:
         mock_run.side_effect = raised_exception
+        with pytest.raises(
+            type(raised_exception)
+        ):  # ensure the right exception is raised
+            git_utils.run_git_command(args)
+        mock_run.assert_called_once_with(
+            ["git", *args],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="ignore",
+        )
+        return
 
-    # if the test case didn't raise an exception
-    else:
-        mock_run.return_value = mock_result
-
+    # success path
+    mock_run.return_value = mock_result
     result = git_utils.run_git_command(args)
-
-    # was subprocess.run called with correct arguments
     mock_run.assert_called_once_with(
-        ["git"] + args,
+        ["git", *args],
         capture_output=True,
         text=True,
         encoding="utf-8",
         errors="ignore",
     )
-
     assert result is mock_result
 
 

@@ -1,9 +1,7 @@
 import sys
 
 from . import __version__ as version
-from . import commands
-from . import output
-from . import start
+from . import commands, output, start
 
 help_msg = """
 Commit writing wizard
