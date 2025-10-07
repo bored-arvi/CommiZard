@@ -15,14 +15,19 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Updated documents  (README.md and CONTRIBUTING.md)
+- Updated documents  (README.md and CONTRIBUTING.md) (thanks 
+  [@ryleymao](https://github.com/ryleymao))
 - Rewrote the generation portion for clearer control flow and behavior
+- Standardize development with linters and the ruff formatter (thanks
+  [@Aisha630](https://github.com/Aisha630))
 
 ### Fixed
 
 - Fixed blank input crashing the program
 - Fixed empty start argument crashing the program
 - Fixed crashes from invalid uses of `gen`/`generate`
+- Fixed possible incorrect behavior with executing git diff (thanks
+  [@Aisha630](https://github.com/Aisha630))
 
 ## [0.1.0] - 2025/10/01
 
