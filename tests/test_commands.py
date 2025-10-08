@@ -228,10 +228,7 @@ def test_cmd_clear(mock_os, mock_exec, mock_write, mock_flush, os, has_clear):
     mock_os.return_value = os
     mock_exec.return_value = int(not has_clear)
     commands.cmd_clear([])
-    if os == "Windows":
-        cmd = "cls"
-    else:
-        cmd = "clear"
+    cmd = "cls" if os == "Windows" else "clear"
     mock_exec.assert_called_once_with(cmd)
     if not has_clear:
         mock_write.assert_called_once()
