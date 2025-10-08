@@ -207,6 +207,7 @@ def test_generate_message_success(
     mock_output.assert_called_once_with("WRAPPED(The generated commit message)")
     assert llm_providers.gen_message == "WRAPPED(The generated commit message)"
 
+
 @pytest.mark.parametrize(
     "os, has_clear",
     [
@@ -217,7 +218,7 @@ def test_generate_message_success(
         ("Unix", True),
         ("Obscure chinese spyware", False),
         ("Windows", False),
-    ]
+    ],
 )
 @patch("commizard.commands.os.stdout.flush")
 @patch("commizard.commands.os.stdout.write")
@@ -234,6 +235,7 @@ def test_cmd_clear(mock_os, mock_exec, mock_write, mock_flush, os, has_clear):
     if not has_clear:
         mock_write.assert_called_once()
         mock_flush.assert_called_once()
+
 
 @pytest.mark.parametrize(
     "user_input, expected_args",

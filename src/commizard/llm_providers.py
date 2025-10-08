@@ -51,9 +51,9 @@ def http_request(method: str, url: str, **kwargs) -> HttpResponse:
     resp = None
     try:
         if method.upper() == "GET":
-            r = requests.get(url, **kwargs) # noqa: S113
+            r = requests.get(url, **kwargs)  # noqa: S113
         elif method.upper() == "POST":
-            r = requests.post(url, **kwargs) # noqa: S113
+            r = requests.post(url, **kwargs)  # noqa: S113
 
         else:
             if method.upper() in ("PUT", "DELETE", "PATCH"):

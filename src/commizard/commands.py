@@ -105,7 +105,7 @@ def generate_message(opts: list[str]) -> None:
     output.print_generated(wrapped_res)
 
 
-def cmd_clear(_args=None):
+def cmd_clear(opts: list[str]) -> None:
     """
     Clear terminal screen (Windows/macOS/Linux).
     """
