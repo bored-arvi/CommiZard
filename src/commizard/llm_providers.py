@@ -87,11 +87,11 @@ def init_model_list() -> None:
     available_models = list_locals()
 
 
+# TODO: see issue #10
 def list_locals() -> list[str]:
     """
     return a list of available local AI models
     """
-    # TODO: see issue #10
     url = "http://localhost:11434/api/tags"
     r = http_request("GET", url, timeout=0.3)
     if r.is_error():
