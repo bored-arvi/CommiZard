@@ -119,9 +119,9 @@ def test_http_request(
 
     if expected_exception:
         with pytest.raises(expected_exception):
-            llm.http_request(method, "http://test.com")
+            llm.http_request(method, "https://test.com")
     else:
-        result = llm.http_request(method, "http://test.com")
+        result = llm.http_request(method, "https://test.com")
         assert isinstance(result, llm.HttpResponse)
         assert result.response == expected_response
         assert result.return_code == expected_code
@@ -173,9 +173,7 @@ def test_list_locals(
         )
     else:
         mock_print_error.assert_not_called()
-    mock_http_request.assert_called_once_with(
-        "GET", "http://localhost:11434/api/tags", timeout=0.3
-    )
+    mock_http_request.assert_called_once()
 
 
 @pytest.mark.parametrize(

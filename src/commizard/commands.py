@@ -3,7 +3,7 @@ import platform
 import sys
 from collections.abc import Callable
 
-import pyperclip  # type: ignore[import-untyped]
+import pyperclip
 
 from . import git_utils, llm_providers, output
 
