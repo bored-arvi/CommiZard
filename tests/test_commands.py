@@ -135,9 +135,9 @@ def test_start_model(
 @pytest.mark.parametrize(
     "available_models, opts",
     [
-        ([], "-v"),
-        (["gpt-1"], "-q"),
-        (["gpt-1", "gpt-2", "gpt-3"], "--all-info"),
+        ([], ["-v"]),
+        (["gpt-1"], ["-q"]),
+        (["gpt-1", "gpt-2", "gpt-3"], ["--all-info"]),
     ],
 )
 @patch("builtins.print")  # thanks chat-GPT. I never would've found this.
@@ -207,6 +207,33 @@ def test_generate_message_success(
     mock_output.assert_called_once_with("WRAPPED(The generated commit message)")
     assert llm_providers.gen_message == "WRAPPED(The generated commit message)"
 
+@pytest.mark.parametrize(
+    "os, has_clear",
+    [
+        ("Windows", True),
+        ("Linux", True),
+        ("Darwin", True),
+        ("Freebsd", True),
+        ("Unix", True),
+        ("Obscure chinese spyware", False),
+        ("Windows", False),
+    ]
+)
+@patch("commizard.commands.os.stdout.flush")
+@patch("commizard.commands.os.stdout.write")
+@patch("commizard.commands.os.system")
+@patch("commizard.commands.platform.system")
+def test_cmd_clear(mock_os, mock_exec, mock_write, mock_flush, os, has_clear):
+    mock_os.return_value = os
+    mock_exec.return_value = int(not has_clear)
+    if os == "Windows":
+        cmd = "cls"
+    else:
+        cmd = "clear"
+    mock_exec.assert_called_once_with(cmd)
+    if not has_clear:
+        mock_write.assert_called_once()
+        mock_flush.assert_called_once()
 
 @pytest.mark.parametrize(
     "user_input, expected_args",
