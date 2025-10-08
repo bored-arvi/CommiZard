@@ -220,13 +220,14 @@ def test_generate_message_success(
         ("Windows", False),
     ],
 )
-@patch("commizard.commands.os.stdout.flush")
-@patch("commizard.commands.os.stdout.write")
+@patch("commizard.commands.sys.stdout.flush")
+@patch("commizard.commands.sys.stdout.write")
 @patch("commizard.commands.os.system")
 @patch("commizard.commands.platform.system")
 def test_cmd_clear(mock_os, mock_exec, mock_write, mock_flush, os, has_clear):
     mock_os.return_value = os
     mock_exec.return_value = int(not has_clear)
+    commands.cmd_clear([])
     if os == "Windows":
         cmd = "cls"
     else:
