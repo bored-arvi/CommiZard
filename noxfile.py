@@ -1,7 +1,8 @@
 import nox
 
+venv: str = "uv|virtualenv"
 
-@nox.session
+@nox.session(reuse_venv=True, venv_backend=venv)
 def install(session):
     """
     Set up the development environment.
@@ -9,7 +10,7 @@ def install(session):
     session.install("-e", ".[dev]")
 
 
-@nox.session
+@nox.session(reuse_venv=True, venv_backend=venv)
 def lint(session):
     """
     ruff check . && mypy .
@@ -19,7 +20,7 @@ def lint(session):
     session.run("mypy", ".")
 
 
-@nox.session
+@nox.session(reuse_venv=True, venv_backend=venv)
 def test(session):
     """
     pytest
@@ -28,7 +29,7 @@ def test(session):
     session.run("pytest")
 
 
-@nox.session
+@nox.session(reuse_venv=True, venv_backend=venv)
 def format(session):
     """
     ruff format .
