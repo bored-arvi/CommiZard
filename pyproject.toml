@@ -89,3 +89,10 @@ docstring-code-format = true
 "**/tests/*" = [
     "S101",  # Checks for uses of the assert keyword
 ]
+
+[[tool.mypy.overrides]]
+module = [
+    "requests",
+    "pyperclip",
+]
+ignore_missing_imports = true

@@ -3,7 +3,7 @@ import platform
 import sys
 from collections.abc import Callable
 
-import pyperclip  # type: ignore[import-untyped]
+import pyperclip
 
 from . import git_utils, llm_providers, output
 
@@ -105,7 +105,7 @@ def generate_message(opts: list[str]) -> None:
     output.print_generated(wrapped_res)
 
 
-def cmd_clear(_args=None):
+def cmd_clear(opts: list[str]) -> None:
     """
     Clear terminal screen (Windows/macOS/Linux).
     """

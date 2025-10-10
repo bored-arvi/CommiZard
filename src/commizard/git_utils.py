@@ -80,6 +80,4 @@ def get_clean_diff() -> str:
     Get the current git diff, sanitized for LLM consumption.
     """
     diff = get_diff()
-    if diff is None:
-        return ""
     return clean_diff(diff)

@@ -26,7 +26,7 @@ def handle_args():
         sys.exit(0)
 
 
-# TODO: see issues #2 and #3
+# TODO: see issue #3
 def main() -> None:
     """
     This is the entry point of the program. calls some functions at the start,

@@ -1,11 +1,10 @@
-import requests  # type: ignore[import-untyped]
+import requests
 
 from . import output
 
 available_models: list[str] | None = None
 selected_model: str | None = None
 gen_message: str | None = None
-TIMEOUT = 120  # seconds
 
 # Ironically enough, I've used Chat-GPT to write a prompt to prompt other
 # Models (or even itself in the future!)
@@ -52,9 +51,9 @@ def http_request(method: str, url: str, **kwargs) -> HttpResponse:
     resp = None
     try:
         if method.upper() == "GET":
-            r = requests.get(url, **kwargs, timeout=TIMEOUT)
+            r = requests.get(url, **kwargs)  # noqa: S113
         elif method.upper() == "POST":
-            r = requests.post(url, **kwargs, timeout=TIMEOUT)
+            r = requests.post(url, **kwargs)  # noqa: S113
 
         else:
             if method.upper() in ("PUT", "DELETE", "PATCH"):
@@ -88,11 +87,11 @@ def init_model_list() -> None:
     available_models = list_locals()
 
 
+# TODO: see issue #10
 def list_locals() -> list[str]:
     """
     return a list of available local AI models
     """
-    # TODO: see issue #10
     url = "http://localhost:11434/api/tags"
     r = http_request("GET", url, timeout=0.3)
     if r.is_error():

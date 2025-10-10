@@ -244,3 +244,10 @@ def test_commit(mock_run_git_command, stdout, stderr, expected_ret):
 def test_clean_diff(input_diff, expected_output):
     result = git_utils.clean_diff(input_diff)
     assert result == expected_output
+
+
+@patch("commizard.git_utils.clean_diff")
+@patch("commizard.git_utils.get_diff")
+def test_get_clean_diff(mock_diff, mock_clean_diff):
+    git_utils.get_clean_diff()
+    mock_clean_diff.assert_called_once_with(mock_diff.return_value)
