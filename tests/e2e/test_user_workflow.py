@@ -9,6 +9,9 @@ import subprocess
 
 import pytest
 
+# Don't mess up the encoding of colored output
+env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
+
 
 @pytest.mark.parametrize(
     "user_in",
@@ -19,7 +22,6 @@ import pytest
     ],
 )
 def test_early_exit(user_in):
-    env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
     out = subprocess.run(
         ["commizard"],
         capture_output=True,
@@ -41,7 +43,6 @@ def test_early_exit(user_in):
 )
 def test_correct_workflow(user_in):
     user_in = "\n".join(user_in) + "\n"
-    env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
     out = subprocess.run(
         ["commizard"], capture_output=True, input=user_in.encode(), env=env
     )
