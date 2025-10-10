@@ -16,12 +16,13 @@ env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
 @pytest.mark.parametrize(
     "user_in",
     [
-        "       quit            \n",
-        "exit\n",
-        " exit\n",
+        ["       quit            ", "start", "list"],
+        ["exit", "quit", "quit"],
+        [" exit", "     gen", "doesn't exist", "shouldn't even execute"],
     ],
 )
 def test_early_exit(user_in):
+    user_in = "\n".join(user_in) + "\n"
     out = subprocess.run(
         ["commizard"],
         capture_output=True,
