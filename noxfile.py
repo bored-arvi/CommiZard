@@ -2,6 +2,7 @@ import nox
 
 venv: str = "uv|virtualenv"
 
+
 @nox.session(reuse_venv=True, venv_backend=venv)
 def install(session):
     """
@@ -28,7 +29,7 @@ def test(session):
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
-def format(session):
+def format(session):  # noqa: A001
     """
     ruff format .
     """
