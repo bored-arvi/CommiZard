@@ -29,3 +29,20 @@ def test_early_exit(user_in):
     )
     assert out.returncode == 0
     assert out.stderr.decode("utf-8").strip() == ""
+
+
+@pytest.mark.parametrize(
+    "user_in",
+    [
+        ["clear", "list", "start something", "gen", "exit"],
+        ["start something", "gen", "quit"],
+        ["gen", "quit"],
+    ],
+)
+def test_correct_workflow(user_in):
+    user_in = "\n".join(user_in) + "\n"
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
+    out = subprocess.run(
+        ["commizard"], capture_output=True, input=user_in.encode(), env=env
+    )
+    assert out.returncode == 0
