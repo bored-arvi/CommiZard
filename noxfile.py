@@ -15,7 +15,6 @@ def lint(session):
     """
     ruff check . && mypy .
     """
-    session.install("ruff", "mypy")
     session.run("ruff", "check", ".")
     session.run("mypy", ".")
 
@@ -25,7 +24,6 @@ def test(session):
     """
     pytest
     """
-    session.install("pytest", "pytest-cov")
     session.run("pytest")
 
 
@@ -34,5 +32,4 @@ def format(session):
     """
     ruff format .
     """
-    session.install("ruff")
     session.run("ruff", "format", ".")
