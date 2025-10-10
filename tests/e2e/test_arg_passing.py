@@ -13,6 +13,8 @@ import pytest
     ],
 )
 def test_arg(arg):
-    out = subprocess.run(["commizard", arg], capture_output=True, text=True)
+    out = subprocess.run(  # noqa: S603
+        ["commizard", arg], capture_output=True, text=True
+    )
     assert out.returncode == 0
     assert out.stderr.strip() == ""

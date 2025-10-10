@@ -79,6 +79,7 @@ extend-select = [
 ignore = [
     "S311", # Standard PRNGs are not suitable for security/cryptographic purposes
     "E501", # Checks for lines that exceed the specified maximum character length.
+    "S607", # Starting a process with a partial executable path
 ]
 
 [tool.ruff.format]
