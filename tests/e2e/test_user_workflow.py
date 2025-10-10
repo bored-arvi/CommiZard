@@ -1,7 +1,9 @@
 """
-This file assumes that: ollama and git are installed, we are inside a git
-working tree (in the git repo, not the .git folder), and the ollama server is
-correctly working and ready to generate a message.
+The tests in this file assume that:
+1. ollama and git are installed
+2. we are inside a git working tree (in the git repo, not the .git folder)
+3. the LLM model smollm:135m is installed in ollama
+4. the ollama server is correctly working and ready to generate a message.
 """
 
 import os
