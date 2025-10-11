@@ -19,9 +19,6 @@ Here are some ways you can help improve this project:
 
 ## ️ Pull Requests (Code Contributions)
 
-✅ I'll review it as soon as I can!
-✅ Even small fixes like typos, docs, or tests are welcome!
-
 ### Setting Up for Development
 
 **Prerequisites:**
@@ -75,6 +72,7 @@ Before committing your changes:
 > consistent!
 
 ✅ I'll review your PR as soon as I can!
+
 ✅ Even small fixes like typos, docs, or tests are welcome!
 
 ## 🧪 Testing & Quality
