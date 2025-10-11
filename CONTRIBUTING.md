@@ -1,9 +1,7 @@
 # How to Contribute to CommiZard
 
-Thank you for your interest in helping shape CommiZard! I'm building this in my
-free time, so your help means the world.
-
-Here are some ways you can help improve this project:
+Thank you for your interest in helping shape CommiZard! Here are some ways you
+can help improve this project:
 
 ## 🐞 Reporting Bugs / Requesting Features
 
@@ -35,26 +33,26 @@ Here are some ways you can help improve this project:
 
 2. Install in development mode with dev dependencies:
    ```bash
-   pip install -e ".[dev]"
+   pip install -e .[dev]
    ```
 
 ### Development Workflow
 
 Before committing your changes:
 
-1. Format your code with Black:
+1. Format your code:
    ```bash
-   ruff format .
+   ruff format
    ```
 
 2. Lint with Ruff:
    ```bash
-   ruff check .
+   ruff check
    ```
 
 3. Type check with mypy (optional but recommended):
    ```bash
-   mypy src/
+   mypy .
    ```
 
 4. Run tests:
@@ -68,7 +66,7 @@ Before committing your changes:
    ```
 
 > [!TIP]
-> Run `ruff format .` and `ruff check .` before every commit to keep code style
+> Run `ruff format && ruff check` before every commit to keep code style
 > consistent!
 
 ✅ I'll review your PR as soon as I can!
@@ -92,14 +90,12 @@ are **incredibly valuable**:
 - **Test on different versions**: Does it work on Python 3.8? 3.10? What
   about different versions of key dependencies (like `ollama`, `requests`,
   `git`)? Report your setup + results!
-- 🧩 **Tidy up code style**: Run `black` or `isort` and send a cleanup PR. (
-  Check with me first if you’re making bulk changes.)
 - 🔗 **Fix broken links or badges**: In README, docs, etc.
 - **Improve this CONTRIBUTING.md file**: Make it clearer? More welcoming? Go
   for it!
 - 🖼️ **Add example screenshots or asciinema recordings** — Show CommiZard in
   action!
-- 🧹 **Run linters & report issues**: Try running `ruff`, `flake8`, `mypy`, or
+- 🧹 **Run linters & report issues**: Try running other linters like `flake8` or
   `pylint` on the codebase. Found warnings or style inconsistencies? Open an
   issue (or better yet, fix them and push a PR!).
 
@@ -107,10 +103,10 @@ are **incredibly valuable**:
 > built this way?" can be super helpful. Sometimes explaining it reveals better
 > ways to do it!
 
-Need guidance? Just comment on an issue (or open one) saying *"I’d like to help
+Need guidance? Just comment on an issue (or open one) saying *"I'd like to help
 with this!"*. I’ll happily walk you through it.
 
 ---
 
-Whether you’re reporting a typo or sending a PR — you’re helping more than you
+Whether you’re reporting a typo or sending a PR, you’re helping more than you
 know! Thanks in advance.
