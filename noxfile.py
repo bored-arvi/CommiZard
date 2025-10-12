@@ -25,7 +25,9 @@ def test(session):
     """
     run unit tests with coverage report
     """
-    session.run("pytest", "--cov=commizard", "-q", "./tests/unit", external=True)
+    session.run(
+        "pytest", "--cov=commizard", "-q", "./tests/unit", external=True
+    )
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
@@ -47,7 +49,7 @@ def e2e_test(session):
 @nox.session(reuse_venv=True, venv_backend=venv)
 def check(session):
     """
-    run all checks
+    run formatter, linter and shallow tests
     """
     session.notify("format")
     session.notify("lint")
