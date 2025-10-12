@@ -34,3 +34,11 @@ def format(session):  # noqa: A001
     ruff format .
     """
     session.run("ruff", "format", ".", external=True)
+
+
+@nox.session(reuse_venv=True, venv_backend=venv)
+def check(session):
+    """run all checks"""
+    session.notify("format")
+    session.notify("lint")
+    session.notify("test")
