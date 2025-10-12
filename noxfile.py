@@ -21,23 +21,16 @@ def lint(session):
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
-def test_cov(session):
-    """
-    run unit tests with coverage report
-    """
-    session.run(
-        "pytest", "--cov=commizard", "-q", "./tests/unit", external=True
-    )
-
-
-@nox.session(reuse_venv=True, venv_backend=venv)
 def test(session):
     """
     run unit tests
     """
-    session.run(
-        "pytest", "-q", "./tests/unit", external=True
-    )
+    if session.posargs["cov"] == True:
+        print("coverage report")
+        args = ("pytest", "--cov=commizard", "-q", "./tests/unit")
+    else:
+        args = ("pytest", "-q", "./tests/unit")
+    session.run(args, external=True)
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
