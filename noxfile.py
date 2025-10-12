@@ -25,12 +25,12 @@ def test(session):
     """
     run unit tests
     """
-    if session.posargs["cov"] == True:
+    if "cov" in session.posargs:
         print("coverage report")
         args = ("pytest", "--cov=commizard", "-q", "./tests/unit")
     else:
         args = ("pytest", "-q", "./tests/unit")
-    session.run(args, external=True)
+    session.run(*args, external=True)
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
