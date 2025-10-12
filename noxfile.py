@@ -23,7 +23,7 @@ def lint(session):
 @nox.session(reuse_venv=True, venv_backend=venv)
 def test(session):
     """
-    run unit tests
+    run unit tests. returns coverage report if "cov" posarg is sent
     """
     if "cov" in session.posargs:
         print("coverage report")
@@ -46,7 +46,7 @@ def e2e_test(session):
     """
     run e2e tests (Warning: It's slow)
     """
-    session.run("pytest", "./tests/e2e", external=True)
+    session.run("pytest", "-q", "./tests/e2e", external=True)
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
@@ -64,5 +64,7 @@ def check_all(session):
     """
     run all checks (used in CI. Use the check session for a faster check)
     """
-    session.notify("check")
+    session.notify("format")
+    session.notify("lint")
+    session.notify("test", ["cov"])
     session.notify("e2e_test")
