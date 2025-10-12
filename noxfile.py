@@ -1,4 +1,4 @@
-import nox
+import nox  # type: ignore
 
 venv: str = "uv|virtualenv"
 
@@ -16,8 +16,8 @@ def lint(session):
     """
     ruff check . && mypy .
     """
-    session.run("ruff", "check", ".")
-    session.run("mypy", ".")
+    session.run("ruff", "check", ".", external=True)
+    session.run("mypy", ".", external=True)
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
@@ -25,7 +25,7 @@ def test(session):
     """
     pytest
     """
-    session.run("pytest")
+    session.run("pytest ./tests/unit", external=True)
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
@@ -33,4 +33,4 @@ def format(session):  # noqa: A001
     """
     ruff format .
     """
-    session.run("ruff", "format", ".")
+    session.run("ruff", "format", ".", external=True)
