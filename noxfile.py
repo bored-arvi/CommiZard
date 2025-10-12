@@ -21,12 +21,22 @@ def lint(session):
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
-def test(session):
+def test_cov(session):
     """
     run unit tests with coverage report
     """
     session.run(
         "pytest", "--cov=commizard", "-q", "./tests/unit", external=True
+    )
+
+
+@nox.session(reuse_venv=True, venv_backend=venv)
+def test(session):
+    """
+    run unit tests
+    """
+    session.run(
+        "pytest", "-q", "./tests/unit", external=True
     )
 
 
@@ -59,7 +69,7 @@ def check(session):
 @nox.session(reuse_venv=True, venv_backend=venv)
 def check_all(session):
     """
-    run all checks
+    run all checks (used in CI. Use the check session for a faster check)
     """
     session.notify("check")
     session.notify("e2e_test")
