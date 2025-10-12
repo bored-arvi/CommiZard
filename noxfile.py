@@ -39,7 +39,7 @@ def format(session):  # noqa: A001
 @nox.session(reuse_venv=True, venv_backend=venv)
 def e2e_test(session):
     """
-    run e2e tests (WARNING: It's slow)
+    run e2e tests (Warning: It's slow)
     """
     session.run("pytest", "./tests/e2e", external=True)
 
