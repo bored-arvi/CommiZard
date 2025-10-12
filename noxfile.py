@@ -52,3 +52,12 @@ def check(session):
     session.notify("format")
     session.notify("lint")
     session.notify("test")
+
+
+@nox.session(reuse_venv=True, venv_backend=venv)
+def check_all(session):
+    """
+    run all checks
+    """
+    session.notify("check")
+    session.notify("e2e_test")
