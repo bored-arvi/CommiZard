@@ -25,7 +25,7 @@ def test(session):
     """
     pytest
     """
-    session.run("pytest ./tests/unit", external=True)
+    session.run("pytest", "./tests/unit", external=True)
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
