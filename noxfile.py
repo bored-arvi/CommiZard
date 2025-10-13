@@ -16,8 +16,9 @@ def lint(session):
     """
     ruff check . && mypy .
     """
-    session.run("ruff", "check", ".", external=True)
-    session.run("mypy", ".", external=True)
+    session.install("ruff", "mypy")
+    session.run("ruff", "check", ".")
+    session.run("mypy", ".")
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
@@ -25,12 +26,13 @@ def test(session):
     """
     run unit tests. returns coverage report if "cov" posarg is sent
     """
+    session.install("pytest")
     if "cov" in session.posargs:
-        print("coverage report")
+        session.install("pytest-cov")
         args = ("pytest", "--cov=commizard", "-q", "./tests/unit")
     else:
         args = ("pytest", "-q", "./tests/unit")
-    session.run(*args, external=True)
+    session.run(*args)
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
@@ -38,7 +40,8 @@ def format(session):  # noqa: A001
     """
     ruff format .
     """
-    session.run("ruff", "format", ".", external=True)
+    session.install("ruff")
+    session.run("ruff", "format", ".")
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
@@ -46,7 +49,8 @@ def e2e_test(session):
     """
     run e2e tests (Warning: It's slow)
     """
-    session.run("pytest", "-q", "./tests/e2e", external=True)
+    session.install("pytest")
+    session.run("pytest", "-q", "./tests/e2e")
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
