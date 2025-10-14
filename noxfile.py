@@ -42,6 +42,14 @@ def format(session):  # noqa: A001
 
 
 @nox.session(reuse_venv=True, venv_backend=venv)
+def format_check(session):
+    """
+    check if the codebase is formatted correctly.
+    """
+    session.run("ruff", "format", "--check", external=True)
+
+
+@nox.session(reuse_venv=True, venv_backend=venv)
 def e2e_test(session):
     """
     run e2e tests (Warning: It's slow)
