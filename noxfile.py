@@ -73,7 +73,13 @@ def check_all(session):
     """
     run all checks (used in CI. Use the check session for a faster check)
     """
-    session.notify("format")
+
+    # don't format and just check if we're running this session with CI arg
+    if "CI" in session.posargs:
+        session.notify("format", ["check"])
+    else:
+        session.notify("format")
+
     session.notify("lint")
     session.notify("test", ["cov"])
     session.notify("e2e_test")
