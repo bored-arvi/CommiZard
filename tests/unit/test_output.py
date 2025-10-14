@@ -13,7 +13,7 @@ def test_print_success(capsys):
     print_success("All good")
     captured = capsys.readouterr()
 
-    assert "All good" in captured.out
+    assert "All good" not in captured.out # <== should trip the test session
     assert "[green]" not in captured.out  # markup should be rendered
     assert captured.err == ""
 

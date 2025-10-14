@@ -4,7 +4,6 @@ from rich.console import Console
 
 console = Console()
 
-
 def print_success(message: str) -> None:
     """
     prints success message in green color
@@ -19,6 +18,13 @@ def print_error(message: str) -> None:
     console.print(f"[bold red]Error: {message}[/bold red]")
 
 
+
+
+
+
+
+
+# Let's also trip the format check
 def print_warning(message: str) -> None:
     """
     prints warning message in yellow color
