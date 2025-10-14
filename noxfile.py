@@ -34,7 +34,7 @@ def test(session):
 
 
 @nox.session(reuse_venv=True, venv_backend=venv_list)
-def format(session):  # noqa: A002 should fail linting
+def format(session):  # noqa: A001
     """
     format codebase.
     """
