@@ -25,7 +25,7 @@ jobs:
       - name: Install project with dev packages and Nox
         run: |
           pip install nox
-          pip install -e .[dev]
+          pip install .[dev]
 
       - name: Run Nox check session
         run: |
