@@ -1,9 +1,9 @@
 import nox  # type: ignore
 
-venv: str = "uv|virtualenv"
+venv_list: str = "uv|virtualenv"
 
 
-@nox.session(reuse_venv=True, venv_backend=venv)
+@nox.session(reuse_venv=True, venv_backend=venv_list)
 def venv(session):
     """
     Set up the development environment.
@@ -11,7 +11,7 @@ def venv(session):
     session.install("-e", ".[dev]")
 
 
-@nox.session(reuse_venv=True, venv_backend=venv)
+@nox.session(reuse_venv=True, venv_backend=venv_list)
 def lint(session):
     """
     ruff check . && mypy .
@@ -20,7 +20,7 @@ def lint(session):
     session.run("mypy", ".", external=True)
 
 
-@nox.session(reuse_venv=True, venv_backend=venv)
+@nox.session(reuse_venv=True, venv_backend=venv_list)
 def test(session):
     """
     run unit tests. returns coverage report if "cov" posarg is sent
@@ -33,7 +33,7 @@ def test(session):
     session.run(*args, external=True)
 
 
-@nox.session(reuse_venv=True, venv_backend=venv)
+@nox.session(reuse_venv=True, venv_backend=venv_list)
 def format(session):  # noqa: A001
     """
     ruff format .
@@ -41,7 +41,7 @@ def format(session):  # noqa: A001
     session.run("ruff", "format", ".", external=True)
 
 
-@nox.session(reuse_venv=True, venv_backend=venv)
+@nox.session(reuse_venv=True, venv_backend=venv_list)
 def format_check(session):
     """
     check if the codebase is formatted correctly.
@@ -49,7 +49,7 @@ def format_check(session):
     session.run("ruff", "format", "--check", external=True)
 
 
-@nox.session(reuse_venv=True, venv_backend=venv)
+@nox.session(reuse_venv=True, venv_backend=venv_list)
 def e2e_test(session):
     """
     run e2e tests (Warning: It's slow)
@@ -57,17 +57,20 @@ def e2e_test(session):
     session.run("pytest", "-q", "./tests/e2e", external=True)
 
 
-@nox.session(reuse_venv=True, venv_backend=venv)
+@nox.session(reuse_venv=True, venv_backend=venv_list)
 def check(session):
     """
     run formatter, linter and shallow tests
     """
-    session.notify("format")
+    if "CI" in session.posargs:
+        session.notify("format_check")
+    else:
+        session.notify("format")
     session.notify("lint")
     session.notify("test")
 
 
-@nox.session(reuse_venv=True, venv_backend=venv)
+@nox.session(reuse_venv=True, venv_backend=venv_list)
 def check_all(session):
     """
     run all checks (used in CI. Use the check session for a faster check)
