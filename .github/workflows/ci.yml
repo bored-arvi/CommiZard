@@ -14,17 +14,17 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Set up python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.14'
           cache: 'pip' # caching pip dependencies
 
-      - name: Install dev dependencies
+      - name: Install project with dev packages and Nox
         run: |
           pip install nox
-          pip install -e .
+          pip install -e .[dev]
 
-      - name: Run nox check session
+      - name: Run Nox check session
         run: |
           nox -s check -- CI
