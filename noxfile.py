@@ -36,17 +36,12 @@ def test(session):
 @nox.session(reuse_venv=True, venv_backend=venv_list)
 def format(session):  # noqa: A001
     """
-    ruff format .
+    format codebase.
     """
-    session.run("ruff", "format", ".", external=True)
-
-
-@nox.session(reuse_venv=True, venv_backend=venv_list)
-def format_check(session):
-    """
-    check if the codebase is formatted correctly.
-    """
-    session.run("ruff", "format", "--check", external=True)
+    if "check" in session.posargs:
+        session.run("ruff", "format", "--check", external=True)
+    else:
+        session.run("ruff", "format", ".", external=True)
 
 
 @nox.session(reuse_venv=True, venv_backend=venv_list)
@@ -62,10 +57,13 @@ def check(session):
     """
     run formatter, linter and shallow tests
     """
+
+    # don't format and just check if we're running this session with CI arg
     if "CI" in session.posargs:
-        session.notify("format_check")
+        session.notify("format", ["check"])
     else:
         session.notify("format")
+
     session.notify("lint")
     session.notify("test")
 
