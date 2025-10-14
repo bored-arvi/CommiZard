@@ -23,9 +23,8 @@ jobs:
       - name: Install dev dependencies
         run: |
           pip install nox
-          nox -s venv
-          source ./.nox/venv/bin/activate
-      
+          pip install -e .
+
       - name: Run nox check session
         run: |
           nox -s check -- CI
