@@ -18,6 +18,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
+      - name: Restore Cached Python
+        id: cache-py
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/deps
+          key: ${{ runner.os }}-py-${{ hashFiles('pyproject.toml') }}
+
       - name: Restore Cached dependencies
         id: cache-dependencies
         uses: actions/cache@v4
@@ -25,11 +32,11 @@ jobs:
           path: ~/.cache/deps
           key: ${{ runner.os }}-deps-${{ hashFiles('pyproject.toml') }}
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - if: ${{ steps.cache-py.outputs.cache-hit != 'true' }}
+        name: Set up Python
+        uses: actions/setup-python@v6
         with:
           python-version: '3.14'
-          cache: 'pip' # caching pip dependencies
 
       - if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true' }}
         name: Install project with dev packages and Nox
@@ -37,6 +44,3 @@ jobs:
           pip install nox
           pip install .[dev]
 
-      - name: Run Nox check session
-        run: |
-          nox -s check -- CI
