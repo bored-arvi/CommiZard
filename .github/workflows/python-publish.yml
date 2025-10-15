@@ -19,7 +19,7 @@ jobs:
       - name: Build 
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.14'
           cache: 'pip' # caching pip dependencies
 
       - name: Build release distributions
@@ -57,4 +57,3 @@ jobs:
           packages-dir: dist/
           user: __token__
           password: ${{ secrets.PYPI_PASSWORD }}
-          
