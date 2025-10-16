@@ -1,5 +1,5 @@
 import sys
-
+import time
 from . import __version__ as version
 from . import commands, output, start
 
@@ -32,6 +32,7 @@ def main() -> None:
     This is the entry point of the program. calls some functions at the start,
     then jumps into an infinite loop.
     """
+    strt = time.perf_counter()
     handle_args()
     if not start.check_git_installed():
         output.print_error("git not installed")
@@ -45,7 +46,8 @@ def main() -> None:
         return
 
     start.print_welcome()
-
+    stp = time.perf_counter()
+    print(f"took: {round(stp-strt,3)}")
     while True:
         user_input = input("CommiZard> ").strip()
         if user_input in ("exit", "quit"):
