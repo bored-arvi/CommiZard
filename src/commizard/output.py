@@ -16,7 +16,8 @@ def print_error(message: str) -> None:
     """
     prints error message bold red
     """
-    console.print(f"[bold red]Error: {message}[/bold red]")
+    error_console = Console(stderr=True, style="bold red")
+    error_console.print(f"Error: {message}")
 
 
 def print_warning(message: str) -> None:
