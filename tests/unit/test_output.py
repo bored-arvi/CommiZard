@@ -18,12 +18,11 @@ def test_print_success(capsys):
     assert captured.err == ""
 
 
-# TODO: if (#18) gets addressed, we should also update this test case.
 def test_print_error(capsys):
     print_error("Something went wrong")
     captured = capsys.readouterr()
-    assert "Error: Something went wrong" in captured.out
-    assert captured.err == ""
+    assert "Error: Something went wrong" in captured.err
+    assert captured.out == ""
 
 
 def test_print_warning(capsys):
