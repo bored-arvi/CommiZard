@@ -20,6 +20,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Rewrote the generation portion for clearer control flow and behavior
 - Standardize development with linters and the ruff formatter (thanks
   [@Aisha630](https://github.com/Aisha630))
+- Errors now print to stderr (previously the errors where printed to stdout)
 
 ### Fixed
 
