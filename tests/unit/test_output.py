@@ -22,8 +22,8 @@ def test_print_success(capsys):
 def test_print_error(capsys):
     print_error("Something went wrong")
     captured = capsys.readouterr()
-    assert "Error: Something went wrong" in captured.out
-    assert captured.err == ""
+    assert "Error: Something went wrong" in captured.err
+    assert captured.out == ""
 
 
 def test_print_warning(capsys):
