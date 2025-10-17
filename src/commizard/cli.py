@@ -1,6 +1,5 @@
 import concurrent.futures
 import sys
-import time
 
 from . import __version__ as version
 from . import commands, output, start
@@ -34,12 +33,11 @@ def main() -> None:
     This is the entry point of the program. calls some functions at the start,
     then jumps into an infinite loop.
     """
-    strt = time.perf_counter()
     handle_args()
-    with concurrent.futures.ThreadPoolExecutor() as exec:
-        fut_git = exec.submit(start.check_git_installed)
-        fut_ai = exec.submit(start.local_ai_available)
-        fut_worktree = exec.submit(start.is_inside_working_tree)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        fut_git = executor.submit(start.check_git_installed)
+        fut_ai = executor.submit(start.local_ai_available)
+        fut_worktree = executor.submit(start.is_inside_working_tree)
         git_ok = fut_git.result()
         ai_ok = fut_ai.result()
         worktree_ok = fut_worktree.result()
@@ -56,8 +54,7 @@ def main() -> None:
         return
 
     start.print_welcome()
-    stp = time.perf_counter()
-    print(f"took: {round(stp - strt, 3)}")
+
     while True:
         user_input = input("CommiZard> ").strip()
         if user_input in ("exit", "quit"):
