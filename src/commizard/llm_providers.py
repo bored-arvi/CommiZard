@@ -138,6 +138,9 @@ def unload_model() -> None:
     Unload the local model from RAM
     """
     global selected_model
+    if selected_model is None:
+        print("No model to unload.")
+        return
     url = "http://localhost:11434/api/generate"
     payload = {"model": selected_model, "keep_alive": 0}
     response = http_request("POST", url, json=payload)
