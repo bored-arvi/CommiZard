@@ -165,7 +165,7 @@ def test_list_locals(
 
     result = llm.list_locals()
     if expect_error:
-        assert result == None
+        assert result is None
     else:
         assert result == expected_result
     mock_http_request.assert_called_once()
