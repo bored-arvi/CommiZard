@@ -40,6 +40,20 @@ def main() -> None:
         fut_git = exec.submit(start.check_git_installed)
         fut_ai = exec.submit(start.local_ai_available)
         fut_worktree = exec.submit(start.is_inside_working_tree)
+        git_ok = fut_git.result()
+        ai_ok = fut_ai.result()
+        worktree_ok = fut_worktree.result()
+
+    if not git_ok:
+        output.print_error("git not installed")
+        return
+
+    if not ai_ok:
+        output.print_warning("local AI not available")
+
+    if not worktree_ok:
+        output.print_error("not inside work tree")
+        return
 
     start.print_welcome()
     stp = time.perf_counter()
