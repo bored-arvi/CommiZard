@@ -155,3 +155,9 @@ def test_local_ai_available(mock_req, ret_code, resp, expected):
     mock_req.return_value.response = resp
     out = start.local_ai_available()
     assert out == expected
+
+
+@patch("commizard.start.git_utils.is_inside_working_tree")
+def test_is_inside_working_tree(mock):
+    start.is_inside_working_tree()
+    mock.assert_called_once()
