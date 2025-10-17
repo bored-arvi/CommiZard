@@ -215,16 +215,54 @@ def test_load_model(
     assert result == expected_result
 
 
+@pytest.mark.parametrize(
+    "initial_model, response_is_error, expected_model_after, should_call_success, should_call_error",
+    [
+        # No model loaded
+        (None, False, None, False, False),
+        # Unload succeeds
+        ("llama3", False, None, True, False),
+        # Unload fails
+        ("mistral", True, "mistral", False, True),
+    ],
+)
+@patch("commizard.llm_providers.output.print_success")
+@patch("commizard.llm_providers.output.print_error")
 @patch("commizard.llm_providers.http_request")
-def test_unload_model(mock_http_request, monkeypatch):
-    monkeypatch.setattr(llm, "selected_model", "mymodel")
+def test_unload_model(
+    mock_http_request,
+    mock_print_error,
+    mock_print_success,
+    initial_model,
+    response_is_error,
+    expected_model_after,
+    should_call_success,
+    should_call_error,
+    monkeypatch,
+):
+    monkeypatch.setattr(llm, "selected_model", initial_model)
+    mock_response = Mock()
+    mock_response.is_error.return_value = response_is_error
+    mock_response.err_message.return_value = "Connection failed"
+    mock_http_request.return_value = mock_response
+
     llm.unload_model()
-    mock_http_request.assert_called_once_with(
-        "POST",
-        "http://localhost:11434/api/generate",
-        json={"model": "mymodel", "keep_alive": 0},
-    )
-    assert llm.selected_model is None
+
+    if initial_model is None:
+        mock_http_request.assert_not_called()
+        mock_print_error.assert_not_called()
+        mock_print_success.assert_not_called()
+    else:
+        mock_http_request.assert_called_once_with(
+            "POST",
+            "http://localhost:11434/api/generate",
+            json={"model": initial_model, "keep_alive": 0},
+        )
+        assert mock_print_error.called == should_call_error
+        assert mock_print_success.called == should_call_success
+
+    # Verify global state
+    assert llm.selected_model == expected_model_after
 
 
 @pytest.mark.parametrize(
