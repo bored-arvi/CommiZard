@@ -88,7 +88,7 @@ def init_model_list() -> None:
 
 
 # TODO: see issue #10
-def list_locals() -> list[str]:
+def list_locals() -> list[str] | None:
     """
     return a list of available local AI models
     """
@@ -98,7 +98,7 @@ def list_locals() -> list[str]:
         output.print_error(
             "failed to list available local AI models. Is ollama running?"
         )
-        return []
+        return None
     r = r.response["models"]
     return [model["name"] for model in r]
 
