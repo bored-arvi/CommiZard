@@ -64,6 +64,23 @@ def test_gradient_text(text, start_color, end_color, expected_substrings):
             assert f"]{char}" in result
 
 
+def test_gradient_text_none_triplet():
+    text = "Some text"
+    end_color = Color.default()
+    start_color = Color.default()
+    substr = ["S", "o", "m", "e", " ", "t", "e", "x", "t"]
+    result = start.gradient_text(text, start_color, end_color)
+
+    for substring in substr:
+        assert substring in result
+
+    # Check result structure: every char should be wrapped
+    for char in text:
+        if char != "\n":
+            assert "[#" not in result
+            assert f"]{char}" not in result
+
+
 @pytest.mark.parametrize(
     "color_system, expect_gradient",
     [
