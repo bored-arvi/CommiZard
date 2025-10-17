@@ -27,7 +27,13 @@ def test(session):
     """
     if "cov" in session.posargs:
         print("coverage report")
-        args = ("pytest", "--cov=commizard", "-q", "./tests/unit")
+        args = (
+            "pytest",
+            "--cov=commizard",
+            "--cov-report=term-missing",
+            "-q",
+            "./tests/unit",
+        )
     else:
         args = ("pytest", "-q", "./tests/unit")
     session.run(*args, external=True)
