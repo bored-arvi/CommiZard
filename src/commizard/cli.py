@@ -1,5 +1,7 @@
+import concurrent.futures
 import sys
 import time
+
 from . import __version__ as version
 from . import commands, output, start
 
@@ -34,20 +36,14 @@ def main() -> None:
     """
     strt = time.perf_counter()
     handle_args()
-    if not start.check_git_installed():
-        output.print_error("git not installed")
-        return
-
-    if not start.local_ai_available():
-        output.print_warning("local AI not available")
-
-    if not start.is_inside_working_tree():
-        output.print_error("not inside work tree")
-        return
+    with concurrent.futures.ThreadPoolExecutor() as exec:
+        fut_git = exec.submit(start.check_git_installed)
+        fut_ai = exec.submit(start.local_ai_available)
+        fut_worktree = exec.submit(start.is_inside_working_tree)
 
     start.print_welcome()
     stp = time.perf_counter()
-    print(f"took: {round(stp-strt,3)}")
+    print(f"took: {round(stp - strt, 3)}")
     while True:
         user_input = input("CommiZard> ").strip()
         if user_input in ("exit", "quit"):
