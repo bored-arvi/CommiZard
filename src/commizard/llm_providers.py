@@ -140,11 +140,11 @@ def unload_model() -> None:
     global selected_model
     url = "http://localhost:11434/api/generate"
     payload = {"model": selected_model, "keep_alive": 0}
-    selected_model = None
     response = http_request("POST", url, json=payload)
     if response.is_error():
         output.print_error(f"Failed to unload model: {response.err_message()}")
     else:
+        selected_model = None
         output.print_success("Model unloaded successfully.")
 
 
