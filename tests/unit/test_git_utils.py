@@ -250,6 +250,9 @@ def test_commit(mock_run_git_command, stdout, stderr, expected_ret):
             "warning: something",
             "",
         ),
+        (
+            None, ""
+        ),
     ],
 )
 def test_clean_diff(input_diff, expected_output):
