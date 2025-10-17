@@ -86,7 +86,7 @@ def print_available_models(opts: list[str]) -> None:
             "failed to list available local AI models. Is ollama running?"
         )
         return
-    elif llm_providers.available_models == []:
+    elif not llm_providers.available_models:
         output.print_warning("No local AI models found.")
         return
     for model in llm_providers.available_models:
