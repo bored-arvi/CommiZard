@@ -141,11 +141,11 @@ def test_start_model(
     ],
 )
 @patch("builtins.print")  # thanks chat-GPT. I never would've found this.
-@patch("commizard.llm_providers.init_model_list")
-def test_print_available_models(
+@patch("commizard.commands.llm_providers.init_model_list")
+def test_print_available_models_correct(
     mock_init, mock_print, available_models, opts, monkeypatch
 ):
-    mock_init.side_effect = lambda: setattr(
+    mock_init.side_effect = lambda: monkeypatch.setattr(
         llm_providers, "available_models", available_models
     )
     commands.print_available_models(opts)
@@ -157,6 +157,31 @@ def test_print_available_models(
 
     for model in available_models:
         mock_print.assert_any_call(model)
+
+
+@pytest.mark.parametrize(
+    "available_models, expect_err",
+    [
+        ([], False),
+        (None, True),
+    ],
+)
+@patch("commizard.llm_providers.output.print_warning")
+@patch("commizard.llm_providers.output.print_error")
+@patch("builtins.print")
+@patch("commizard.commands.llm_providers.init_model_list")
+def test_print_available_models_error_behavior(
+    mock_init, mock_print, mock_err, mock_warn, available_models, expect_err
+):
+    mock_init.side_effect = lambda: setattr(
+        llm_providers, "available_models", available_models
+    )
+    commands.print_available_models([])
+    mock_print.assert_not_called()
+    if expect_err:
+        mock_err.assert_called_once()
+    else:
+        mock_warn.assert_called_once()
 
 
 @patch("commizard.commands.output.print_warning")

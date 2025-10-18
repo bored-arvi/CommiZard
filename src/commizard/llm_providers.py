@@ -88,17 +88,14 @@ def init_model_list() -> None:
 
 
 # TODO: see issue #10
-def list_locals() -> list[str]:
+def list_locals() -> list[str] | None:
     """
     return a list of available local AI models
     """
     url = "http://localhost:11434/api/tags"
     r = http_request("GET", url, timeout=0.3)
     if r.is_error():
-        output.print_error(
-            "failed to list available local AI models. Is ollama running?"
-        )
-        return []
+        return None
     r = r.response["models"]
     return [model["name"] for model in r]
 

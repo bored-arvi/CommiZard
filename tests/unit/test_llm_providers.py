@@ -150,11 +150,9 @@ def test_init_model_list(mock_list, monkeypatch):
         (False, {"models": []}, [], False),
     ],
 )
-@patch("commizard.llm_providers.output.print_error")
 @patch("commizard.llm_providers.http_request")
 def test_list_locals(
     mock_http_request,
-    mock_print_error,
     is_error,
     response,
     expected_result,
@@ -166,13 +164,10 @@ def test_list_locals(
     mock_http_request.return_value = fake_response
 
     result = llm.list_locals()
-    assert result == expected_result
     if expect_error:
-        mock_print_error.assert_called_once_with(
-            "failed to list available local AI models. Is ollama running?"
-        )
+        assert result is None
     else:
-        mock_print_error.assert_not_called()
+        assert result == expected_result
     mock_http_request.assert_called_once()
 
 
