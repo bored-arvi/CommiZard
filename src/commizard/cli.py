@@ -65,5 +65,5 @@ def main() -> None:
         commands.parser(user_input)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()

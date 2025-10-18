@@ -1,5 +1,5 @@
 import subprocess
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -164,40 +164,51 @@ def test_is_changed(mock_run, mock_val, expected):
 
 
 @pytest.mark.parametrize(
-    "mock_val, expected",
+    "is_changed_return, run_git_returncode, run_git_stdout, expected_output",
     [
+        # No changes detected
+        (False, 0, "some diff", ""),
+        # Changes detected, git diff succeeds
         (
-            subprocess.CompletedProcess(
-                args=["git", "--no-pager", "diff"],
-                returncode=0,
-                stdout="",
-                stderr="",
-            ),
-            "",
+            True,
+            0,
+            "diff --git a/file.py b/file.py\n+new line\n-old line\n\n",
+            "diff --git a/file.py b/file.py\n+new line\n-old line",
         ),
-        (
-            subprocess.CompletedProcess(
-                args=["git", "--no-pager", "diff"],
-                returncode=0,
-                stdout="test_out\n",
-                stderr="",
-            ),
-            "test_out",
-        ),
+        # Changes detected, git diff fails (non-zero return code)
+        (True, 1, "error output", None),
+        # Changes detected, git diff succeeds but stdout is empty
+        (True, 0, "", ""),
+        # Changes detected, git diff succeeds with whitespace-only output
+        (True, 0, "   \n\t  ", ""),
     ],
 )
 @patch("commizard.git_utils.run_git_command")
-def test_get_diff(mock_run, mock_val, expected):
-    mock_run.return_value = mock_val
-    res = git_utils.get_diff()
+@patch("commizard.git_utils.is_changed")
+def test_get_diff(
+    mock_is_changed,
+    mock_run_git_command,
+    is_changed_return,
+    run_git_returncode,
+    run_git_stdout,
+    expected_output,
+):
+    mock_is_changed.return_value = is_changed_return
+    mock_result = MagicMock()
+    mock_result.returncode = run_git_returncode
+    mock_result.stdout = run_git_stdout
+    mock_run_git_command.return_value = mock_result
 
-    if expected == "":
-        mock_run.assert_called_once_with(["diff", "--name-only"])
+    result = git_utils.get_diff()
+
+    if is_changed_return:
+        mock_run_git_command.assert_called_once_with(
+            ["--no-pager", "diff", "--no-color"]
+        )
     else:
-        mock_run.assert_any_call(["diff", "--name-only"])
-        mock_run.assert_any_call(["--no-pager", "diff", "--no-color"])
+        mock_run_git_command.assert_not_called()
 
-    assert res == expected
+    assert result == expected_output
 
 
 @pytest.mark.parametrize(
@@ -239,6 +250,7 @@ def test_commit(mock_run_git_command, stdout, stderr, expected_ret):
             "warning: something",
             "",
         ),
+        (None, ""),
     ],
 )
 def test_clean_diff(input_diff, expected_output):
