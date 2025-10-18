@@ -1,3 +1,4 @@
+import concurrent.futures
 import sys
 
 from . import __version__ as version
@@ -33,14 +34,22 @@ def main() -> None:
     then jumps into an infinite loop.
     """
     handle_args()
-    if not start.check_git_installed():
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        fut_git = executor.submit(start.check_git_installed)
+        fut_ai = executor.submit(start.local_ai_available)
+        fut_worktree = executor.submit(start.is_inside_working_tree)
+        git_ok = fut_git.result()
+        ai_ok = fut_ai.result()
+        worktree_ok = fut_worktree.result()
+
+    if not git_ok:
         output.print_error("git not installed")
         return
 
-    if not start.local_ai_available():
+    if not ai_ok:
         output.print_warning("local AI not available")
 
-    if not start.is_inside_working_tree():
+    if not worktree_ok:
         output.print_error("not inside work tree")
         return
 
