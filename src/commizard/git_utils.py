@@ -1,8 +1,8 @@
 import subprocess
-from typing import Optional
+from typing import Optional, List, Tuple
 
 
-def run_git_command(args: list[str]) -> subprocess.CompletedProcess:
+def run_git_command(args: List[str]) -> subprocess.CompletedProcess:
     """
     Run a git command with the given args.
 
@@ -50,7 +50,7 @@ def get_diff() -> Optional[str]:
     return None
 
 
-def commit(msg: str) -> tuple[int, str]:
+def commit(msg: str) -> Tuple[int, str]:
     """
     commit with msg as the commit text.
     Returns:
