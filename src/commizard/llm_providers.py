@@ -1,10 +1,10 @@
 import requests
 
 from . import output
-
-available_models: list[str] | None = None
-selected_model: str | None = None
-gen_message: str | None = None
+from typing import List, Tuple, Dict, Optional
+available_models: Optional[List[str]] = None
+selected_model: Optional[str] = None
+gen_message: Optional[str] = None
 
 # Ironically enough, I've used Chat-GPT to write a prompt to prompt other
 # Models (or even itself in the future!)
@@ -88,7 +88,7 @@ def init_model_list() -> None:
 
 
 # TODO: see issue #10
-def list_locals() -> list[str] | None:
+def list_locals() -> Optional[List[str]]:
     """
     return a list of available local AI models
     """
@@ -111,7 +111,7 @@ def select_model(select_str: str) -> None:
         output.print_success(f"{selected_model} loaded.")
 
 
-def load_model(model_name: str) -> dict:
+def load_model(model_name: str) -> Dict:
     """
     Load the local model into RAM
     Args:
@@ -149,7 +149,7 @@ def unload_model() -> None:
 
 
 # TODO: see issues #11 and #15
-def generate(prompt: str) -> tuple[int, str]:
+def generate(prompt: str) -> Tuple[int, str]:
     """
     generates a response by prompting the selected_model.
     Args:
