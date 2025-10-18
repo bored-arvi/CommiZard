@@ -29,6 +29,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Fixed crashes from invalid uses of `gen`/`generate`
 - Fixed possible incorrect behavior with executing git diff (thanks
   [@Aisha630](https://github.com/Aisha630))
+- Fixed duplicate error messages on `list`
 
 ## [0.1.0] - 2025/10/01
 
