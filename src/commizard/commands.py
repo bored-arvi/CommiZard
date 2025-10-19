@@ -1,11 +1,16 @@
+from __future__ import annotations
+
 import os
 import platform
 import sys
-from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 import pyperclip
 
 from . import git_utils, llm_providers, output
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 def handle_commit_req(opts: list[str]) -> None:
