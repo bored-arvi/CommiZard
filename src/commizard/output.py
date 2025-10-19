@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import textwrap
 
 from rich.console import Console

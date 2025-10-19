@@ -1,15 +1,19 @@
+from __future__ import annotations
+
 import os
 import platform
 import sys
-from collections.abc import Callable
-from typing import List
+from typing import TYPE_CHECKING
 
 import pyperclip
 
 from . import git_utils, llm_providers, output
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
-def handle_commit_req(opts: List[str]) -> None:
+
+def handle_commit_req(opts: list[str]) -> None:
     """
     commits the generated prompt. prints an error message if commiting fails
     """
@@ -24,7 +28,7 @@ def handle_commit_req(opts: List[str]) -> None:
 
 
 # TODO: implement
-def print_help(opts: List[str]) -> None:
+def print_help(opts: list[str]) -> None:
     """
     prints a list of all commands and a brief description
 
@@ -36,7 +40,7 @@ def print_help(opts: List[str]) -> None:
     """
 
 
-def copy_command(opts: List[str]) -> None:
+def copy_command(opts: list[str]) -> None:
     """
     copies the generated prompt to clipboard according to options passed.
 
@@ -53,7 +57,7 @@ def copy_command(opts: List[str]) -> None:
     output.print_success("Copied to clipboard.")
 
 
-def start_model(opts: List[str]) -> None:
+def start_model(opts: list[str]) -> None:
     """
     Get the model (either local or online) ready for generation based on the
     options passed.
@@ -77,7 +81,7 @@ def start_model(opts: List[str]) -> None:
     llm_providers.select_model(model_name)
 
 
-def print_available_models(opts: List[str]) -> None:
+def print_available_models(opts: list[str]) -> None:
     """
     prints the available models according to options passed.
     """
@@ -94,7 +98,7 @@ def print_available_models(opts: List[str]) -> None:
         print(model)
 
 
-def generate_message(opts: List[str]) -> None:
+def generate_message(opts: list[str]) -> None:
     diff = git_utils.get_clean_diff()
     if diff == "":
         output.print_warning("No changes to the repository.")
@@ -111,7 +115,7 @@ def generate_message(opts: List[str]) -> None:
     output.print_generated(wrapped_res)
 
 
-def cmd_clear(opts: List[str]) -> None:
+def cmd_clear(opts: list[str]) -> None:
     """
     Clear terminal screen (Windows/macOS/Linux).
     """
@@ -122,7 +126,7 @@ def cmd_clear(opts: List[str]) -> None:
         sys.stdout.flush()
 
 
-supported_commands: dict[str, Callable[[List[str]], None]] = {
+supported_commands: dict[str, Callable[[list[str]], None]] = {
     "commit": handle_commit_req,
     "help": print_help,
     "cp": copy_command,

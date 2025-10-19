@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import subprocess
 
 
-def run_git_command(args: List[str]) -> subprocess.CompletedProcess:
+def run_git_command(args: list[str]) -> subprocess.CompletedProcess:
     """
     Run a git command with the given args.
 
@@ -32,7 +34,7 @@ def is_changed() -> bool:
     return (out.returncode == 0) and (out.stdout.strip() != "")
 
 
-def get_diff() -> Optional[str]:
+def get_diff() -> str | None:
     """
     Get the diff from the current working directory.
 
@@ -49,7 +51,7 @@ def get_diff() -> Optional[str]:
     return None
 
 
-def commit(msg: str) -> Tuple[int, str]:
+def commit(msg: str) -> tuple[int, str]:
     """
     commit with msg as the commit text.
     Returns:
@@ -60,7 +62,7 @@ def commit(msg: str) -> Tuple[int, str]:
     return out.returncode, ret
 
 
-def clean_diff(diff: Optional[str]) -> str:
+def clean_diff(diff: str | None) -> str:
     """
     Remove unnecessary information from the diff.
     """
