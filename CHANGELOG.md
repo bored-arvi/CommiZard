@@ -12,10 +12,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - New `cls`/`clear` command to clear the screen (thanks
   [@MRADULTRIPATHI](https://github.com/MRADULTRIPATHI))
+- Start supporting python version 3.9 (
+  thanks [@bored-arvi](https://github.com/bored-arvi))
 
 ### Changed
 
-- Updated documents  (README.md and CONTRIBUTING.md) (thanks 
+- Updated documents  (README.md and CONTRIBUTING.md) (thanks
   [@ryleymao](https://github.com/ryleymao))
 - Rewrote the generation portion for clearer control flow and behavior
 - Standardize development with linters and the ruff formatter (thanks
