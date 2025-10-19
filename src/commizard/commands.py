@@ -3,6 +3,7 @@ import platform
 import sys
 from collections.abc import Callable
 from typing import List
+
 import pyperclip
 
 from . import git_utils, llm_providers, output

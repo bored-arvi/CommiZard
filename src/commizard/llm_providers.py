@@ -1,7 +1,9 @@
+from typing import Dict, List, Optional, Tuple
+
 import requests
 
 from . import output
-from typing import List, Tuple, Dict, Optional
+
 available_models: Optional[List[str]] = None
 selected_model: Optional[str] = None
 gen_message: Optional[str] = None
