@@ -23,7 +23,7 @@ def handle_args():
         return
     if sys.argv[1] in ("-v", "--version"):
         print(f"CommiZard {version}")
-        sys.exit(0)  # This is fine - it's before main() really starts
+        sys.exit(0)
     elif sys.argv[1] in ("-h", "--help"):
         print(help_msg.strip(), end="\n")
         sys.exit(0)
