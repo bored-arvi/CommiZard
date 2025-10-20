@@ -8,6 +8,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-10-20
+
 ### Added
 
 - New `cls`/`clear` command to clear the screen (thanks
@@ -84,7 +86,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - MIT open source license.
 - PyPI release: the package can now be installed with `pip install commizard`.
 
-[Unreleased]: https://github.com/Chungzter/CommiZard/compare/v0.1.0...master
+[Unreleased]: https://github.com/Chungzter/CommiZard/compare/v0.2.0...master
+
+[0.2.0]: https://github.com/Chungzter/CommiZard/compare/v0.1.0...v0.2.0
 
 [0.1.0]: https://github.com/Chungzter/CommiZard/compare/v0.0.1a0...v0.1.0
 
