@@ -29,11 +29,13 @@ def handle_args():
         sys.exit(0)
 
 
-# TODO: see issue #3
-def main() -> None:
+def main() -> int:
     """
     This is the entry point of the program. calls some functions at the start,
     then jumps into an infinite loop.
+
+    Returns:
+        int: Exit code (0 for success, non-zero for errors)
     """
     handle_args()
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -46,25 +48,30 @@ def main() -> None:
 
     if not git_ok:
         output.print_error("git not installed")
-        return
+        return 1
 
     if not ai_ok:
         output.print_warning("local AI not available")
 
     if not worktree_ok:
         output.print_error("not inside work tree")
-        return
+        return 1
 
     start.print_welcome()
 
-    while True:
-        user_input = input("CommiZard> ").strip()
-        if user_input in ("exit", "quit"):
-            print("Goodbye!")
-            break
-        elif user_input == "":
-            continue
-        commands.parser(user_input)
+    try:
+        while True:
+            user_input = input("CommiZard> ").strip()
+            if user_input in ("exit", "quit"):
+                print("Goodbye!")
+                break
+            elif user_input == "":
+                continue
+            commands.parser(user_input)
+    except (EOFError, KeyboardInterrupt):
+        print("\nGoodbye!")
+
+    return 0
 
 
 if __name__ == "__main__":  # pragma: no cover
