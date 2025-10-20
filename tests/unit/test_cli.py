@@ -119,3 +119,28 @@ def test_main(
     assert mock_print.call_count == 1
     assert out == 0
     mock_print.assert_called_once_with("Goodbye!")
+
+
+@pytest.mark.parametrize(
+    "expected_exception",
+    [
+        EOFError,
+        KeyboardInterrupt,
+    ],
+)
+@patch("commizard.cli.start.check_git_installed")
+@patch("commizard.cli.start.local_ai_available")
+@patch("commizard.cli.start.is_inside_working_tree")
+@patch("commizard.cli.start.print_welcome")
+@patch("commizard.cli.output.print_error")
+@patch("commizard.cli.output.print_warning")
+@patch("commizard.cli.handle_args")
+@patch("commizard.cli.input")
+@patch("commizard.cli.print")
+def test_main_exception_handling(
+    mock_prnt, mock_in, _3, _4, _5, _6, _7, _8, _9, expected_exception
+):
+    mock_in.side_effect = expected_exception
+    out = cli.main()
+    assert out == 0
+    mock_prnt.assert_called_once_with("\nGoodbye!")
