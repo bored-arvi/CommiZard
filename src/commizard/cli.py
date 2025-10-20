@@ -26,7 +26,7 @@ def handle_args():
         sys.exit(0)  # This is fine - it's before main() really starts
     elif sys.argv[1] in ("-h", "--help"):
         print(help_msg.strip(), end="\n")
-        sys.exit(0)  # This is fine too
+        sys.exit(0)
 
 
 def main() -> int:
