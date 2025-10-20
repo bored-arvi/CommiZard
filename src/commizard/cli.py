@@ -59,16 +59,18 @@ def main() -> int:
 
     start.print_welcome()
 
-    while True:
-        user_input = input("CommiZard> ").strip()
-        if user_input in ("exit", "quit"):
-            print("Goodbye!")
-            break
-        elif user_input == "":
-            continue
-        commands.parser(user_input)
+    try:
+        while True:
+            user_input = input("CommiZard> ").strip()
+            if user_input in ("exit", "quit"):
+                print("Goodbye!")
+                break
+            elif user_input == "":
+                continue
+            commands.parser(user_input)
+    except (EOFError, KeyboardInterrupt):
+        print("\nGoodbye!")
 
     return 0
-
 if __name__ == "__main__":  # pragma: no cover
     main()
