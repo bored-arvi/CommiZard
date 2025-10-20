@@ -89,11 +89,12 @@ def test_main(
     mock_is_inside_work_tree.return_value = inside_work_tree
     mock_local_ai.return_value = local_ai_avail
     mock_input.side_effect = [*user_inputs, "exit"]
-    cli.main()
+    out = cli.main()
     mock_args.assert_called_once()
     mock_check_git_installed.assert_called_once()
 
     if not git_installed:
+        assert out == 1
         mock_error.assert_called_once_with("git not installed")
         mock_welcome.assert_not_called()
         mock_parser.assert_not_called()
@@ -116,4 +117,5 @@ def test_main(
 
     # exit the loop
     assert mock_print.call_count == 1
+    assert out == 0
     mock_print.assert_called_once_with("Goodbye!")
