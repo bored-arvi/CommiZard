@@ -72,5 +72,7 @@ def main() -> int:
         print("\nGoodbye!")
 
     return 0
+
+
 if __name__ == "__main__":  # pragma: no cover
     main()
