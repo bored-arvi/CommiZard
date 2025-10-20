@@ -14,7 +14,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   [@MRADULTRIPATHI](https://github.com/MRADULTRIPATHI))
 - Many additions to the test suite and better DevEx with new CI/CD pipelines,
   including new GitHub workflows, Nox sessions, reaching 100% test coverage,
-  addition of e2e tests and rewrites for a couple of tests
+  addition of e2e tests, addition of dependabot dependency tracking, and
+  rewrites for a couple of tests
 
 ### Changed
 
@@ -60,12 +61,18 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added wrapping functionality: Now the commit lines all wrap at 70 lines.
 - Refactored significant parts of the codebase. This is still a work in
   progress, but the program’s flow is now cleaner and more maintainable.
+- Standardized exit codes. Previously the program would always exit with 0. Now
+  the status code varies for errors: 0 for successful exits, 1 for errors (
+  thanks [@bored-arvi](https://github.com/bored-arvi))
 
 ### Fixed
 
 - Fixed `gen` command crashing when user changes contained certain special
   Unicode characters. Changes containing any UTF-8 supported character are now
   handled correctly.
+- Fixed Keyboard interrupts from the user crashing the program. The program will
+  now exit gracefully if the user hits Ctrl+C (
+  thanks [@bored-arvi](https://github.com/bored-arvi))
 
 ## [0.0.1-alpha] - 2025-09-16
 
