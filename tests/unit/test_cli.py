@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import DEFAULT, patch
 
 import pytest
 
@@ -128,19 +128,31 @@ def test_main(
         KeyboardInterrupt,
     ],
 )
-@patch("commizard.cli.start.check_git_installed")
-@patch("commizard.cli.start.local_ai_available")
-@patch("commizard.cli.start.is_inside_working_tree")
-@patch("commizard.cli.start.print_welcome")
-@patch("commizard.cli.output.print_error")
-@patch("commizard.cli.output.print_warning")
-@patch("commizard.cli.handle_args")
-@patch("commizard.cli.input")
-@patch("commizard.cli.print")
-def test_main_exception_handling(
-    mock_prnt, mock_in, _3, _4, _5, _6, _7, _8, _9, expected_exception
-):
-    mock_in.side_effect = expected_exception
-    out = cli.main()
-    assert out == 0
-    mock_prnt.assert_called_once_with("\nGoodbye!")
+def test_main_exception_handling(expected_exception):
+    with (
+        patch.multiple(
+            "commizard.cli.start",
+            check_git_installed=DEFAULT,
+            local_ai_available=DEFAULT,
+            is_inside_working_tree=DEFAULT,
+            print_welcome=DEFAULT,
+        ),
+        patch.multiple(
+            "commizard.cli.output",
+            print_warning=DEFAULT,
+            print_error=DEFAULT,
+        ),
+        patch.multiple(
+            "commizard.cli",
+            print=DEFAULT,
+            handle_args=DEFAULT,
+            input=DEFAULT,
+        ) as print_mocks,
+    ):
+        print_mocks["print"].side_effect = None  # optional, just to be explicit
+        print_mocks["input"].side_effect = expected_exception
+
+        out = cli.main()
+
+        assert out == 0
+        print_mocks["print"].assert_called_once_with("\nGoodbye!")
