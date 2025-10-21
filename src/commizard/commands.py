@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 import pyperclip
 
 from . import git_utils, llm_providers, output
+from .ollama_errors import get_error_message
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -99,6 +100,14 @@ def print_available_models(opts: list[str]) -> None:
 
 
 def generate_message(opts: list[str]) -> None:
+    """
+    Generate a commit message using Ollama with improved error handling.
+    Args:
+        opts: list of options following the command
+    
+    Returns:
+        None
+    """
     diff = git_utils.get_clean_diff()
     if diff == "":
         output.print_warning("No changes to the repository.")
@@ -106,8 +115,15 @@ def generate_message(opts: list[str]) -> None:
 
     prompt = llm_providers.generation_prompt + diff
     stat, res = llm_providers.generate(prompt)
+
     if stat != 0:
-        output.print_error(res)
+        # Check if it's a standard HTTP error code (4xx, 5xx)
+        if stat >= 400:
+            error_msg = get_error_message(stat)
+            output.print_error(error_msg)
+        else:
+            # For connection errors or other non-HTTP errors
+            output.print_error(res)
         return
 
     wrapped_res = output.wrap_text(res, 72)
