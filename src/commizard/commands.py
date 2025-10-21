@@ -171,31 +171,34 @@ def generate_message(opts: list[str]) -> None:
     Generate a commit message using Ollama with improved error handling.
     Args:
         opts: list of options following the command
-
-    Returns:
-        None
     """
-    diff = git_utils.get_clean_diff()
-    if diff == "":
-        output.print_warning("No changes to the repository.")
-        return
+    try:
+        diff = git_utils.get_clean_diff()
+        if diff == "":
+            output.print_warning("No changes to the repository.")
+            return
 
-    prompt = llm_providers.generation_prompt + diff
-    stat, res = llm_providers.generate(prompt)
+        prompt = llm_providers.generation_prompt + diff
+        stat, res = llm_providers.generate(prompt)
 
-    if stat != 0:
-        # Check if it's a standard HTTP error code (4xx, 5xx)
-        if stat >= 400:
-            error_msg = get_error_message(stat)
-            output.print_error(error_msg)
-        else:
-            # For connection errors or other non-HTTP errors
-            output.print_error(res)
-        return
+        if stat != 0:
+            # Handle known HTTP-style status codes (400–599)
+            if 400 <= stat <= 599:
+                error_msg = get_error_message(stat)
+                output.print_error(error_msg)
+            else:
+                # Handle connection or unexpected errors
+                output.print_error(str(res))
+            return
 
-    wrapped_res = output.wrap_text(res, 72)
-    llm_providers.gen_message = wrapped_res
-    output.print_generated(wrapped_res)
+        wrapped_res = output.wrap_text(res, 72)
+        llm_providers.gen_message = wrapped_res
+        output.print_generated(wrapped_res)
+
+    except ConnectionRefusedError:
+        output.print_error("Connection refused")
+    except Exception as e:
+        output.print_error(f"Unexpected error: {e}")
 
 
 def cmd_clear(opts: list[str]) -> None:
