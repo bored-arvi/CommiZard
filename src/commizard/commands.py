@@ -169,12 +169,10 @@ def print_available_models(opts: list[str]) -> None:
 def generate_message(opts: list[str]) -> None:
     """
     Generate a commit message using Ollama with improved error handling.
-    Args:
-        opts: list of options following the command
     """
     try:
         diff = git_utils.get_clean_diff()
-        if diff == "":
+        if not diff:
             output.print_warning("No changes to the repository.")
             return
 
@@ -182,12 +180,10 @@ def generate_message(opts: list[str]) -> None:
         stat, res = llm_providers.generate(prompt)
 
         if stat != 0:
-            # Handle known HTTP-style status codes (400–599)
             if 400 <= stat <= 599:
                 error_msg = get_error_message(stat)
                 output.print_error(error_msg)
             else:
-                # Handle connection or unexpected errors
                 output.print_error(str(res))
             return
 
@@ -197,7 +193,8 @@ def generate_message(opts: list[str]) -> None:
 
     except ConnectionRefusedError:
         output.print_error("Connection refused")
-    except Exception as e:
+    except (RuntimeError, ValueError, TypeError) as e:
+        # Catch only expected runtime errors
         output.print_error(f"Unexpected error: {e}")
 
 
