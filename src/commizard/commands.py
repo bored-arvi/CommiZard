@@ -12,6 +12,7 @@ from . import git_utils, llm_providers, output
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+
 def get_error_message(status_code: int) -> str:
     """
     Return user-friendly error message for Ollama HTTP status codes.
