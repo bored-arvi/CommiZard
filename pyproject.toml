@@ -10,9 +10,9 @@ authors = [
 ]
 description = "The commit writing Wizard Assistant"
 dependencies = [
-    "rich>=13.9.0,<=14.1.0",
+    "rich>=13.9.0,<=14.2.0",
     "requests>=2.32.2,<=2.32.5",
-    "pyperclip>=1.8.0,<=1.9.0",
+    "pyperclip>=1.8.0,<=1.11.0",
 ]
 readme = "README.md"
 requires-python = ">=3.9"
@@ -34,7 +34,7 @@ keywords = [
 dev = [
     "pytest>=7.0.0,<=8.4.2",
     "pytest-cov>=4.0.0,<=7.0.0",
-    "ruff>=0.1.0,<=0.13.3",
+    "ruff>=0.1.0,<=0.14.1",
     "mypy>=1.0.0,<=1.18.2",
 ]
 
