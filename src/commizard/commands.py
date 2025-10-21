@@ -170,7 +170,7 @@ def generate_message(opts: list[str]) -> None:
     Generate a commit message using Ollama with improved error handling.
     Args:
         opts: list of options following the command
-    
+
     Returns:
         None
     """
