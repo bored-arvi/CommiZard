@@ -34,10 +34,6 @@ def get_error_message(status_code: int) -> str:
     error_messages = {
         400: (
             "Bad Request - The request was malformed or contains invalid parameters.\n"
-            "Suggestions:\n"
-            "  • Check if your prompt is properly formatted\n"
-            "  • Verify all required parameters are provided\n"
-            "  • Ensure the model name is correct"
         ),
         403: (
             "Forbidden - Access to Ollama was denied.\n"
@@ -63,11 +59,6 @@ def get_error_message(status_code: int) -> str:
         ),
         503: (
             "Service Unavailable - Ollama service is not responding.\n"
-            "Suggestions:\n"
-            "  • Start Ollama: ollama serve\n"
-            "  • Check if Ollama is running: ps aux | grep ollama\n"
-            "  • Verify the service is listening on port 11434\n"
-            "  • Wait a moment if the service is starting up"
         ),
     }
 
