@@ -59,6 +59,7 @@ def get_error_message(status_code: int) -> str:
         ),
         503: (
             "Service Unavailable - Ollama service is not responding.\n"
+            "Please do let the dev team know if this keeps happening.\n"
         ),
     }
 
@@ -161,32 +162,20 @@ def generate_message(opts: list[str]) -> None:
     """
     Generate a commit message using Ollama with improved error handling.
     """
-    try:
-        diff = git_utils.get_clean_diff()
-        if not diff:
-            output.print_warning("No changes to the repository.")
-            return
+    diff = git_utils.get_clean_diff()
+    if diff=="":
+        output.print_warning("No changes to the repository.")
+        return
 
-        prompt = llm_providers.generation_prompt + diff
-        stat, res = llm_providers.generate(prompt)
+    prompt = llm_providers.generation_prompt + diff
+    stat, res = llm_providers.generate(prompt)
 
-        if stat != 0:
-            if 400 <= stat <= 599:
-                error_msg = get_error_message(stat)
-                output.print_error(error_msg)
-            else:
-                output.print_error(str(res))
-            return
-
-        wrapped_res = output.wrap_text(res, 72)
-        llm_providers.gen_message = wrapped_res
-        output.print_generated(wrapped_res)
-
-    except ConnectionRefusedError:
-        output.print_error("Connection refused")
-    except (RuntimeError, ValueError, TypeError) as e:
-        # Catch only expected runtime errors
-        output.print_error(f"Unexpected error: {e}")
+    if stat != 0:
+        output.print_error(str(res))
+        return 
+    wrapped_res = output.wrap_text(res, 72)
+    llm_providers.gen_message = wrapped_res
+    output.print_generated(wrapped_res)
 
 
 def cmd_clear(opts: list[str]) -> None:
