@@ -111,7 +111,7 @@ def generate_message(opts: list[str]) -> None:
     stat, res = llm_providers.generate(prompt)
 
     if stat != 0:
-        output.print_error(str(res))
+        output.print_error(res)
         return
 
     wrapped_res = output.wrap_text(res, 72)
