@@ -103,7 +103,7 @@ def generate_message(opts: list[str]) -> None:
     Generate a commit message using Ollama with improved error handling.
     """
     diff = git_utils.get_clean_diff()
-    if diff=="":
+    if diff == "":
         output.print_warning("No changes to the repository.")
         return
 
@@ -112,7 +112,7 @@ def generate_message(opts: list[str]) -> None:
 
     if stat != 0:
         output.print_error(str(res))
-        return 
+        return
     wrapped_res = output.wrap_text(res, 72)
     llm_providers.gen_message = wrapped_res
     output.print_generated(wrapped_res)

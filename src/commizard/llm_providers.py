@@ -149,6 +149,7 @@ def unload_model() -> None:
         selected_model = None
         output.print_success("Model unloaded successfully.")
 
+
 def get_error_message(status_code: int) -> str:
     """
     Return user-friendly error message for Ollama HTTP status codes.
@@ -203,7 +204,7 @@ def get_error_message(status_code: int) -> str:
         return f"Error {status_code}: {error_messages[status_code]}"
 
     if 400 <= status_code < 500:
-    # Client errors (4xx)
+        # Client errors (4xx)
         return (
             f"Error {status_code}: Client Error - This appears to be a configuration or request issue.\n"
             "Suggestions:\n"
@@ -212,7 +213,7 @@ def get_error_message(status_code: int) -> str:
             "  • Review your commizard configuration"
         )
     elif 500 <= status_code < 600:
-    # Server errors (5xx)
+        # Server errors (5xx)
         return (
             f"Error {status_code}: Server Error - This appears to be an issue with the Ollama service.\n"
             "Suggestions:\n"
@@ -226,6 +227,7 @@ def get_error_message(status_code: int) -> str:
             f"Error {status_code}: Unexpected response.\n"
             "Check the Ollama documentation or server logs for more details."
         )
+
 
 # TODO: see issues #11 and #15
 def generate(prompt: str) -> tuple[int, str]:
@@ -246,7 +248,7 @@ def generate(prompt: str) -> tuple[int, str]:
     elif r.return_code == 200:
         return 0, r.response.get("response")
     else:
-        error_msg= get_error_message(r.return_code)
+        error_msg = get_error_message(r.return_code)
         return r.return_code, error_msg
 
 
