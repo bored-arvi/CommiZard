@@ -66,11 +66,30 @@ def get_error_message(status_code: int) -> str:
     if status_code in error_messages:
         return f"Error {status_code}: {error_messages[status_code]}"
 
-    # Generic fallback for unknown status codes
-    return (
-        f"Error {status_code}: Request failed.\n"
-        "Check the Ollama documentation or server logs for more details."
-    )
+    if 400 <= status_code < 500:
+    # Client errors (4xx)
+        return (
+            f"Error {status_code}: Client Error - This appears to be a configuration or request issue.\n"
+            "Suggestions:\n"
+            "  • Verify your request parameters and model name\n"
+            "  • Check Ollama documentation: https://github.com/ollama/ollama/blob/main/docs/api.md\n"
+            "  • Review your commizard configuration"
+        )
+    elif 500 <= status_code < 600:
+    # Server errors (5xx)
+        return (
+            f"Error {status_code}: Server Error - This appears to be an issue with the Ollama service.\n"
+            "Suggestions:\n"
+            "  • Try restarting Ollama: ollama serve\n"
+            "  • Check Ollama logs for more information\n"
+            "  • Wait a moment and try again"
+        )
+    else:
+        # Really unexpected codes (like 3xx redirects or 1xx info codes)
+        return (
+            f"Error {status_code}: Unexpected response.\n"
+            "Check the Ollama documentation or server logs for more details."
+        )
 
 
 def handle_commit_req(opts: list[str]) -> None:
